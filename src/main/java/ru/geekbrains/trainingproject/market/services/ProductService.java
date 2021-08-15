@@ -1,12 +1,10 @@
 package ru.geekbrains.trainingproject.market.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.repositories.ProductRepository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +23,6 @@ public class ProductService {
 
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
-
     }
 
     public void save(Product product) {

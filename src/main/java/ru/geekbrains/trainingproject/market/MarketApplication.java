@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MarketApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MarketApplication.class, args);
-		System.out.println("Application start OK!");
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MarketApplication.class, args);
+        System.out.println("Application start OK!");
+    }
 
 }

@@ -1,11 +1,7 @@
 package ru.geekbrains.trainingproject.market.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.services.ProductService;
 
@@ -26,6 +22,23 @@ public class ProductController {
     public Product findById(@PathVariable Long id) {
         return productService.findById(id).get();
     }
+
+
+    @GetMapping("/products/del/{id}")
+    public List<Product> deleteById(Long id) {
+        productService.deleteProductById(id);
+        return productService.findAll();
+    }
+
+    @PostMapping("/create")
+    public List<Product> save(Product product) {
+        productService.save(product);
+        return productService.findAll();
+    }
+
+    //http://localhost:8189/market/products/filter?minPrice=100&maxPrice=350
+    //http://localhost:8189/market/products/filter?minPrice=100
+    //http://localhost:8189/market/products/filter?maxPrice=350
 
     @GetMapping("/products/filter")
     public List<Product> findAllByPriceIsBetween(
