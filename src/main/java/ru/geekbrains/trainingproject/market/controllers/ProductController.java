@@ -1,11 +1,14 @@
 package ru.geekbrains.trainingproject.market.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.trainingproject.market.dtos.ProductDto;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.services.ProductService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,20 +17,25 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/products")
-    public List<Product> findAll() {
-        return productService.findAll();
+    public Page<ProductDto> findAll(@RequestParam(defaultValue = "0",name = "p") int pageIndex ) {
+        if (pageIndex < 0) {
+            pageIndex = 0;
+        }
+
+        return productService.findAllPage(pageIndex, 5).map(ProductDto::new);
     }
 
+
+
     @GetMapping("/products/{id}")
-    public Product findById(@PathVariable Long id) {
-        return productService.findById(id).get();
+    public ProductDto findById(@PathVariable Long id) {
+        return new ProductDto(productService.findById(id).get());
     }
 
 
     @GetMapping("/products/del/{id}")
-    public List<Product> deleteById(Long id) {
+    public void deleteById(@PathVariable Long id) {
         productService.deleteProductById(id);
-        return productService.findAll();
     }
 
     @PostMapping("/create")

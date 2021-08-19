@@ -1,6 +1,8 @@
 package ru.geekbrains.trainingproject.market.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.repositories.ProductRepository;
@@ -16,6 +18,10 @@ public class ProductService {
     public List<Product> findAll() {
         return productRepository.findAll();
     }
+public Page<Product> findAllPage(int pageIndex,int pageSize) {
+    return productRepository.findAll(PageRequest.of(pageIndex,pageSize));
+
+}
 
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
@@ -29,9 +35,6 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public Optional<Product> find(Long id) {
-        return productRepository.findById(id);
-    }
 
     public List<Product> findAllByPriceIsBetween(Integer minPrise, Integer maxPrice) {
         return productRepository.findAllByPriceIsBetween(maxPrice, maxPrice);
@@ -44,4 +47,5 @@ public class ProductService {
     public List<Product> findAllByPriceIsMoreThenEqual(Integer minPrice) {
         return productRepository.findAllByPriceIsMoreThenEqual(minPrice);
     }
+
 }
