@@ -1,10 +1,14 @@
-package ru.geekbrains.trainingproject.market.controllers;
+package ru.geekbrains.trainingproject.market.controllers.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.trainingproject.market.dtos.ProductDto;
+import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
+import ru.geekbrains.trainingproject.market.model.Category;
 import ru.geekbrains.trainingproject.market.model.Product;
+import ru.geekbrains.trainingproject.market.repositories.CategoryRepository;
+import ru.geekbrains.trainingproject.market.services.CategoryService;
 import ru.geekbrains.trainingproject.market.services.ProductService;
 
 import java.util.List;
@@ -12,12 +16,14 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
-    @GetMapping("/products")
-    public Page<ProductDto> findAll(@RequestParam(defaultValue = "0",name = "p") int pageIndex ) {
+    @GetMapping()
+    public Page<ProductDto> findAll(@RequestParam(defaultValue = "0", name = "p") int pageIndex) {
         if (pageIndex < 0) {
             pageIndex = 0;
         }
@@ -25,23 +31,27 @@ public class ProductController {
         return productService.findAllPage(pageIndex, 5).map(ProductDto::new);
     }
 
-
-
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
         return new ProductDto(productService.findById(id).get());
     }
 
 
-    @GetMapping("/products/del/{id}")
+    @GetMapping("/del/{id}")
     public void deleteById(@PathVariable Long id) {
         productService.deleteProductById(id);
     }
 
     @PostMapping("/create")
-    public List<Product> save(Product product) {
+    public ProductDto save(ProductDto productDto) {
+        Product product = new Product();
+        product.setPrice(productDto.getPrice());
+        product.setTitle(productDto.getTitle());
+//        product.setCategory(productDto.getId());
+
+        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
         productService.save(product);
-        return productService.findAll();
+        return new ProductDto(product);
     }
 
     //http://localhost:8189/market/products/filter?minPrice=100&maxPrice=350

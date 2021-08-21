@@ -1,37 +1,34 @@
 angular.module('market-front', []).controller('indexController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/market/';
-    $scope.currentPage = 0;
+    $scope.currentPage = 1;
 
     $scope.loadProducts = function (pageIndex = 0) {
         $http({
-            url: contextPath + "products",
+            url: contextPath + "api/v1/products",
             method: 'GET',
             params: {
                 p: pageIndex
             }
         }).then(function (response) {
-            console.log(response);
+            console.log(response.data);
             $scope.productsPage = response.data;
+            $scope.totalPages = $scope.productsPage.totalPages;
         });
     };
 
     $scope.delProductById = function (product) {
-        $http.get(contextPath + "products/del/" + product.id)
+        $http.get(contextPath + "api/v1/products/del/" + product.id)
             .then(function (response) {
                 $scope.loadProducts();
             });
     };
 
     $scope.toChangePage = function (increment) {
-        $scope.currentPage = $scope.currentPage + increment;
-        /**Не удалось достать $scope.currentPage.data.totalPages поэтому проверку на
-         * индекс страницы на сделал
-         */
-
-        if ($scope.currentPage < 0) {
-            $scope.currentPage = 0;
+        if (($scope.productsPage.first && increment < 0) || ($scope.productsPage.last && increment > 0)) {
+            increment = 0;
         }
-        $scope.loadProducts($scope.currentPage);
+        $scope.currentPage = $scope.currentPage + increment;
+        $scope.loadProducts($scope.currentPage - 1);
     };
 
     $scope.loadProducts();

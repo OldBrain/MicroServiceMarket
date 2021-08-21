@@ -20,6 +20,7 @@
 <thead>
 <table class="table table-success table-striped">
     <tr>
+        <td>Category</td>
         <td>id</td>
         <td>title</td>
         <td>prise</td>
@@ -29,6 +30,7 @@
     <tbody>
 
     <tr ng-repeat="p in productsPage.content">
+<td>{{p.categoryTitle}}</td>
 <td>{{p.id}}</td>
 <td>{{p.title}}</td>
 <td>{{p.price}}</td>
@@ -38,6 +40,8 @@
 
     </tr>
 </table>
+<h6>страница {{currentPage}} из {{totalPages}}</h6>
+
 <button class="btn btn-info" ng-click="toChangePage(-1)">Previous Page</button>
 <button class="btn btn-info" ng-click="toChangePage(1)">Next page</button>
     </tbody>
