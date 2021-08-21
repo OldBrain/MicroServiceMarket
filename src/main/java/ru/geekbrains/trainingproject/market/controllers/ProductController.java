@@ -1,15 +1,14 @@
 package ru.geekbrains.trainingproject.market.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.trainingproject.market.dtos.ProductDto;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.services.ProductService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,14 +17,36 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/products")
-    public List<Product> findAll() {
+    public Page<ProductDto> findAll(@RequestParam(defaultValue = "0",name = "p") int pageIndex ) {
+        if (pageIndex < 0) {
+            pageIndex = 0;
+        }
+
+        return productService.findAllPage(pageIndex, 5).map(ProductDto::new);
+    }
+
+
+
+    @GetMapping("/products/{id}")
+    public ProductDto findById(@PathVariable Long id) {
+        return new ProductDto(productService.findById(id).get());
+    }
+
+
+    @GetMapping("/products/del/{id}")
+    public void deleteById(@PathVariable Long id) {
+        productService.deleteProductById(id);
+    }
+
+    @PostMapping("/create")
+    public List<Product> save(Product product) {
+        productService.save(product);
         return productService.findAll();
     }
 
-    @GetMapping("/products/{id}")
-    public Product findById(@PathVariable Long id) {
-        return productService.findById(id).get();
-    }
+    //http://localhost:8189/market/products/filter?minPrice=100&maxPrice=350
+    //http://localhost:8189/market/products/filter?minPrice=100
+    //http://localhost:8189/market/products/filter?maxPrice=350
 
     @GetMapping("/products/filter")
     public List<Product> findAllByPriceIsBetween(
