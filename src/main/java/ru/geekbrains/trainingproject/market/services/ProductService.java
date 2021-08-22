@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.trainingproject.market.model.Category;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.repositories.ProductRepository;
 
@@ -48,5 +49,4 @@ public Page<Product> findAllPage(int pageIndex,int pageSize) {
     public List<Product> findAllByPriceIsMoreThenEqual(Integer minPrice) {
         return productRepository.findAllByPriceIsMoreThenEqual(minPrice);
     }
-
 }

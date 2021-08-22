@@ -25,36 +25,45 @@ public class ProductController {
         if (pageIndex < 0) {
             pageIndex = 0;
         }
-
-            return productService.findAllPage(pageIndex, 5).map(ProductDto::new);
+        return productService.findAllPage(pageIndex, 5).map(ProductDto::new);
     }
 
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
-
-        return new ProductDto(productService.findById(id).get());
+        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("product id " + id + "not found"));
+        return new ProductDto(product);
     }
-
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
+        productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("product id " + id + "not found"));
         productService.deleteProductById(id);
     }
 
-    @PostMapping("/create")
-    public ProductDto save(ProductDto productDto) {
+    @PostMapping("")
+    public ProductDto save(@RequestBody ProductDto productDto) {
         Product product = new Product();
         product.setPrice(productDto.getPrice());
         product.setTitle(productDto.getTitle());
         Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
+        product.setCategory(category);
         productService.save(product);
         return new ProductDto(product);
     }
 
+    @PutMapping("")
+    public ProductDto productDtoEdit(@RequestBody ProductDto productDto) {
+        Product product = productService.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        productService.save(product);
+        return new ProductDto(product);
+    }
+
+
     //http://localhost:8189/market/products/filter?minPrice=100&maxPrice=350
     //http://localhost:8189/market/products/filter?minPrice=100
     //http://localhost:8189/market/products/filter?maxPrice=350
-
     @GetMapping("/filter")
     public List<Product> findAllByPriceIsBetween(
             @RequestParam(name = "minPrice", required = false) Integer minPrice,
