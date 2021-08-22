@@ -7,12 +7,10 @@ import ru.geekbrains.trainingproject.market.dtos.ProductDto;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Category;
 import ru.geekbrains.trainingproject.market.model.Product;
-import ru.geekbrains.trainingproject.market.repositories.CategoryRepository;
 import ru.geekbrains.trainingproject.market.services.CategoryService;
 import ru.geekbrains.trainingproject.market.services.ProductService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +26,7 @@ public class ProductController {
             pageIndex = 0;
         }
 
-        return productService.findAllPage(pageIndex, 5).map(ProductDto::new);
+            return productService.findAllPage(pageIndex, 5).map(ProductDto::new);
     }
 
     @GetMapping("/{id}")
@@ -37,7 +35,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("/del/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         productService.deleteProductById(id);
     }
@@ -47,8 +45,6 @@ public class ProductController {
         Product product = new Product();
         product.setPrice(productDto.getPrice());
         product.setTitle(productDto.getTitle());
-//        product.setCategory(productDto.getId());
-
         Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
         productService.save(product);
         return new ProductDto(product);
@@ -58,7 +54,7 @@ public class ProductController {
     //http://localhost:8189/market/products/filter?minPrice=100
     //http://localhost:8189/market/products/filter?maxPrice=350
 
-    @GetMapping("/products/filter")
+    @GetMapping("/filter")
     public List<Product> findAllByPriceIsBetween(
             @RequestParam(name = "minPrice", required = false) Integer minPrice,
             @RequestParam(name = "maxPrice", required = false) Integer maxPrice) {

@@ -18,6 +18,7 @@ public class ProductService {
     public List<Product> findAll() {
         return productRepository.findAll();
     }
+
 public Page<Product> findAllPage(int pageIndex,int pageSize) {
     return productRepository.findAll(PageRequest.of(pageIndex,pageSize));
 

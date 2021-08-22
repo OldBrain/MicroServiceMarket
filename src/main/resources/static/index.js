@@ -17,7 +17,7 @@ angular.module('market-front', []).controller('indexController', function ($scop
     };
 
     $scope.delProductById = function (product) {
-        $http.get(contextPath + "api/v1/products/del/" + product.id)
+        $http.delete(contextPath + "api/v1/products" + product.id)
             .then(function (response) {
                 $scope.loadProducts();
             });
