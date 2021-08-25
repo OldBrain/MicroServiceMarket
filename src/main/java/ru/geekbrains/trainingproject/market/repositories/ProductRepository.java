@@ -11,12 +11,14 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    List<Product> findAllByPriceIsBetween(Integer minPrice, Integer maxPrice);
+    Optional<Product> findAllByPriceIsBetween(Integer minPrice, Integer maxPrice);
 
-    List<Product> findAllByPriceLessThanEqual(Integer maxPrice);
+    Optional<Product> findAllByPriceLessThanEqual(Integer maxPrice);
 
     Optional<Product> findProductByTitleEquals(String title);
 
     @Query("select p from Product p where p.price>=:minPrice")
-    List<Product> findAllByPriceIsMoreThenEqual(Integer minPrice);
+    Optional<Product> findAllByPriceIsMoreThenEqual(Integer minPrice);
+
+
 }

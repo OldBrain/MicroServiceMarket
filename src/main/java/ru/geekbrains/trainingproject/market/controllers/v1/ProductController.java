@@ -10,7 +10,10 @@ import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.services.CategoryService;
 import ru.geekbrains.trainingproject.market.services.ProductService;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,12 +28,13 @@ public class ProductController {
         if (pageIndex < 0) {
             pageIndex = 0;
         }
-        return productService.findAllPage(pageIndex, 5).map(ProductDto::new);
+        return productService.findAllPageByPage(pageIndex, 5).map(ProductDto::new);
     }
 
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
-        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("product id " + id + "not found"));
+        Product product = productService.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException("product id " + id + "not found"));
         return new ProductDto(product);
     }
 
@@ -52,32 +56,35 @@ public class ProductController {
     }
 
     @PutMapping("")
-    public ProductDto productDtoEdit(@RequestBody ProductDto productDto) {
-        Product product = productService.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
-        product.setTitle(productDto.getTitle());
-        product.setPrice(productDto.getPrice());
-        productService.save(product);
-        return new ProductDto(product);
+    public void productDtoEdit(@RequestBody ProductDto productDto) {
+        productService.updateProductFromDto(productDto);
     }
 
 
+
+    // TODO: Проверить и доработать. Пока не использовать
     //http://localhost:8189/market/products/filter?minPrice=100&maxPrice=350
     //http://localhost:8189/market/products/filter?minPrice=100
     //http://localhost:8189/market/products/filter?maxPrice=350
     @GetMapping("/filter")
-    public List<Product> findAllByPriceIsBetween(
+    public Optional<ProductDto> findAllByPriceIsBetween(
             @RequestParam(name = "minPrice", required = false) Integer minPrice,
-            @RequestParam(name = "maxPrice", required = false) Integer maxPrice) {
+            @RequestParam(name = "maxPrice", required = false) Integer maxPrice,
+            @RequestParam(defaultValue = "0", name = "p") int pageIndex) {
+        int pageSize = 5;
+
         if (minPrice == null & maxPrice == null) {
-            return productService.findAll();
+            return productService.findAll().stream().findAny().map(ProductDto::new);
         }
 
         if (minPrice != null & maxPrice == null) {
-            return productService.findAllByPriceIsMoreThenEqual(minPrice);
+            return productService.findAllByPriceIsMoreThenEqual(minPrice).map(ProductDto::new);
         }
+
         if (minPrice == null & maxPrice != null) {
-            return productService.findAllByPriceLessThanEqual(maxPrice);
+            return productService.findAllByPriceLessThanEqual(maxPrice).map(ProductDto::new);
         }
-        return productService.findAllByPriceIsBetween(minPrice, maxPrice);
+
+        return productService.findAllByPriceIsBetween(minPrice, maxPrice).map(ProductDto::new);
     }
 }
