@@ -61,7 +61,6 @@ public class ProductController {
     }
 
 
-
     // TODO: Проверить и доработать. Пока не использовать
     //http://localhost:8189/market/products/filter?minPrice=100&maxPrice=350
     //http://localhost:8189/market/products/filter?minPrice=100
@@ -74,17 +73,20 @@ public class ProductController {
         int pageSize = 5;
 
         if (minPrice == null & maxPrice == null) {
-            return productService.findAll().stream().findAny().map(ProductDto::new);
+            Optional<Product> optionalProduct = Optional.ofNullable(productService.findAll().stream().findAny().orElseThrow(() -> new ResourceNotFoundException("Ошибка при получении полного списка продуктов")));
+            return optionalProduct.map(ProductDto::new);
         }
 
         if (minPrice != null & maxPrice == null) {
-            return productService.findAllByPriceIsMoreThenEqual(minPrice).map(ProductDto::new);
+            Optional<Product> optionalProduct = Optional.ofNullable(productService.findAllByPriceIsMoreThenEqual(minPrice).orElseThrow(() -> new ResourceNotFoundException("По фильтру продуктов нет")));
+            return optionalProduct.map(ProductDto::new);
         }
 
         if (minPrice == null & maxPrice != null) {
-            return productService.findAllByPriceLessThanEqual(maxPrice).map(ProductDto::new);
+            Optional<Product> optionalProduct = Optional.ofNullable(productService.findAllByPriceLessThanEqual(maxPrice).orElseThrow(() -> new ResourceNotFoundException("По фильтру продуктов нет")));
+            return optionalProduct.map(ProductDto::new);
         }
-
-        return productService.findAllByPriceIsBetween(minPrice, maxPrice).map(ProductDto::new);
+        Optional<Product> optionalProduct = Optional.ofNullable(productService.findAllByPriceIsBetween(minPrice, maxPrice).orElseThrow(() -> new ResourceNotFoundException("По фильтру продуктов нет")));
+        return optionalProduct.map(ProductDto::new);
     }
 }
