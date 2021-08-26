@@ -62,9 +62,6 @@ public class ProductController {
 
 
     // TODO: Проверить и доработать. Пока не использовать
-    //http://localhost:8189/market/products/filter?minPrice=100&maxPrice=350
-    //http://localhost:8189/market/products/filter?minPrice=100
-    //http://localhost:8189/market/products/filter?maxPrice=350
     @GetMapping("/filter")
     public Optional<ProductDto> findAllByPriceIsBetween(
             @RequestParam(name = "minPrice", required = false) Integer minPrice,
