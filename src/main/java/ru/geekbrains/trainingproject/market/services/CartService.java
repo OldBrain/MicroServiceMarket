@@ -84,12 +84,12 @@ public class CartService {
     public void updateProduct(CartProductDto cartProductDto) {
         CartProductDto cartProductDtoEdit = getProduct(cartProductDto);
         deleteById(cartProductDtoEdit.getId());
-        save(cartProductDtoEdit);
+        save(cartProductDto);
     }
 
     private void save(CartProductDto cartProductDto) {
-        CartProductDto cartProductDtoEdit = new CartProductDto();
-        cartProductDtoEdit = cartProductDto
+        CartProductDto cartProductDtoEdit;
+        cartProductDtoEdit = cartProductDto;
         cartRepository.getCartProductsDtoList().add(cartProductDtoEdit);
     }
 

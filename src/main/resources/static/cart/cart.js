@@ -3,13 +3,13 @@ angular.module('market-front').controller('cartController', function ($scope, $h
 
     $scope.loadProducts = function () {
         $http.get(contextPath + 'api/v1/cart')
-       .then(function (response) {
-            console.log(response.data);
-           $scope.productsInCart = response.data;
+            .then(function (response) {
+                console.log(response.data);
+                $scope.productsInCart = response.data;
 
-        },function failureCallback(response) {
-            alert("Ошибка"+response.data.message);
-       });
+            }, function failureCallback(response) {
+                alert("Ошибка" + response.data.message);
+            });
     };
 
     $scope.delProductById = function (product) {
@@ -22,10 +22,9 @@ angular.module('market-front').controller('cartController', function ($scope, $h
     };
 
     $scope.priceEdit = function (product) {
-        var newPrice = prompt("Input product title:", product.quantity);
-        if (newPrice != null) {
-            product.price = newPrice;
-
+        var newQuantity = prompt("Input product title:", product.quantity);
+        if (newQuantity != null) {
+            product.quantity = newQuantity;
             $http.put(contextPath + "api/v1/cart/", product)
                 .then(function (response) {
                     $scope.loadProducts();

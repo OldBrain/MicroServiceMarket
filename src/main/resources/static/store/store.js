@@ -5,7 +5,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
     $scope.addCart = function (product) {
         $http.post(contextPath + 'api/v1/cart/' + product.id)
             .then(function successCallback(response) {
-                alert("Добавлен в корзину");
+                alert(product.title + " добавлен в корзину");
             });
     };
     $scope.loadProducts = function (pageIndex = 0) {
