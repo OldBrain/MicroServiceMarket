@@ -1,18 +1,15 @@
 package ru.geekbrains.trainingproject.market.repositories;
 
 import lombok.Data;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.geekbrains.trainingproject.market.dtos.CartProductsDto;
-import ru.geekbrains.trainingproject.market.model.Product;
+import ru.geekbrains.trainingproject.market.dtos.CartProductDto;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
-@Repository
 @Data
+@Repository
 public class CartRepository {
-    List<CartProductsDto> cartProductsDtoList;
-
-
+    List<CartProductDto> cartProductsDtoList=new LinkedList<>();
 
 }

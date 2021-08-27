@@ -23,13 +23,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#!/store">Каталог товаров</a>
                     </li>
-
+                    <li class="nav-item">
+<!--                    <button class="box" on-click="nav-link" href="#!/cart">Корзина</button>-->
+                    </li>
                 </ul>
-            </div>
 
+            </div>
+            <button class="btn btn-success" onclick="window.location.href = '#!/cart';">Корзина<br>0</button>
         </nav>
 
-        <button class="box" ng-click="priceEdit(p)">Корзина</button>
 
     </div>
 
@@ -38,6 +40,7 @@
     <script src="index.js"></script>
     <script src="store/store.js"></script>
     <script src="welcome/welcome.js"></script>
+    <script src="cart/cart.js"></script>
 </div>
 </body>
 </html>

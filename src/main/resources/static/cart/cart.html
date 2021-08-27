@@ -1,0 +1,36 @@
+<div>
+    <h1>Market</h1>
+    <thead>
+    <table class="table table-success table-striped">
+        <tr>
+            <td>категория</td>
+            <td>id</td>
+            <td>товар</td>
+            <td>цена</td>
+            <td>кол-во</td>
+            <td>button</td>
+            <td>button</td>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr ng-repeat="p in productsInCart">
+
+            <td>{{p.categoryTitle}}</td>
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>{{p.quantity}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="delProductById(p)">Убрать из корзины</button>
+            </td>
+            <td>
+                <button class="btn btn-info" ng-click="priceEdit(p)">Изменить количество</button>
+            </td>
+        </tr>
+    </table>
+
+
+    </tbody>
+</div>
