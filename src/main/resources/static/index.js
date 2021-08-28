@@ -1,39 +1,34 @@
-angular.module('market-front', []).controller('indexController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8189/market/';
-    $scope.currentPage = 0;
+(function () {
+    angular
+        .module('market-front', ['ngRoute'])
+        .config(config)
+        .run(run);
 
-    $scope.loadProducts = function (pageIndex = 0) {
-        $http({
-            url: contextPath + "products",
-            method: 'GET',
-            params: {
-                p: pageIndex
-            }
-        }).then(function (response) {
-            console.log(response);
-            $scope.productsPage = response.data;
-        });
-    };
+    function config($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: 'welcome/welcome.html',
+                controller: 'welcomeController'
+            })
+            .when('/store', {
+                templateUrl: 'store/store.html',
+                controller: 'storeController'
+            })
+            .when('/cart', {
+                templateUrl: 'cart/cart.html',
+                controller: 'cartController'
+            })
 
-    $scope.delProductById = function (product) {
-        $http.get(contextPath + "products/del/" + product.id)
-            .then(function (response) {
-                $scope.loadProducts();
+            .otherwise({
+                redirectTo: '/'
             });
-    };
+    }
 
-    $scope.toChangePage = function (increment) {
-        $scope.currentPage = $scope.currentPage + increment;
-        /**Не удалось достать $scope.currentPage.data.totalPages поэтому проверку на
-         * индекс страницы на сделал
-         */
+    function run($rootScope, $http) {
+    }
+})();
 
-        if ($scope.currentPage < 0) {
-            $scope.currentPage = 0;
-        }
-        $scope.loadProducts($scope.currentPage);
-    };
+angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http) {
+    const contextPath = 'http://localhost:8189/market';
 
-    $scope.loadProducts();
 });
-
