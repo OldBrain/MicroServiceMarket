@@ -1,9 +1,11 @@
 package ru.geekbrains.trainingproject.market.utils;
 
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.internal.Function;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -39,7 +41,23 @@ public class JwtTokenUtil {
                 .compact();
     }
     public String getUserNameFromToken(String token) {
+        return null;
+    }
+public List<String> getRoles(String token) {
+    return getClaimsFromToken(token, (Function<Claims, List<String>>)
+            claims -> claims.get("roles", List.class));
+}
 
+    private <T> T getClaimsFromToken(String token, Function<Claims,T> claimsResolver) {
+        Claims claims = getAllClaimsFromToken(token);
+        return claimsResolver.apply(claims);
+    }
 
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
+
