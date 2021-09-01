@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil {
-    @Value("${jwt.secret}")
-    private String jwtSecret;
-
     @Value("${jwt.lifetime}")
     private Integer jwtLifetime;
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
