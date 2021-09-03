@@ -11,12 +11,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//    private final JwcRequestFilter jwcRequestFilter;
+    private final JwcRequestFilter jwcRequestFilter;
 
 
     @Override
@@ -34,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
-//        http.addFilterBefore(jwcRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwcRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
