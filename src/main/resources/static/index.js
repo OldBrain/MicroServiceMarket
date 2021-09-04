@@ -2,7 +2,7 @@
 
 (function () {
     angular
-        .module('market-front', ['ngRoute'])
+        .module('market-front', ['ngRoute','ngStorage'])
         .config(config)
         .run(run);
 
@@ -20,13 +20,19 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
-
+            .when('/reg', {
+                templateUrl: 'registration/registration.html',
+                controller: 'registrationController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
     }
 
-    function run($rootScope, $http) {
+    function run($rootScope, $http, $localStorage) {
+        if ($localStorage.webMarketUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
+        }
     }
 })();
 
@@ -37,7 +43,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
     const contextPath = 'http://localhost:8189/market';
 
     $scope.tryToAuth = function () {
-        $http.post(contextPath + '/auth', $scope.user)
+        $http.post(contextPath + '/api/v1/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -47,15 +53,8 @@ angular.module('market-front').controller('indexController', function ($rootScop
                     $scope.user.password = null;
                 }
             }, function errorCallback(response) {
+                alert(response.data.message)
             });
-    };
-
-    $rootScope.isUserLoggedIn = function () {
-        if ($localStorage.webMarketUser) {
-            return true;
-        } else {
-            return false;
-        }
     };
 
     $scope.tryToLogout = function () {
@@ -71,6 +70,15 @@ angular.module('market-front').controller('indexController', function ($rootScop
     $scope.clearUser = function () {
         delete $localStorage.webMarketUser;
         $http.defaults.headers.common.Authorization = '';
+
+    };
+
+    $rootScope.isUserLoggedIn = function () {
+        if ($localStorage.webMarketUser) {
+            return true;
+        } else {
+            return false;
+        }
     };
 
 });

@@ -24,6 +24,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,6 +41,14 @@ public class UserService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> mapRolesTuAuthorities(Collection<Role> roles) {
         return roles.stream().map(role ->
                 new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    public boolean isExistsUser(String usrname ) {
+        return userRepository.existsAllByUsernameEquals(usrname);
+    }
+
+    public boolean isExistsEmail(String email) {
+        return userRepository.existsAllByEmailEquals(email);
     }
 }
 

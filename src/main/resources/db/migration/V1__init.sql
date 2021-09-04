@@ -56,6 +56,7 @@ create table roles
 
 CREATE TABLE users_roles
 (
+    id bigserial,
     user_id bigint not null references users (id),
     role_id bigint not null references roles (id),
     primary key (user_id, role_id)
