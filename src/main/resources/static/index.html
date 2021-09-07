@@ -37,7 +37,8 @@
                                 <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
                                        aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
-                                <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
+                                <input id="navPasswordField" class="form-control" ng-model="user.password"
+                                       type="password"
                                        aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
                                 <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
@@ -47,13 +48,19 @@
                         </form>
                     </li>
 
-    <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
-        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
-    </li>
+                    <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+                        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
+                    </li>
                 </ul>
 
             </div>
-            <button class="btn btn-success" onclick="window.location.href = '#!/cart';">Корзина<br>0</button>
+            <li>
+                <button class="btn btn-success" onclick="window.location.href = '#!/cart';">Корзина<br>0</button>
+            </li>
+            <li class="nav-item" ng-show="isUserLoggedIn()">
+                <button class="btn btn-success" onclick="window.location.href = '#!/userspersonal';">ЛК</button>
+<!--                <button> class="btn btn-success" onclick="window.location.href = '#!/cart';" img alt="" src="https://pbs.twimg.com/profile_images/1319227045474426880/omvHzEUJ_normal.jpg" /></button>-->
+            </li>
         </nav>
 
 
