@@ -2,12 +2,21 @@ angular.module('market-front').controller('storeController', function ($scope, $
     const contextPath = 'http://localhost:8189/market/';
     $scope.currentPage = 1;
 
-    $scope.addCart = function (product) {
-        $http.post(contextPath + 'api/v1/cart/' + product.id)
-            .then(function successCallback(response) {
-                alert(product.title + " добавлен в корзину");
-            });
+    // $scope.addCart = function (product) {
+    //     $http.post(contextPath + 'api/v1/cart/' + product.id)
+    //         .then(function successCallback(response) {
+    //             alert(product.title + " добавлен в корзину");
+    //         });
+    // };
+
+    $scope.addToCart = function (productId) {
+        $http({
+            url: contextPath + 'api/v1/cart/add/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+        });
     };
+
     $scope.loadProducts = function (pageIndex = 0) {
         $http({
             url: contextPath + "api/v1/products",

@@ -1,39 +1,49 @@
-angular.module('market-front').controller('cartController', function ($scope, $http) {
+angular.module('market-front').controller('cartController', function ($scope, $http, $location) {
     const contextPath = 'http://localhost:8189/market/';
 
-    $scope.loadProducts = function () {
-        $http.get(contextPath + 'api/v1/cart')
-            .then(function (response) {
-                console.log(response.data);
-                $scope.productsInCart = response.data;
-
-            }, function failureCallback(response) {
-                alert("Ошибка" + response.data.message);
-            });
+    $scope.loadCart = function () {
+        $http({
+            url: contextPath + 'api/v1/cart',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.cart = response.data;
+        });
     };
 
-    $scope.delProductById = function (product) {
-        $http.delete(contextPath + "api/v1/cart/" + product.id)
-            .then(function (response) {
-                $scope.loadProducts();
-            }, function failureCallback(response) {
-                alert(response.data.message);
-            });
+    $scope.incrementItem = function (productId) {
+        $http({
+            url: contextPath + 'api/v1/cart/add/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
     };
 
-    $scope.priceEdit = function (product) {
-        var newQuantity = prompt("Input product title:", product.quantity);
-        if (newQuantity != null) {
-            product.quantity = newQuantity;
-            $http.put(contextPath + "api/v1/cart/", product)
-                .then(function (response) {
-                    $scope.loadProducts();
-                }, function failureCallback(response) {
-                    alert(response.data.message);
-                });
-        }
+    $scope.decrementItem = function (productId) {
+        $http({
+            url: contextPath + 'api/v1/cart/decrement/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
     };
 
-    $scope.loadProducts();
+    $scope.removeItem = function (productId) {
+        $http({
+            url: contextPath + 'api/v1/cart/remove/' + productId,
+            method: 'GET'
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    };
+
+    $scope.checkOut = function () {
+        $location.path("/order_confirmation");
+    }
+
+    $scope.disabledCheckOut = function () {
+        alert("Для оформления заказа необходимо войти в учетную запись");
+    }
+
+    $scope.loadCart();
 });
-

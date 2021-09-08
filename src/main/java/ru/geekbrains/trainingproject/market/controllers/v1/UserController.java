@@ -1,6 +1,5 @@
 package ru.geekbrains.trainingproject.market.controllers.v1;
 
-import javafx.print.Collation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import ru.geekbrains.trainingproject.market.model.Role;
 import ru.geekbrains.trainingproject.market.model.User;
 import ru.geekbrains.trainingproject.market.services.RolesService;
 import ru.geekbrains.trainingproject.market.services.UserService;
-import ru.geekbrains.trainingproject.market.services.UsersRolesService;
 import ru.geekbrains.trainingproject.market.utils.JwtTokenUtil;
 
 import java.util.*;
@@ -32,7 +30,6 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RolesService rolesService;
-    private final UsersRolesService usersRolesService;
 
     @PostMapping("")
     public ResponseEntity<?> createAuthToken(@RequestBody AuthRequest authRequest) {

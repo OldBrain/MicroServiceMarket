@@ -56,9 +56,10 @@
             </div>
             <li>
                 <button class="btn btn-success" onclick="window.location.href = '#!/cart';">Корзина<br>0</button>
+<!--                <a class="nav-link" href="#!/cart">Корзина</a>-->
             </li>
             <li class="nav-item" ng-show="isUserLoggedIn()">
-                <button class="btn btn-success" onclick="window.location.href = '#!/userspersonal';">ЛК</button>
+                <button class="btn btn-success" onclick="window.location.href = '#!/userspersonal';">ЛК<br>{{user.username}}</button>
 <!--                <button> class="btn btn-success" onclick="window.location.href = '#!/cart';" img alt="" src="https://pbs.twimg.com/profile_images/1319227045474426880/omvHzEUJ_normal.jpg" /></button>-->
             </li>
         </nav>

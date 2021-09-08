@@ -1,36 +1,35 @@
 <div>
-    <h1>Market</h1>
+  <p></p>
+  <h3>Корзина</h3>
+  <span ng-show="cart.items.length == 0">Ваша корзина пуста</span>
+  <table class="table" ng-show="cart.items.length > 0">
     <thead>
-    <table class="table table-success table-striped">
-        <tr>
-            <td>категория</td>
-            <td>id</td>
-            <td>товар</td>
-            <td>цена</td>
-            <td>кол-во</td>
-            <td>button</td>
-            <td>button</td>
-        </tr>
-        </thead>
-
-        <tbody>
-
-        <tr ng-repeat="p in productsInCart">
-
-            <td>{{p.categoryTitle}}</td>
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
-            <td>{{p.quantity}}</td>
-            <td>
-                <button class="btn btn-danger" ng-click="delProductById(p)">Убрать из корзины</button>
-            </td>
-            <td>
-                <button class="btn btn-info" ng-click="priceEdit(p)">Изменить количество</button>
-            </td>
-        </tr>
-    </table>
-
-
+    <tr>
+      <td>Название</td>
+      <td>Количество</td>
+      <td>Цена</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="i in cart.items">
+      <td>{{i.productTitle}}</td>
+      <td>
+        <button class="btn btn-primary" ng-click="decrementItem(i.productId)">-</button>
+        {{i.quantity}}
+        <button class="btn btn-primary" ng-click="incrementItem(i.productId)">+</button>
+        <button class="btn btn-danger" ng-click="removeItem(i.productId)">X</button>
+      </td>
+      <td>{{i.pricePerProduct + ' x ' + i.quantity + ' = ' + i.price}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>{{'Итого: ' + cart.totalPrice}}</td>
+    </tr>
     </tbody>
+  </table>
+
+  <p></p>
+  <button class="btn btn-primary" ng-click="checkOut()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+  <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
 </div>

@@ -32,6 +32,7 @@
     function run($rootScope, $http, $localStorage) {
         if ($localStorage.webMarketUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
+
         }
     }
 })();
@@ -48,8 +49,8 @@ angular.module('market-front').controller('indexController', function ($rootScop
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.webMarketUser = {username: $scope.user.username, token: response.data.token};
-
-                    $scope.user.username = null;
+                    $scope.username = $scope.user.username;
+                    // $scope.user.username = null;
                     $scope.user.password = null;
                 }
             }, function errorCallback(response) {

@@ -1,38 +1,36 @@
 package ru.geekbrains.trainingproject.market.controllers.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.trainingproject.market.dtos.CartProductDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.trainingproject.market.services.CartService;
-
-import java.util.List;
+import ru.geekbrains.trainingproject.market.utils.Cart;
 
 @RestController
-@RequiredArgsConstructor
-
 @RequestMapping("/api/v1/cart")
+@RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
 
-    @GetMapping()
-    public List<CartProductDto> findAll() {
-        return cartService.getAll();
+    @GetMapping("")
+    public Cart getCartForCurrentUser() {
+        return cartService.getCartForCurrentUser();
     }
 
-    @PostMapping("/{id}")
-    public Integer save(@PathVariable Long id) {
-        cartService.addProduct(id);
-        return cartService.getAll().size();
+    @GetMapping("/add/{productId}")
+    public void addToCart(@PathVariable Long productId) {
+        cartService.addItem(productId);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        cartService.deleteById(id);
+    @GetMapping("/decrement/{productId}")
+    public void decrementItem(@PathVariable Long productId) {
+        cartService.decrementItem(productId);
     }
 
-
-    @PutMapping("")
-    public void productDtoEdit(@RequestBody CartProductDto cartProductDto) {
-        cartService.updateProduct(cartProductDto);
+    @GetMapping("/remove/{productId}")
+    public void removeItem(@PathVariable Long productId) {
+        cartService.removeItem(productId);
     }
 }
