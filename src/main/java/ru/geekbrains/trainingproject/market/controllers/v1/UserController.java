@@ -60,17 +60,6 @@ public class UserController {
         Role role = rolesService.getRoleWithUsersRights();
         user.setRoles(Collections.singletonList(role));
         userService.save(user);
-
-//        try {
-//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), userRegDto.getPassword()));
-//        } catch (AuthenticationException e) {
-//            return new ResponseEntity<>(new MarketError("Incorrect username or password"), HttpStatus.UNAUTHORIZED);
-//        }
-//        UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
-//        String token = jwtTokenUtil.generateToken(userDetails);
-//        return ResponseEntity.ok(new AuthResponse(token));
-
-//        return ResponseEntity.ok(HttpStatus.OK);
         AuthRequest request = new AuthRequest(userRegDto.getUsername(), userRegDto.getPassword());
         return createAuthToken(request);
     }
