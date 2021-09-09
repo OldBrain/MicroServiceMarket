@@ -14,7 +14,7 @@ public class CartController {
     @GetMapping("")
     public Cart getCartForCurrentUser(@RequestParam(name = "tmpId") String tmpId) {
         if (tmpId == null) {
-            tmpId=generateTmpId();
+//            tmpId=generateTmpId();
         }
         return cartService.getCartForCurrentUser(tmpId);
     }
