@@ -1,4 +1,4 @@
-angular.module('market-front').controller('storeController', function ($scope, $http) {
+angular.module('market-front').controller('storeController', function ($scope, $http,$rootScope,$localStorage) {
     const contextPath = 'http://localhost:8189/market/';
     $scope.currentPage = 1;
 
@@ -10,6 +10,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
     // };
 
     $scope.addToCart = function (productId) {
+        $scope.getTmpId();
         $http({
             url: contextPath + 'api/v1/cart/add/' + productId,
             method: 'GET'
@@ -38,6 +39,22 @@ angular.module('market-front').controller('storeController', function ($scope, $
         }
         $scope.currentPage = $scope.currentPage + increment;
         $scope.loadProducts($scope.currentPage - 1);
+    };
+
+    $scope.getTmpId = function () {
+        if ($localStorage.tmpId) {
+            $http.defaults.headers.common.tmpId = 'tmpId ' + $localStorage.tmpId.tmpId;
+        }
+        if (!$rootScope.isUserLoggedIn()&&!$localStorage.tmpId) {
+        $http.get(contextPath + 'api/v1/auth')
+            .then(function (response) {
+                $scope.tmpId = response.data;
+                $http.defaults.headers.common.tmpId = 'tmpId ' + $scope.tmpId;
+                $localStorage.tmpId = {tmpId: $scope.tmpId};
+                alert($localStorage.tmpId.tmpId);
+            });
+        }
+
     };
 
     $scope.loadProducts();

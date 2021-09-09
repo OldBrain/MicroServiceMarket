@@ -12,11 +12,8 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("")
-    public Cart getCartForCurrentUser(@RequestParam(name = "tmpId") String tmpId) {
-        if (tmpId == null) {
-//            tmpId=generateTmpId();
-        }
-        return cartService.getCartForCurrentUser(tmpId);
+    public Cart getCartForCurrentUser() {
+     return cartService.getCartForCurrentUser();
     }
 
     @GetMapping("/add/{productId}")

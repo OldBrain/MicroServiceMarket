@@ -18,13 +18,9 @@ angular.module('market-front').controller('registrationController', function ($s
                     $scope.user.password = null;
 
                 }
-
-
-
             }, function failureCallback (response) {
                 console.log(response);
                 alert(response.data.message);
             });
     }
-
 });

@@ -1,43 +1,31 @@
 package ru.geekbrains.trainingproject.market.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.trainingproject.market.config.security.JwcRequestFilter;
+import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.utils.Cart;
 
 import javax.annotation.PostConstruct;
-import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
-//@Service
-@Component
+@Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductService productService;
     private final JwcRequestFilter jwcRequestFilter;
     private Cart cart;
-    String userName;
-
-
-//    public CartService(String userName) {
-//        this.userName = userName;
-//        this.cart = new Cart(userName);
-//    }
 
     @PostConstruct
     public void init() {
-        this.userName = getUserNameFromSecurityContext();
-        this.cart = new Cart(userName);
-        System.out.println("ИМЯ: "+userName);
+        this.cart = new Cart(jwcRequestFilter);
     }
 
-    public Cart getCartForCurrentUser(String userTmpId) {
-        return cart;
+    public Cart getCartForCurrentUser() {
+        return cart.getCartByUserTmpId();
     }
 
     public void addItem(Long productId) {
@@ -59,10 +47,5 @@ public class CartService {
     public void clearCart() {
         cart.clear();
     }
-    private String getUserNameFromSecurityContext() {
-        if (jwcRequestFilter.getCurrentUserName() != null) {
-            return jwcRequestFilter.getCurrentUserName();
-        }
-        return "Host";
-    }
+
 }

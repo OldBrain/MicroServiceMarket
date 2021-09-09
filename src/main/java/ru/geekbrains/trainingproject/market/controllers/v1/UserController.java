@@ -61,4 +61,8 @@ public class UserController {
         return createAuthToken(request);
     }
 
+    @GetMapping("")
+    public String createTmpId() {
+        return userService.createTmpId();
+    }
 }

@@ -12,6 +12,7 @@ import ru.geekbrains.trainingproject.market.model.User;
 import ru.geekbrains.trainingproject.market.repositories.UserRepository;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -49,6 +50,10 @@ public class UserService implements UserDetailsService {
 
     public boolean isExistsEmail(String email) {
         return userRepository.existsAllByEmailEquals(email);
+    }
+
+    public String createTmpId() {
+        return String.valueOf(Math.round(System.currentTimeMillis()+Math.random()*1000000000));
     }
 }
 
