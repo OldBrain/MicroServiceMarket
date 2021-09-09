@@ -1,10 +1,7 @@
 package ru.geekbrains.trainingproject.market.controllers.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.trainingproject.market.services.CartService;
 import ru.geekbrains.trainingproject.market.utils.Cart;
 
@@ -15,8 +12,11 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("")
-    public Cart getCartForCurrentUser() {
-        return cartService.getCartForCurrentUser();
+    public Cart getCartForCurrentUser(@RequestParam(name = "tmpId") String tmpId) {
+        if (tmpId == null) {
+            tmpId=generateTmpId();
+        }
+        return cartService.getCartForCurrentUser(tmpId);
     }
 
     @GetMapping("/add/{productId}")

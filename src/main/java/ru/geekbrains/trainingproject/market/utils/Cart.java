@@ -11,16 +11,16 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 public class Cart {
-    private String userName;
+    private String userTmpId;
     private List<OrderItemDto> listItems;
     private int totalPrice;
     ConcurrentHashMap<String,List<OrderItemDto>> cartMap = new ConcurrentHashMap();
 
-    public Cart(String userName) {
-        this.userName = userName;
+    public Cart(String userTmpId) {
+        this.userTmpId = userTmpId;
 
-        if (cartMap.containsKey(userName)) {
-            this.listItems = cartMap.get(userName);
+        if (cartMap.containsKey(userTmpId)) {
+            this.listItems = cartMap.get(userTmpId);
         } else {
             this.listItems = new ArrayList<>();
         }
@@ -69,7 +69,7 @@ public class Cart {
     public void clear() {
         listItems.clear();
         totalPrice = 0;
-        cartMap.remove(userName);
+        cartMap.remove(userTmpId);
     }
 
     private void recalculate() {
@@ -79,7 +79,7 @@ public class Cart {
         }
     }
     private void addToCartMap() {
-        cartMap.put(userName, listItems);
+        cartMap.put(userTmpId, listItems);
     }
 
     public List<OrderItemDto> getCartByUserName(String userName) {
