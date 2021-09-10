@@ -2,8 +2,11 @@ package ru.geekbrains.trainingproject.market.controllers.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
 import ru.geekbrains.trainingproject.market.services.CartService;
 import ru.geekbrains.trainingproject.market.utils.Cart;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cart")
@@ -12,7 +15,7 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("")
-    public Cart getCartForCurrentUser() {
+    public List<OrderItemDto> getCartForCurrentUser() {
      return cartService.getCartForCurrentUser();
     }
 

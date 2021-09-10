@@ -24,7 +24,7 @@ public class CartService {
         this.cart = new Cart(jwcRequestFilter);
     }
 
-    public Cart getCartForCurrentUser() {
+    public List<OrderItemDto> getCartForCurrentUser() {
         return cart.getCartByUserTmpId();
     }
 

@@ -1,8 +1,9 @@
 <div>
   <p></p>
   <h3>Корзина</h3>
-  <span ng-show="cart.items.length == 0">Ваша корзина пуста</span>
-  <table class="table" ng-show="cart.items.length > 0">
+  <span ng-show="cart.content.size == 0">Ваша корзина пуста</span>
+  <table class="table" ng-show="cart.content.size > 0">
+<!--  <table class="table" >-->
     <thead>
     <tr>
       <td>Название</td>
@@ -11,7 +12,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="i in cart.items">
+    <tr ng-repeat="i in cart.content">
       <td>{{i.productTitle}}</td>
       <td>
         <button class="btn btn-primary" ng-click="decrementItem(i.productId)">-</button>

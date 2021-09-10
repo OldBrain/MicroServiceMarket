@@ -1,28 +1,30 @@
 package ru.geekbrains.trainingproject.market.utils;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import ru.geekbrains.trainingproject.market.config.security.JwcRequestFilter;
 import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
 import ru.geekbrains.trainingproject.market.model.Product;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 @Data
 public class Cart {
-    private List<OrderItemDto> listItems;
+    private List<OrderItemDto> items;
     private int totalPrice;
-    private ConcurrentHashMap<String, List<OrderItemDto>> cartMap = new ConcurrentHashMap();
-    private JwcRequestFilter jwcRequestFilter;
+    private ConcurrentHashMap<String, List<OrderItemDto>> cartMap;
+    private final JwcRequestFilter jwcRequestFilter;
+
 
     public Cart(JwcRequestFilter jwcRequestFilter) {
         this.jwcRequestFilter = jwcRequestFilter;
-    }
-
-    public Cart() {
+        cartMap = new ConcurrentHashMap();
     }
 
     public boolean add(Long productId) {
@@ -80,6 +82,7 @@ public class Cart {
 
     private void addToCartMap() {
         cartMap.put(getCurrentUserTmpId(), getCurrentItemList());
+
     }
 
     private List<OrderItemDto> getCurrentItemList() {
@@ -94,9 +97,9 @@ public class Cart {
         return jwcRequestFilter.getUserTmpId();
     }
 
-    public Cart getCartByUserTmpId() {
-        listItems = cartMap.get(getCurrentUserTmpId());
-        return this;
+    public List<OrderItemDto> getCartByUserTmpId() {
+        items = cartMap.get(getCurrentUserTmpId());
+        return items;
     }
 
 }
