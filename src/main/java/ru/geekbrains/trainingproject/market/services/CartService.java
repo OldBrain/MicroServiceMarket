@@ -2,30 +2,32 @@ package ru.geekbrains.trainingproject.market.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.trainingproject.market.config.security.JwcRequestFilter;
 import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.utils.Cart;
+import ru.geekbrains.trainingproject.market.utils.TmpUserIdFromHttpRequestUtil;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductService productService;
-    private final JwcRequestFilter jwcRequestFilter;
+    private final TmpUserIdFromHttpRequestUtil tmpUserIdFromHttpRequest;
     private Cart cart;
 
     @PostConstruct
     public void init() {
-        this.cart = new Cart(jwcRequestFilter);
+        this.cart = new Cart(tmpUserIdFromHttpRequest);
     }
 
-    public List<OrderItemDto> getCartForCurrentUser() {
-        return cart.getCartByUserTmpId();
+//    public List<OrderItemDto> getCartForCurrentUser() {
+//        return cart.getCartByUserTmpId();
+//    }
+  public Cart getCartForCurrentUser() {
+        return cart;
     }
 
     public void addItem(Long productId) {

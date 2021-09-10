@@ -14,8 +14,12 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
-    @GetMapping("")
-    public List<OrderItemDto> getCartForCurrentUser() {
+//    @GetMapping("")
+//    public List<OrderItemDto> getCartForCurrentUser() {
+//     return cartService.getCartForCurrentUser();
+//    }
+ @GetMapping("")
+    public Cart getCartForCurrentUser() {
      return cartService.getCartForCurrentUser();
     }
 

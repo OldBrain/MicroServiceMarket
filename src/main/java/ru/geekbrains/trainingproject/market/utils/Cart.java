@@ -1,14 +1,9 @@
 package ru.geekbrains.trainingproject.market.utils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import ru.geekbrains.trainingproject.market.config.security.JwcRequestFilter;
 import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
 import ru.geekbrains.trainingproject.market.model.Product;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,17 +13,24 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Cart {
     private List<OrderItemDto> items;
     private int totalPrice;
+    @JsonIgnore
     private ConcurrentHashMap<String, List<OrderItemDto>> cartMap;
-    private final JwcRequestFilter jwcRequestFilter;
+    @JsonIgnore
+    private TmpUserIdFromHttpRequestUtil tmpUserIdHttpRequest;
 
-
-    public Cart(JwcRequestFilter jwcRequestFilter) {
-        this.jwcRequestFilter = jwcRequestFilter;
+    public Cart(TmpUserIdFromHttpRequestUtil tmpUserIdHttpRequest) {
+        this.tmpUserIdHttpRequest = tmpUserIdHttpRequest;
         cartMap = new ConcurrentHashMap();
     }
 
+    @JsonIgnore
+    public TmpUserIdFromHttpRequestUtil getTmpUserIdHttpRequest() {
+        return null;
+    }
+
     public boolean add(Long productId) {
-        for (OrderItemDto i : getCurrentItemList()) {
+        setCurrentItemList();
+        for (OrderItemDto i : items) {
             if (i.getProductId().equals(productId)) {
                 i.changeQuantity(1);
                 recalculate();
@@ -40,13 +42,14 @@ public class Cart {
     }
 
     public void add(Product product) {
-        getCurrentItemList().add(new OrderItemDto(product));
+        items.add(new OrderItemDto(product));
         recalculate();
         addToCartMap();
     }
 
     public void decrement(Long productId) {
-        Iterator<OrderItemDto> iter = getCurrentItemList().iterator();
+        setCurrentItemList();
+        Iterator<OrderItemDto> iter = items.iterator();
         while (iter.hasNext()) {
             OrderItemDto i = iter.next();
             if (i.getProductId().equals(productId)) {
@@ -62,44 +65,47 @@ public class Cart {
     }
 
     public void remove(Long productId) {
-        getCurrentItemList().removeIf(i -> i.getProductId().equals(productId));
+        setCurrentItemList();
+        items.removeIf(i -> i.getProductId().equals(productId));
         recalculate();
         addToCartMap();
     }
 
     public void clear() {
-        getCurrentItemList().clear();
+        setCurrentItemList();
+        items.clear();
         totalPrice = 0;
         cartMap.remove(getCurrentUserTmpId());
     }
 
     private void recalculate() {
         totalPrice = 0;
-        for (OrderItemDto i : getCurrentItemList()) {
+        for (OrderItemDto i : items) {
             totalPrice += i.getPrice();
         }
     }
 
     private void addToCartMap() {
-        cartMap.put(getCurrentUserTmpId(), getCurrentItemList());
-
+        cartMap.put(getCurrentUserTmpId(), items);
     }
 
-    private List<OrderItemDto> getCurrentItemList() {
+    private List<OrderItemDto> setCurrentItemList() {
         if (cartMap.containsKey(getCurrentUserTmpId())) {
-            return cartMap.get(getCurrentUserTmpId());
+            items = cartMap.get(getCurrentUserTmpId());
         } else {
-            return new ArrayList<>();
+            items = new ArrayList<>();
         }
+        return items;
     }
 
     private String getCurrentUserTmpId() {
-        return jwcRequestFilter.getUserTmpId();
+        return tmpUserIdHttpRequest.getUserTmpId();
     }
 
-    public List<OrderItemDto> getCartByUserTmpId() {
-        items = cartMap.get(getCurrentUserTmpId());
-        return items;
-    }
+//    public List<OrderItemDto> getCartByUserTmpId() {
+//        items = cartMap.get(getCurrentUserTmpId());
+//        return items;
+//    }
+
 
 }

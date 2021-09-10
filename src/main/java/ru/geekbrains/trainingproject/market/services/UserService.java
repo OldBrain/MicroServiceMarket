@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService {
     }
 
     public String createTmpId() {
-        return String.valueOf(Math.round(System.currentTimeMillis()+Math.random()*1000000000));
+        return String.valueOf(System.currentTimeMillis());
     }
 }
 

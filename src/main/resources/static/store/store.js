@@ -3,7 +3,6 @@ angular.module('market-front').controller('storeController', function ($scope, $
     $scope.currentPage = 1;
 
     $scope.addToCart = function (productId) {
-        $scope.getTmpId();
         $http({
             url: contextPath + 'api/v1/cart/add/' + productId,
             method: 'GET'
@@ -34,7 +33,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
         $scope.loadProducts($scope.currentPage - 1);
     };
 
-    $scope.getTmpId = function () {
+    $rootScope.getTmpAndSaveId = function () {
         if ($localStorage.tmpId) {
             $http.defaults.headers.common.tmpId = 'tmpId ' + $localStorage.tmpId.tmpId;
         }
@@ -49,7 +48,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
         }
 
     };
-
+    $rootScope.getTmpAndSaveId();
     $scope.loadProducts();
 });
 

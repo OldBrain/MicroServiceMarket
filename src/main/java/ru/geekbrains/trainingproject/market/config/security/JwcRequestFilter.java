@@ -23,21 +23,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwcRequestFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
-    private String userTmpId = null;
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHandler = request.getHeader("Authorization");
-        String tmpIdHandler = request.getHeader("tmpId");
-
-        userTmpId = null;
         String userName = null;
         String jwt = null;
-
-        if (tmpIdHandler != null && tmpIdHandler.startsWith("tmpId ")) {
-            userTmpId = tmpIdHandler.substring(6);
-        }
 
         if (authHandler != null && authHandler.startsWith("Bearer ")) {
             jwt = authHandler.substring(7);
@@ -57,10 +48,4 @@ public class JwcRequestFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    public String getUserTmpId() {
-        if (userTmpId == null) {
-            userTmpId = "NoName";
-        }
-        return userTmpId;
-    }
 }
