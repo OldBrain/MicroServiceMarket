@@ -1,4 +1,4 @@
-angular.module('market-front').controller('cartController', function ($scope, $http, $location,$localStorage) {
+angular.module('market-front').controller('cartController', function ($scope, $http, $location,$localStorage,$rootScope) {
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.loadCart = function () {
@@ -7,6 +7,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             method: 'GET'
         }).then(function (response) {
             $scope.cart = response.data;
+            console.log($scope.cart)
         });
     };
 
