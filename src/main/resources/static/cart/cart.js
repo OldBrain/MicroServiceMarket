@@ -17,7 +17,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             url: contextPath + 'api/v1/cart/add/' + productId,
             method: 'GET'
         }).then(function (response) {
-            $rootScope.loadCart();
+            $scope.loadCart();
         });
     };
 
@@ -26,7 +26,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             url: contextPath + 'api/v1/cart/decrement/' + productId,
             method: 'GET'
         }).then(function (response) {
-            $rootScope.loadCart();
+            $scope.loadCart();
         });
     };
 
@@ -35,7 +35,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             url: contextPath + 'api/v1/cart/remove/' + productId,
             method: 'GET'
         }).then(function (response) {
-            $rootScope.loadCart();
+            $scope.loadCart();
         });
     };
 

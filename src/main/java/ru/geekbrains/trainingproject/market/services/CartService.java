@@ -23,7 +23,7 @@ public class CartService {
     }
 
     public Cart getCartForCurrentUser() {
-        cart.setCurrentItemList();
+        cart.recalculate();
         return cart;
     }
 

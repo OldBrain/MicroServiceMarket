@@ -7,6 +7,7 @@ import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException
 import ru.geekbrains.trainingproject.market.model.Product;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -96,7 +97,7 @@ public class Cart {
 //
 //    }
 
-    private void recalculate() {
+    public void recalculate() {
         setCurrentItemList();
         totalPrice = 0;
         for (OrderItemDto i : items) {
@@ -105,11 +106,10 @@ public class Cart {
     }
 
     private void addToCartMap() {
-//        System.out.println(getCurrentKeyForCart());
         cartMap.put(getCurrentKeyForCart(), items);
     }
 
-    public List<OrderItemDto> setCurrentItemList() {
+    private List<OrderItemDto> setCurrentItemList() {
         if (cartMap.containsKey(getCurrentKeyForCart())) {
             items = cartMap.get(getCurrentKeyForCart());
         } else {
@@ -118,7 +118,7 @@ public class Cart {
         return items;
     }
 
-    private String getCurrentUserTmpId() {
+    private String getCurrentTmpId() {
         return userDataFromHttpRequestUtil.getUserTmpId();
     }
 
@@ -128,11 +128,47 @@ public class Cart {
 
     private String getCurrentKeyForCart() {
         if (getCurrentUserName() != null) {
+            reorganizeCurtMap();
             return getCurrentUserName();
-        } else if (getCurrentUserTmpId()!=null) {
-            return getCurrentUserTmpId();
+        } else if (getCurrentTmpId() != null) {
+            return getCurrentTmpId();
         }
         throw new ResourceNotFoundException("Не удалось получить данные о клиенте из httpServlet");
+    }
+
+    private void reorganizeCurtMap() {
+        if (cartMap.containsKey(getCurrentUserName()) && cartMap.containsKey(getCurrentTmpId())) {
+            List<OrderItemDto> tmpListByNameKey = cartMap.get(getCurrentUserName());
+            List<OrderItemDto> tmpListByTmpId = cartMap.get(getCurrentTmpId());
+            List<OrderItemDto> resultItemList = Stream.concat(
+                    tmpListByNameKey.parallelStream(),
+                    tmpListByTmpId.parallelStream()).collect(Collectors.toList());
+            cartMap.remove(getCurrentTmpId());
+            List<OrderItemDto> sortedList = resultItemList.stream().sorted(Comparator.comparing(OrderItemDto::getProductId)).collect(Collectors.toList());
+
+            items = mergeItemList(sortedList);
+
+            cartMap.put(getCurrentUserName(), items);
+        }
+        if (!cartMap.containsKey(getCurrentUserName()) && cartMap.containsKey(getCurrentTmpId())) {
+            List<OrderItemDto> tmpListByTmpId = cartMap.get(getCurrentTmpId());
+            cartMap.remove(getCurrentTmpId());
+            cartMap.put(getCurrentUserName(), tmpListByTmpId);
+        }
+    }
+
+    private List<OrderItemDto> mergeItemList(List<OrderItemDto> itemList) {
+        for (int i = 0; i < itemList.size() - 1; i++) {
+            if (itemList.get(i).getProductId().
+                    equals(itemList.get(i + 1).getProductId())) {
+
+                itemList.get(i).setQuantity(itemList.get(i).getQuantity()
+                        + itemList.get(i + 1).getQuantity());
+                itemList.remove(i + 1);
+                i = 0;
+            }
+        }
+        return itemList;
     }
 
     public int getTotalPrice() {
