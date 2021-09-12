@@ -1,4 +1,4 @@
-angular.module('market-front').controller('registrationController', function ($scope, $http, $localStorage, $location) {
+angular.module('market-front').controller('registrationController', function ($scope, $http, $localStorage, $location,$rootScope) {
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.createUser = function () {
@@ -11,6 +11,7 @@ angular.module('market-front').controller('registrationController', function ($s
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.webMarketUser = {username: $scope.new_user.username, token: response.data.token};
+                    $rootScope.lkname = $scope.new_user.username;
                     $location.path('/');
                     $scope.new_user = null;
                     alert('Регистрация прошла успешно ');
@@ -23,4 +24,8 @@ angular.module('market-front').controller('registrationController', function ($s
                 alert(response.data.message);
             });
     }
+
+    // $rootScope.setCartSum();
+    $rootScope.loadCart();
+    $rootScope.setLkName();
 });

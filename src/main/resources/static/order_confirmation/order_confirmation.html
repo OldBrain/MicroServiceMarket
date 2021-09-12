@@ -32,6 +32,7 @@
         <p></p>
         <input class="form-control" type="text" placeholder="Адрес доставки" ng-model="orderDetails.address">
         <p></p>
-        <button type="submit" class="btn btn-primary">Оформить заказ</button>
+        <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+        <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
     </form>
 </div>

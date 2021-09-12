@@ -3,11 +3,15 @@ package ru.geekbrains.trainingproject.market.utils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
+import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 public class Cart {
@@ -16,16 +20,11 @@ public class Cart {
     @JsonIgnore
     private ConcurrentHashMap<String, List<OrderItemDto>> cartMap;
     @JsonIgnore
-    private TmpUserIdFromHttpRequestUtil tmpUserIdHttpRequest;
+    private UserDataFromHttpRequestUtil userDataFromHttpRequestUtil;
 
-    public Cart(TmpUserIdFromHttpRequestUtil tmpUserIdHttpRequest) {
-        this.tmpUserIdHttpRequest = tmpUserIdHttpRequest;
+    public Cart(UserDataFromHttpRequestUtil userDataFromHttpRequestUtil) {
+        this.userDataFromHttpRequestUtil = userDataFromHttpRequestUtil;
         cartMap = new ConcurrentHashMap();
-    }
-
-    @JsonIgnore
-    public TmpUserIdFromHttpRequestUtil getTmpUserIdHttpRequest() {
-        return null;
     }
 
     public boolean add(Long productId) {
@@ -42,9 +41,10 @@ public class Cart {
     }
 
     public void add(Product product) {
+        setCurrentItemList();
         items.add(new OrderItemDto(product));
-        recalculate();
         addToCartMap();
+        recalculate();
     }
 
     public void decrement(Long productId) {
@@ -75,10 +75,29 @@ public class Cart {
         setCurrentItemList();
         items.clear();
         totalPrice = 0;
-        cartMap.remove(getCurrentUserTmpId());
+        cartMap.remove(getCurrentKeyForCart());
     }
 
+//    public void changeKeyToUserName() {
+//        if (!isNameAlreadyFoundInCartMap() && isUserTmpIdAlreadyFoundInCartMap()) {
+//            List<OrderItemDto> tmpIdItemList = cartMap.get(getCurrentUserTmpId());
+//            cartMap.remove(getCurrentUserTmpId());
+//            cartMap.put(getCurrentUserName(), tmpIdItemList);
+//        } else if(isNameAlreadyFoundInCartMap() && isUserTmpIdAlreadyFoundInCartMap())
+//        {
+//            List<OrderItemDto> tmpIdItemList = cartMap.get(getCurrentUserTmpId());
+//            List<OrderItemDto> userNameItemList = cartMap.get(getCurrentUserTmpId());
+//            items = Stream.concat(
+//                    userNameItemList.parallelStream(),
+//                    tmpIdItemList.parallelStream()).
+//                    collect(Collectors.toList());
+//            cartMap.put(getCurrentUserName(), items);
+//        }
+//
+//    }
+
     private void recalculate() {
+        setCurrentItemList();
         totalPrice = 0;
         for (OrderItemDto i : items) {
             totalPrice += i.getPrice();
@@ -86,12 +105,13 @@ public class Cart {
     }
 
     private void addToCartMap() {
-        cartMap.put(getCurrentUserTmpId(), items);
+//        System.out.println(getCurrentKeyForCart());
+        cartMap.put(getCurrentKeyForCart(), items);
     }
 
-    private List<OrderItemDto> setCurrentItemList() {
-        if (cartMap.containsKey(getCurrentUserTmpId())) {
-            items = cartMap.get(getCurrentUserTmpId());
+    public List<OrderItemDto> setCurrentItemList() {
+        if (cartMap.containsKey(getCurrentKeyForCart())) {
+            items = cartMap.get(getCurrentKeyForCart());
         } else {
             items = new ArrayList<>();
         }
@@ -99,13 +119,25 @@ public class Cart {
     }
 
     private String getCurrentUserTmpId() {
-        return tmpUserIdHttpRequest.getUserTmpId();
+        return userDataFromHttpRequestUtil.getUserTmpId();
     }
 
-//    public List<OrderItemDto> getCartByUserTmpId() {
-//        items = cartMap.get(getCurrentUserTmpId());
-//        return items;
-//    }
+    private String getCurrentUserName() {
+        return userDataFromHttpRequestUtil.getUserName();
+    }
 
+    private String getCurrentKeyForCart() {
+        if (getCurrentUserName() != null) {
+            return getCurrentUserName();
+        } else if (getCurrentUserTmpId()!=null) {
+            return getCurrentUserTmpId();
+        }
+        throw new ResourceNotFoundException("Не удалось получить данные о клиенте из httpServlet");
+    }
 
+    public int getTotalPrice() {
+        setCurrentItemList();
+        recalculate();
+        return totalPrice;
+    }
 }

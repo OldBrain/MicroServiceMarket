@@ -2,20 +2,19 @@ package ru.geekbrains.trainingproject.market.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
+import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.utils.Cart;
-import ru.geekbrains.trainingproject.market.utils.TmpUserIdFromHttpRequestUtil;
+import ru.geekbrains.trainingproject.market.utils.UserDataFromHttpRequestUtil;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductService productService;
-    private final TmpUserIdFromHttpRequestUtil tmpUserIdFromHttpRequest;
+    private final UserDataFromHttpRequestUtil tmpUserIdFromHttpRequest;
     private Cart cart;
 
     @PostConstruct
@@ -23,10 +22,8 @@ public class CartService {
         this.cart = new Cart(tmpUserIdFromHttpRequest);
     }
 
-//    public List<OrderItemDto> getCartForCurrentUser() {
-//        return cart.getCartByUserTmpId();
-//    }
-  public Cart getCartForCurrentUser() {
+    public Cart getCartForCurrentUser() {
+        cart.setCurrentItemList();
         return cart;
     }
 
@@ -50,4 +47,7 @@ public class CartService {
         cart.clear();
     }
 
+    public Integer getTotalSum() {
+        return cart.getTotalPrice();
+    }
 }

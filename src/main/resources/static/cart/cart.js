@@ -2,12 +2,13 @@ angular.module('market-front').controller('cartController', function ($scope, $h
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.loadCart = function () {
+        $rootScope.cartsumm=0;
         $http({
             url: contextPath + 'api/v1/cart',
             method: 'GET'
         }).then(function (response) {
             $scope.cart = response.data;
-            console.log($scope.cart)
+            $rootScope.cartsumm = $scope.cart.totalPrice;
         });
     };
 
@@ -16,7 +17,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             url: contextPath + 'api/v1/cart/add/' + productId,
             method: 'GET'
         }).then(function (response) {
-            $scope.loadCart();
+            $rootScope.loadCart();
         });
     };
 
@@ -25,7 +26,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             url: contextPath + 'api/v1/cart/decrement/' + productId,
             method: 'GET'
         }).then(function (response) {
-            $scope.loadCart();
+            $rootScope.loadCart();
         });
     };
 
@@ -34,9 +35,11 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             url: contextPath + 'api/v1/cart/remove/' + productId,
             method: 'GET'
         }).then(function (response) {
-            $scope.loadCart();
+            $rootScope.loadCart();
         });
     };
+
+
 
     $scope.checkOut = function () {
         $location.path("/order_confirmation");

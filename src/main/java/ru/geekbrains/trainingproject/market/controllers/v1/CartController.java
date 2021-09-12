@@ -14,7 +14,7 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
-//    @GetMapping("")
+//
 //    public List<OrderItemDto> getCartForCurrentUser() {
 //     return cartService.getCartForCurrentUser();
 //    }
@@ -36,5 +36,10 @@ public class CartController {
     @GetMapping("/remove/{productId}")
     public void removeItem(@PathVariable Long productId) {
         cartService.removeItem(productId);
+    }
+
+    @GetMapping("/sum/")
+    public Integer getTotalSum() {
+        return cartService.getTotalSum();
     }
 }

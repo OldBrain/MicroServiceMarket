@@ -7,6 +7,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
             url: contextPath + 'api/v1/cart/add/' + productId,
             method: 'GET'
         }).then(function (response) {
+            $rootScope.setCartSum();
         });
     };
 
@@ -33,22 +34,13 @@ angular.module('market-front').controller('storeController', function ($scope, $
         $scope.loadProducts($scope.currentPage - 1);
     };
 
-    $rootScope.getTmpAndSaveId = function () {
-        if ($localStorage.tmpId) {
-            $http.defaults.headers.common.tmpId = 'tmpId ' + $localStorage.tmpId.tmpId;
-        }
-        if (!$rootScope.isUserLoggedIn()&&!$localStorage.tmpId) {
-        $http.get(contextPath + 'api/v1/auth')
-            .then(function (response) {
-                $scope.tmpId = response.data;
-                $http.defaults.headers.common.tmpId = 'tmpId ' + $scope.tmpId;
-                $localStorage.tmpId = {tmpId: $scope.tmpId};
-                alert($localStorage.tmpId.tmpId);
-            });
-        }
 
-    };
-    $rootScope.getTmpAndSaveId();
+
     $scope.loadProducts();
+
+    $rootScope.getOrSaveTmpId();
+    $rootScope.setLkName();
+    // $rootScope.loadCart();
+    // $rootScope.setCartSum();
 });
 
