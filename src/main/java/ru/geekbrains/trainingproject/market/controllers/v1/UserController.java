@@ -9,10 +9,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.trainingproject.market.dtos.UserDto;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthRequest;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthResponse;
 import ru.geekbrains.trainingproject.market.dtos.security.UserDetailsForRegistrationDto;
 import ru.geekbrains.trainingproject.market.exceptions.MarketError;
+import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Role;
 import ru.geekbrains.trainingproject.market.model.User;
 import ru.geekbrains.trainingproject.market.services.RolesService;
@@ -61,8 +63,14 @@ public class UserController {
         return createAuthToken(request);
     }
 
-    @GetMapping("")
+    @GetMapping("/getid")
     public String createTmpId() {
         return userService.createTmpId();
+    }
+
+    @GetMapping("/{userName}")
+    public ResponseEntity<?> getUser(@PathVariable String userName) {
+        UserDto userDto=new UserDto(userService.getUserUserName(userName).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя с именем " + userName)));
+        return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 }

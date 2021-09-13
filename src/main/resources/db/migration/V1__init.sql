@@ -6,6 +6,16 @@ create table categories
 insert into categories (title)
 values ('Food');
 
+create table if not exists user_details
+(
+    id         bigserial primary key,
+    last_name  varchar(100),
+    patronymic varchar(100),
+    first_name varchar(100),
+    phone      varchar(20),
+    address    varchar(255)
+);
+
 CREATE TABLE products
 (
     id          bigserial primary key,
@@ -36,6 +46,11 @@ values ('bread', 5, 1),
        ('fish', 1200, 1),
        ('pasta', 85, 1);
 
+insert into user_details(last_name, patronymic, first_name, phone, address)
+VALUES ('Люся', 'Петровна', 'Кукушуина', '25-25-25', 'Астрахань'),
+       ('Петя', 'Петрович', 'Кукушуин', '25-25-25', 'Астрахань');
+
+
 create table users
 (
     id         bigserial primary key,
@@ -43,7 +58,9 @@ create table users
     password   varchar(80) not null,
     email      varchar(50) unique,
     created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp
+    updated_at timestamp default current_timestamp,
+    details_id bigint,
+    FOREIGN KEY (details_id) references user_details (id)
 );
 
 create table roles
@@ -56,7 +73,7 @@ create table roles
 
 CREATE TABLE users_roles
 (
-    id bigserial,
+    id      bigserial,
     user_id bigint not null references users (id),
     role_id bigint not null references roles (id),
     primary key (user_id, role_id)
@@ -66,10 +83,13 @@ insert into roles (name)
 values ('ROLE_USER'),
        ('ROLE_ADMIN');
 
-insert into users (username, password, email)
-values ('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user@gmail.com'),
-       ('admin', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'admin@gmail.com');
+-- insert into users (username, password, email)
+-- values ('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user@gmail.com'),
+--        ('admin', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'admin@gmail.com');
 
+insert into users (username, password, email, details_id)
+values ('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user@gmail.com', 1),
+       ('admin', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'admin@gmail.com', 2);
 
 insert into users_roles (user_id, role_id)
 values (1, 1),

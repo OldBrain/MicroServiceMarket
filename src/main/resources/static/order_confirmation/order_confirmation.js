@@ -28,13 +28,29 @@ angular.module('market-front').controller('orderConfirmationController', functio
         alert("Для оформления заказа необходимо войти в учетную запись");
     }
 
+
+
     $scope.createOrder = function () {
         //TO DOO
     };
 
+    $scope.getUserByName = function () {
+        if ($rootScope.isUserLoggedIn()) {
+
+            $http.get(contextPath + 'api/v1/auth/'+ $rootScope.lkname)
+                .then(function successCallback (response) {
+                    $scope.user = response.data;
+                    console.log(response);
+
+                },function errorCallback(response) {
+                alert(response.data.message)
+            });
+
+        }
+    };
+
     $rootScope.setCartSum();
-    // $rootScope.setLkName();
     $rootScope.loadCart();
 
-
+    $scope.getUserByName();
 });

@@ -1,7 +1,10 @@
 <div>
     <p></p>
     <h3>Оформление заказа</h3>
-    <table class="table">
+    <h3>Покупатель {{user.detailsUser.firstName}} {{user.detailsUser.lastName}} {{user.detailsUser.patronymic}}</h3>
+    <h5>E-mail: {{user.email}}</h5>
+
+    <table class="table table-success table-striped">
         <thead>
         <tr>
             <td>Название</td>
@@ -28,9 +31,19 @@
     <p></p>
     <h3>Детали заказа</h3>
     <form novalidate ng-submit="createOrder()">
-        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDetails.phone">
+        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="user.detailsUser.firstName">
         <p></p>
-        <input class="form-control" type="text" placeholder="Адрес доставки" ng-model="orderDetails.address">
+
+        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="user.detailsUser.lastName">
+        <p></p>
+
+        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="user.detailsUser.patronymic">
+        <p></p>
+
+
+        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="user.detailsUser.phone">
+        <p></p>
+        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="user.detailsUser.address">
         <p></p>
         <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
         <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>

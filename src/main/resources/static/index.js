@@ -115,7 +115,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
             $http.defaults.headers.common.tmpId = 'tmpId ' + $localStorage.tmpId.tmpId;
         }
         if (!$rootScope.isUserLoggedIn()&&!$localStorage.tmpId) {
-            $http.get(contextPath + 'api/v1/auth')
+            $http.get(contextPath + 'api/v1/auth/getid')
                 .then(function (response) {
                     $scope.tmpId = response.data;
                     $http.defaults.headers.common.tmpId = 'tmpId ' + $scope.tmpId;

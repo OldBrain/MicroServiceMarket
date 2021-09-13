@@ -12,7 +12,6 @@ import ru.geekbrains.trainingproject.market.model.User;
 import ru.geekbrains.trainingproject.market.repositories.UserRepository;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -54,6 +53,10 @@ public class UserService implements UserDetailsService {
 
     public String createTmpId() {
         return String.valueOf(System.currentTimeMillis());
+    }
+
+    public Optional<User> getUserUserName(String userName) {
+        return userRepository.findByUsername(userName);
     }
 }
 

@@ -1,0 +1,9 @@
+-- create table if not exists user_details
+-- (
+--     id    bigserial primary key,
+--     last_name varchar(100),
+--     first_name varchar(100),
+--     patronymic varchar(100),
+--     phone varchar(20),
+--     address varchar(255)
+-- );
