@@ -20,12 +20,4 @@ public class OrderController {
 
         cartService.clearCart();
     }
-
-//    @GetMapping
-//    public AdditionalUserInfo getAdditionalUserInfo(@RequestBody String userName) {
-//        User user = userService.getUserUserName(userName).orElseThrow(()->new ResourceNotFoundException("Не удалось найти пользователя с именем "+userName));
-//        return user.getAdditionalUserInfo();
-//    }
-
-
 }

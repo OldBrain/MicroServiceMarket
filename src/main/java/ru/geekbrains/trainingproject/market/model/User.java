@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -41,9 +42,11 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToOne()
-//    @PrimaryKeyJoinColumn
     @JoinColumn(name = "details_id")
     private DetailsUser detailsUser;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orderList;
 
 
     @Override

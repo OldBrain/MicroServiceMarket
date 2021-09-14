@@ -79,24 +79,6 @@ public class Cart {
         cartMap.remove(getCurrentKeyForCart());
     }
 
-//    public void changeKeyToUserName() {
-//        if (!isNameAlreadyFoundInCartMap() && isUserTmpIdAlreadyFoundInCartMap()) {
-//            List<OrderItemDto> tmpIdItemList = cartMap.get(getCurrentUserTmpId());
-//            cartMap.remove(getCurrentUserTmpId());
-//            cartMap.put(getCurrentUserName(), tmpIdItemList);
-//        } else if(isNameAlreadyFoundInCartMap() && isUserTmpIdAlreadyFoundInCartMap())
-//        {
-//            List<OrderItemDto> tmpIdItemList = cartMap.get(getCurrentUserTmpId());
-//            List<OrderItemDto> userNameItemList = cartMap.get(getCurrentUserTmpId());
-//            items = Stream.concat(
-//                    userNameItemList.parallelStream(),
-//                    tmpIdItemList.parallelStream()).
-//                    collect(Collectors.toList());
-//            cartMap.put(getCurrentUserName(), items);
-//        }
-//
-//    }
-
     public void recalculate() {
         setCurrentItemList();
         totalPrice = 0;

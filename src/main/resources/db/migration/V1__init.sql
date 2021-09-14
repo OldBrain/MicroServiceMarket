@@ -3,6 +3,7 @@ create table categories
     id    bigserial primary key,
     title varchar(255)
 );
+
 insert into categories (title)
 values ('Food');
 
@@ -14,6 +15,51 @@ create table if not exists user_details
     first_name varchar(100),
     phone      varchar(20),
     address    varchar(255)
+);
+
+create table users
+(
+    id         bigserial primary key,
+    username   varchar(30) not null,
+    password   varchar(80) not null,
+    email      varchar(50) unique,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp,
+    details_id bigint,
+    orders_id bigint,
+    FOREIGN KEY (details_id) references user_details (id)
+);
+
+create table orders
+(
+    id    bigserial primary key,
+    last_name  varchar(100),
+    patronymic varchar(100),
+    first_name varchar(100),
+    phone      varchar(20),
+    address    varchar(255),
+    sum integer,
+    details_id bigserial,
+    status_id bigserial,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp,
+    user_id   bigserial references users(id)
+);
+
+create table order_status
+(
+    id    bigserial primary key,
+    title varchar(20),
+    order_id   bigint references orders(id)
+);
+
+create table orders_details
+(
+    id    bigserial primary key,
+    productTitle varchar(100),
+    quantity integer,
+    price integer,
+    order_id  bigint references orders(id)
 );
 
 CREATE TABLE products
@@ -47,21 +93,20 @@ values ('bread', 5, 1),
        ('pasta', 85, 1);
 
 insert into user_details(last_name, patronymic, first_name, phone, address)
-VALUES ('Люся', 'Петровна', 'Кукушуина', '25-25-25', 'Астрахань'),
-       ('Петя', 'Петрович', 'Кукушуин', '25-25-25', 'Астрахань');
+VALUES ('Татьяна', 'Петровна', 'Админова', '25-25-25', 'Астрахань'),
+       ('Сергей', 'Иванович', 'Юзеров', '25-25-25', 'Астрахань');
+
+insert into order_status(title)
+values ('сформирован'),
+       ('подтвержден'),
+       ('оплачен'),
+       ('на сборке'),
+       ('отправлен'),
+       ('получен покупателем'),
+       ('выполнен');
 
 
-create table users
-(
-    id         bigserial primary key,
-    username   varchar(30) not null,
-    password   varchar(80) not null,
-    email      varchar(50) unique,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp,
-    details_id bigint,
-    FOREIGN KEY (details_id) references user_details (id)
-);
+
 
 create table roles
 (
@@ -94,3 +139,6 @@ values ('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 
 insert into users_roles (user_id, role_id)
 values (1, 1),
        (2, 2);
+
+insert into orders(last_name, patronymic, first_name, phone, address, sum, user_id,status_id)
+values ('Владимир', 'Иванович', 'Тестов', '+7(905)555-555', 'Москва, Кремль', '10099', 1, 1);
