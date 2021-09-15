@@ -53,7 +53,7 @@ create table order_status
     order_id   bigint references orders(id)
 );
 
-create table orders_details
+create table order_items
 (
     id    bigserial primary key,
     productTitle varchar(100),
@@ -93,8 +93,8 @@ values ('bread', 5, 1),
        ('pasta', 85, 1);
 
 insert into user_details(last_name, patronymic, first_name, phone, address)
-VALUES ('Татьяна', 'Петровна', 'Админова', '25-25-25', 'Астрахань'),
-       ('Сергей', 'Иванович', 'Юзеров', '25-25-25', 'Астрахань');
+VALUES ('Татьяна', 'Петровна', 'Юзерова', '25-25-25', 'Астрахань'),
+       ('Сергей', 'Иванович', 'Админов', '25-25-25', 'Астрахань');
 
 insert into order_status(title)
 values ('сформирован'),

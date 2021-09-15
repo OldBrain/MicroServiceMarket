@@ -7,18 +7,28 @@ angular.module('market-front').controller('orderConfirmationController', functio
             method: 'GET'
         }).then(function (response) {
             $scope.cart = response.data;
+
         });
     };
+
 
     $scope.createOrder = function () {
         $http({
             url: contextPath + 'api/v1/orders',
             method: 'POST',
-            data: $scope.orderDetails
+            data: $scope.userDto
         }).then(function (response) {
+            $http({
+                url: contextPath + 'api/v1/orders',
+                method: 'PUT',
+                data: $scope.cart
 
-            alert('Ваш заказ успешно сформирован');
-            $location.path('/');
+            }).then(function (response){
+                alert('Ваш заказ успешно сформирован');
+                $location.path('/');
+                $rootScope.setCartSum();
+            });
+
         });
     };
 
@@ -28,18 +38,12 @@ angular.module('market-front').controller('orderConfirmationController', functio
         alert("Для оформления заказа необходимо войти в учетную запись");
     }
 
-
-
-    $scope.createOrder = function () {
-        //TO DOO
-    };
-
-    $scope.getUserByName = function () {
+    $scope.getUserDtoByName = function () {
         if ($rootScope.isUserLoggedIn()) {
 
             $http.get(contextPath + 'api/v1/auth/'+ $rootScope.lkname)
                 .then(function successCallback (response) {
-                    $scope.user = response.data;
+                    $scope.userDto = response.data;
                     console.log(response);
 
                 },function errorCallback(response) {
@@ -52,5 +56,5 @@ angular.module('market-front').controller('orderConfirmationController', functio
     $rootScope.setCartSum();
     $rootScope.loadCart();
 
-    $scope.getUserByName();
+    $scope.getUserDtoByName();
 });

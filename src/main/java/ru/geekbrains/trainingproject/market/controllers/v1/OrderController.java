@@ -1,9 +1,9 @@
 package ru.geekbrains.trainingproject.market.controllers.v1;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.trainingproject.market.dtos.OrderDetailsDto;
+import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
+import ru.geekbrains.trainingproject.market.dtos.UserDto;
 import ru.geekbrains.trainingproject.market.services.CartService;
 import ru.geekbrains.trainingproject.market.services.UserService;
 
@@ -15,9 +15,14 @@ public class OrderController {
     private final UserService userService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder(@RequestBody OrderDetailsDto orderDetailsDto) {
-
+//    @ResponseStatus(HttpStatus.CREATED)
+    public void createOrder(@RequestBody UserDto userDto) {
+        System.out.println(userDto);
         cartService.clearCart();
+    }
+
+    @PutMapping
+    public void createOrderItems(@RequestBody OrderItemDto orderItemDto) {
+        System.out.println(orderItemDto);
     }
 }

@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrderDetailsDto {
+public class OrderDto {
     private String phone;
     private String address;
+
 }

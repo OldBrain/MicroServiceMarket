@@ -1,8 +1,8 @@
 <div>
     <p></p>
     <h3>Оформление заказа</h3>
-    <h3>Покупатель {{user.detailsUser.firstName}} {{user.detailsUser.lastName}} {{user.detailsUser.patronymic}}</h3>
-    <h5>E-mail: {{user.email}}</h5>
+    <h3>Покупатель {{userDto.detailsUser.firstName}} {{userDto.detailsUser.lastName}} {{userDto.detailsUser.patronymic}}</h3>
+    <h5>E-mail: {{userDto.email}}</h5>
 
     <table class="table table-success table-striped">
         <thead>
@@ -30,20 +30,20 @@
 
     <p></p>
     <h3>Детали заказа</h3>
-    <form novalidate ng-submit="createOrder()">
-        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="user.detailsUser.firstName">
+    <form novalidate >
+        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="userDto.detailsUser.firstName">
         <p></p>
 
-        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="user.detailsUser.lastName">
+        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="userDto.detailsUser.lastName">
         <p></p>
 
-        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="user.detailsUser.patronymic">
+        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="userDto.detailsUser.patronymic">
         <p></p>
 
 
-        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="user.detailsUser.phone">
+        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="userDto.detailsUser.phone">
         <p></p>
-        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="user.detailsUser.address">
+        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="userDto.detailsUser.address">
         <p></p>
         <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
         <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>

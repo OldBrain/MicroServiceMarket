@@ -55,7 +55,7 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "order")
-    private List<OrdersDetails> ordersDetailsList;
+    private List<OrderItems> ordersItems;
 
     @OneToOne()
     @JoinColumn(name = "order_id")

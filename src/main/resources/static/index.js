@@ -66,6 +66,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $scope.tryToLogout = function () {
+        $location.path("/");
         $scope.clearUser();
         if ($scope.user.username) {
             $scope.user.username = null;
@@ -73,7 +74,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
         if ($scope.user.password) {
             $scope.user.password = null;
         }
-        $location.path("/");
+
         $rootScope.setCartSum();
     };
 

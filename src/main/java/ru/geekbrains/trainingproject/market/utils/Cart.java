@@ -2,7 +2,7 @@ package ru.geekbrains.trainingproject.market.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import ru.geekbrains.trainingproject.market.dtos.OrderItemDto;
+import ru.geekbrains.trainingproject.market.dtos.CartItemDto;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
 
@@ -16,10 +16,10 @@ import java.util.stream.Stream;
 
 @Data
 public class Cart {
-    private List<OrderItemDto> items;
+    private List<CartItemDto> items;
     private int totalPrice;
     @JsonIgnore
-    private ConcurrentHashMap<String, List<OrderItemDto>> cartMap;
+    private ConcurrentHashMap<String, List<CartItemDto>> cartMap;
     @JsonIgnore
     private UserDataFromHttpRequestUtil userDataFromHttpRequestUtil;
 
@@ -30,7 +30,7 @@ public class Cart {
 
     public boolean add(Long productId) {
         setCurrentItemList();
-        for (OrderItemDto i : items) {
+        for (CartItemDto i : items) {
             if (i.getProductId().equals(productId)) {
                 i.changeQuantity(1);
                 recalculate();
@@ -43,16 +43,16 @@ public class Cart {
 
     public void add(Product product) {
         setCurrentItemList();
-        items.add(new OrderItemDto(product));
+        items.add(new CartItemDto(product));
         addToCartMap();
         recalculate();
     }
 
     public void decrement(Long productId) {
         setCurrentItemList();
-        Iterator<OrderItemDto> iter = items.iterator();
+        Iterator<CartItemDto> iter = items.iterator();
         while (iter.hasNext()) {
-            OrderItemDto i = iter.next();
+            CartItemDto i = iter.next();
             if (i.getProductId().equals(productId)) {
                 i.changeQuantity(-1);
                 if (i.getQuantity() <= 0) {
@@ -82,7 +82,7 @@ public class Cart {
     public void recalculate() {
         setCurrentItemList();
         totalPrice = 0;
-        for (OrderItemDto i : items) {
+        for (CartItemDto i : items) {
             totalPrice += i.getPrice();
         }
     }
@@ -91,7 +91,7 @@ public class Cart {
         cartMap.put(getCurrentKeyForCart(), items);
     }
 
-    private List<OrderItemDto> setCurrentItemList() {
+    private List<CartItemDto> setCurrentItemList() {
         if (cartMap.containsKey(getCurrentKeyForCart())) {
             items = cartMap.get(getCurrentKeyForCart());
         } else {
@@ -120,26 +120,26 @@ public class Cart {
 
     private void reorganizeCurtMap() {
         if (cartMap.containsKey(getCurrentUserName()) && cartMap.containsKey(getCurrentTmpId())) {
-            List<OrderItemDto> tmpListByNameKey = cartMap.get(getCurrentUserName());
-            List<OrderItemDto> tmpListByTmpId = cartMap.get(getCurrentTmpId());
-            List<OrderItemDto> resultItemList = Stream.concat(
+            List<CartItemDto> tmpListByNameKey = cartMap.get(getCurrentUserName());
+            List<CartItemDto> tmpListByTmpId = cartMap.get(getCurrentTmpId());
+            List<CartItemDto> resultItemList = Stream.concat(
                     tmpListByNameKey.parallelStream(),
                     tmpListByTmpId.parallelStream()).collect(Collectors.toList());
             cartMap.remove(getCurrentTmpId());
-            List<OrderItemDto> sortedList = resultItemList.stream().sorted(Comparator.comparing(OrderItemDto::getProductId)).collect(Collectors.toList());
+            List<CartItemDto> sortedList = resultItemList.stream().sorted(Comparator.comparing(CartItemDto::getProductId)).collect(Collectors.toList());
 
             items = mergeItemList(sortedList);
 
             cartMap.put(getCurrentUserName(), items);
         }
         if (!cartMap.containsKey(getCurrentUserName()) && cartMap.containsKey(getCurrentTmpId())) {
-            List<OrderItemDto> tmpListByTmpId = cartMap.get(getCurrentTmpId());
+            List<CartItemDto> tmpListByTmpId = cartMap.get(getCurrentTmpId());
             cartMap.remove(getCurrentTmpId());
             cartMap.put(getCurrentUserName(), tmpListByTmpId);
         }
     }
 
-    private List<OrderItemDto> mergeItemList(List<OrderItemDto> itemList) {
+    private List<CartItemDto> mergeItemList(List<CartItemDto> itemList) {
         for (int i = 0; i < itemList.size() - 1; i++) {
             if (itemList.get(i).getProductId().
                     equals(itemList.get(i + 1).getProductId())) {
