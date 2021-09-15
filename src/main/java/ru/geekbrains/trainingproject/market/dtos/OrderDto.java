@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class OrderDto {
-    private Long id;
+    private Long userId;
     private String username;
     private String email;
     private DetailsUser detailsUser;
@@ -19,7 +19,7 @@ public class OrderDto {
     private Integer totalPrice;
 
     public OrderDto(Cart cart, User user) {
-        this.id = user.getId();
+        this.userId = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.detailsUser = user.getDetailsUser();

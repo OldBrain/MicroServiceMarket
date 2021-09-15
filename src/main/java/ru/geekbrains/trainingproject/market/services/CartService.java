@@ -3,6 +3,7 @@ package ru.geekbrains.trainingproject.market.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.trainingproject.market.dtos.OrderDto;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.utils.Cart;
@@ -50,4 +51,6 @@ public class CartService {
     public Integer getTotalSum() {
         return cart.getTotalPrice();
     }
+
+
 }
