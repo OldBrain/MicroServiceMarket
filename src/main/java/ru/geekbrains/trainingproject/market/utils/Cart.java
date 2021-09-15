@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 public class Cart {
     private List<CartItemDto> items;
     private int totalPrice;
+    private int pricePerProduct;
     @JsonIgnore
     private ConcurrentHashMap<String, List<CartItemDto>> cartMap;
     @JsonIgnore
@@ -98,6 +99,14 @@ public class Cart {
             items = new ArrayList<>();
         }
         return items;
+    }
+
+    public List<CartItemDto> getItemListByUserName(String userName) {
+        if (userName != null) {
+            return cartMap.get(userName);
+        } else {
+            throw new ResourceNotFoundException("Корзина для "+userName+" не найдена");
+        }
     }
 
     private String getCurrentTmpId() {

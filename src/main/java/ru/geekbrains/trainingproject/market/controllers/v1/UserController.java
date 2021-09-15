@@ -9,7 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.trainingproject.market.dtos.UserDto;
+import ru.geekbrains.trainingproject.market.dtos.OrderDto;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthRequest;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthResponse;
 import ru.geekbrains.trainingproject.market.dtos.security.UserDetailsForRegistrationDto;
@@ -17,6 +17,7 @@ import ru.geekbrains.trainingproject.market.exceptions.MarketError;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Role;
 import ru.geekbrains.trainingproject.market.model.User;
+import ru.geekbrains.trainingproject.market.services.CartService;
 import ru.geekbrains.trainingproject.market.services.RolesService;
 import ru.geekbrains.trainingproject.market.services.UserService;
 import ru.geekbrains.trainingproject.market.utils.JwtTokenUtil;
@@ -32,6 +33,7 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RolesService rolesService;
+    private final CartService cartService;
 
     @PostMapping("")
     public ResponseEntity<?> createAuthToken(@RequestBody AuthRequest authRequest) {
@@ -70,7 +72,7 @@ public class UserController {
 
     @GetMapping("/{userName}")
     public ResponseEntity<?> getUser(@PathVariable String userName) {
-        UserDto userDto=new UserDto(userService.getUserUserName(userName).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя с именем " + userName)));
+        OrderDto userDto=new OrderDto(cartService.getCartForCurrentUser(), userService.getUserUserName(userName).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя с именем " + userName)));
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 }

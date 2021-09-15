@@ -1,8 +1,8 @@
 <div>
     <p></p>
     <h3>Оформление заказа</h3>
-    <h3>Покупатель {{userDto.detailsUser.firstName}} {{userDto.detailsUser.lastName}} {{userDto.detailsUser.patronymic}}</h3>
-    <h5>E-mail: {{userDto.email}}</h5>
+    <h3>Покупатель {{orderDto.detailsUser.firstName}} {{orderDto.detailsUser.lastName}} {{orderDto.detailsUser.patronymic}}</h3>
+    <h5>E-mail: {{orderDto.email}}</h5>
 
     <table class="table table-success table-striped">
         <thead>
@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="i in cart.items">
+        <tr ng-repeat="i in orderDto.items">
             <td>{{i.productTitle}}</td>
             <td>
                 {{i.quantity}}
@@ -23,7 +23,7 @@
         <tr>
             <td></td>
             <td></td>
-            <td>{{'Итого: ' + cart.totalPrice}}</td>
+            <td>{{'Итого: ' + orderDto.totalPrice}}</td>
         </tr>
         </tbody>
     </table>
@@ -31,21 +31,21 @@
     <p></p>
     <h3>Детали заказа</h3>
     <form novalidate >
-        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="userDto.detailsUser.firstName">
+        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="orderDto.detailsUser.firstName">
         <p></p>
 
-        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="userDto.detailsUser.lastName">
+        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="orderDto.detailsUser.lastName">
         <p></p>
 
-        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="userDto.detailsUser.patronymic">
+        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="orderDto.detailsUser.patronymic">
         <p></p>
 
 
-        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="userDto.detailsUser.phone">
+        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDto.detailsUser.phone">
         <p></p>
-        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="userDto.detailsUser.address">
+        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="orderDto.detailsUser.address">
         <p></p>
-        <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
-        <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+        <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && orderDto.items.length > 0">Оформить заказ</button>
+        <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && orderDto.items.length > 0">Оформить заказ</button>
     </form>
 </div>
