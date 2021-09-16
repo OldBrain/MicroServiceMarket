@@ -35,7 +35,8 @@ create table order_status
     title varchar(20)
 );
 
-create table if not exists orders
+
+create table order
 (
     id         bigserial primary key,
     last_name  varchar(100),
@@ -44,23 +45,23 @@ create table if not exists orders
     phone      varchar(20),
     address    varchar(255),
     sum        integer,
---     details_id bigserial,
+    details_id bigserial,
     status_id  bigserial,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
-    user_id    bigint references users(id),
+    user_id    bigserial references users (id),
     foreign key (status_id) references order_status (id)
 );
+
+
 
 create table order_items
 (
     id bigserial primary key,
-    product_id bigint,
     productTitle varchar(100),
     quantity     integer,
     price        integer,
-    price_per_product integer,
-    order_id bigint references orders (id)
+    order_id     bigserial references order (id)
 );
 
 CREATE TABLE products
@@ -136,5 +137,5 @@ insert into users_roles (user_id, role_id)
 values (1, 1),
        (2, 2);
 
-insert into orders(last_name, patronymic, first_name, phone, address, sum, user_id, status_id)
+insert into order(last_name, patronymic, first_name, phone, address, sum, user_id, status_id)
 values ('Владимир', 'Иванович', 'Тестов', '+7(905)555-555', 'Москва, Кремль', '10099', 1, 1);

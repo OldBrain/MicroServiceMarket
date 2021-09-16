@@ -15,4 +15,7 @@ public class OrderItemsService {
     public Optional<OrderItems> getOrderItemsById(Long id) {
         return orderItemsRepository.findById(id);
     }
+    public void Save(OrderItems orderItems) {
+        orderItemsRepository.save(orderItems);
+    }
 }

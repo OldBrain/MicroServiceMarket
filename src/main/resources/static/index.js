@@ -24,10 +24,17 @@
                 templateUrl: 'order_confirmation/order_confirmation.html',
                 controller: 'orderConfirmationController'
             })
-
-            .when('/reg', {
+            .when('/registration', {
                 templateUrl: 'registration/registration.html',
                 controller: 'registrationController'
+            })
+            .when('/create_product', {
+                templateUrl: 'create_product/create_product.html',
+                controller: 'createProductController'
+            })
+            .when('/orders_show', {
+                templateUrl: 'orders_show/orders_show.html',
+                controller: 'ordersShowController'
             })
             .otherwise({
                 redirectTo: '/'
@@ -131,7 +138,9 @@ angular.module('market-front').controller('indexController', function ($rootScop
         $location.path("/cart");
     };
 
-
+    $scope.showOrder = function () {
+        $location.path("/orders_show")
+    };
 
     $rootScope.cartsumm=0;
     $rootScope.getOrSaveTmpId();

@@ -13,6 +13,9 @@ public class OrderItems {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "product_id")
+    private Long productId;
+
     @Column(name = "productTitle")
     private String productTitle;
 
@@ -21,6 +24,9 @@ public class OrderItems {
 
     @Column(name = "price")
     private Integer price;
+
+    @Column(name = "price_per_product")
+    private Integer pricePerProduct;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

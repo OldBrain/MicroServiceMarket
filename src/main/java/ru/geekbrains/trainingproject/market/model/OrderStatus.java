@@ -16,7 +16,4 @@ public class OrderStatus {
     @Column(name = "title")
     String title;
 
-    @Column(name = "order_id")
-    Long order_id;
-
 }

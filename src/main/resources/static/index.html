@@ -27,8 +27,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#!/store">Каталог товаров</a>
                     </li>
+                    <li class="nav-item" ng-show="isUserLoggedIn()">
+                        <a class="nav-link" href="#!/create_product">Создать товар</a>
+                    </li>
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
-                        <a class="nav-link" href="#!/reg">Регистрация</a>
+                        <a class="nav-link" href="#!/registration">Регистрация</a>
                     </li>
 
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
@@ -48,21 +51,21 @@
                         </form>
                     </li>
 
-                    <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+                    <li class="nav-item" ng-show="isUserLoggedIn()">
                         <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
                     </li>
                 </ul>
 
             </div>
+
             <li>
-<!--                <button class="btn btn-success" onclick="window.location.href = '#!/cart';">Корзина<br>{{cartsumm}} руб.</button>-->
-                <button class="btn btn-success"  ng-click="showCart()">Корзина<br>{{cartsumm}} руб.</button>
-<!--                <a class="nav-link" href="#!/cart">Корзина</a>-->
+                <button class="btn btn-success" ng-click="showCart()">Корзина<br>{{cartsumm}} руб.</button>
             </li>
+
             <li class="nav-item" ng-show="isUserLoggedIn()">
-                <button class="btn btn-success" onclick="window.location.href = '#!/userspersonal';">ЛК<br>{{lkname}}</button>
-<!--                <button> class="btn btn-success" onclick="window.location.href = '#!/cart';" img alt="" src="https://pbs.twimg.com/profile_images/1319227045474426880/omvHzEUJ_normal.jpg" /></button>-->
+                <button class="btn btn-success" ng-click="showOrder()">ЛК<br>{{lkname}}</button>
             </li>
+
         </nav>
 
 
@@ -76,6 +79,8 @@
     <script src="cart/cart.js"></script>
     <script src="registration/registration.js"></script>
     <script src="order_confirmation/order_confirmation.js"></script>
+    <script src="orders_show/orders_show.js"></script>
+    <script src="create_product/create_product.js"></script>
 </div>
 </body>
 </html>

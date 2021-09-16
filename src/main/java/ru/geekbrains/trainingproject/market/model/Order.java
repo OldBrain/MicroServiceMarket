@@ -35,12 +35,8 @@ public class Order {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "details_id")
-    private Long details_id;
-
-    @Column(name = "status_id")
-    private Long status_id;
-
+//    @Column(name = "details_id")
+//    private Long details_id;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -58,6 +54,6 @@ public class Order {
     private List<OrderItems> ordersItems;
 
     @OneToOne()
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "status_id")
     private OrderStatus orderStatus;
 }
