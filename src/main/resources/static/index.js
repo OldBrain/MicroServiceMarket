@@ -32,9 +32,9 @@
                 templateUrl: 'create_product/create_product.html',
                 controller: 'createProductController'
             })
-            .when('/orders_show', {
-                templateUrl: 'orders_show/orders_show.html',
-                controller: 'ordersShowController'
+            .when('/personal_account', {
+                templateUrl: 'personal_account/personal_account.html',
+                controller: 'personalAccountController'
             })
             .otherwise({
                 redirectTo: '/'
@@ -139,7 +139,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $scope.showOrder = function () {
-        $location.path("/orders_show")
+        $location.path("/personal_account")
     };
 
     $rootScope.cartsumm=0;

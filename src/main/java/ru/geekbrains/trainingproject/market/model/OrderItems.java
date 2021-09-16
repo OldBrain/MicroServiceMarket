@@ -1,11 +1,8 @@
 package ru.geekbrains.trainingproject.market.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
-@Data
 @Table(name = "order_items")
 public class OrderItems {
     @Id
@@ -16,7 +13,7 @@ public class OrderItems {
     @Column(name = "product_id")
     private Long productId;
 
-    @Column(name = "productTitle")
+    @Column(name = "product_title")
     private String productTitle;
 
     @Column(name = "quantity")
@@ -28,14 +25,68 @@ public class OrderItems {
     @Column(name = "price_per_product")
     private Integer pricePerProduct;
 
-//    @Column(name = "order_id")
-//    private Long orderId;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    Order order;
 
-//    @ManyToOne
-//    @JoinColumn(name = "order_id")
-//    Order order;
+    public OrderItems() {
+    }
 
+    public Long getId() {
+        return id;
+    }
 
+    public Long getProductId() {
+        return productId;
+    }
+
+    public String getProductTitle() {
+        return productTitle;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public Integer getPricePerProduct() {
+        return pricePerProduct;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public void setProductTitle(String productTitle) {
+        this.productTitle = productTitle;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public void setPricePerProduct(Integer pricePerProduct) {
+        this.pricePerProduct = pricePerProduct;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }
 
 

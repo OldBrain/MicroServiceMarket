@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.trainingproject.market.dtos.OrderDto;
+import ru.geekbrains.trainingproject.market.dtos.UserPersonalAccountDto;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthRequest;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthResponse;
 import ru.geekbrains.trainingproject.market.dtos.security.UserDetailsForRegistrationDto;
@@ -74,5 +75,11 @@ public class UserController {
     public ResponseEntity<?> getUser(@PathVariable String userName) {
         OrderDto userDto=new OrderDto(cartService.getCartForCurrentUser(), userService.getUserUserName(userName).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя с именем " + userName)));
         return new ResponseEntity<>(userDto,HttpStatus.OK);
+    }
+
+    @GetMapping("/orders/{userName}")
+    public ResponseEntity<?> getUserOrders(@PathVariable String userName) {
+        UserPersonalAccountDto personalAccountDto =new UserPersonalAccountDto(userService.getUserUserName(userName).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя с именем " + userName)));
+        return new ResponseEntity<>(personalAccountDto,HttpStatus.OK);
     }
 }

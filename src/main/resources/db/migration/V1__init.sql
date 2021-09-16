@@ -56,18 +56,12 @@ create table order_items
 (
     id bigserial primary key,
     product_id bigint,
-    productTitle varchar(100),
+    product_title varchar(100),
     quantity     integer,
     price        integer,
     price_per_product integer,
-    order_id bigint
---         references orders (id)
-);
---
-CREATE TABLE IF NOT EXISTS orders_orders_items
-(
     order_id bigint,
-    orders_items_id bigint
+    foreign key (order_id) references orders (id)
 );
 
 
@@ -113,8 +107,6 @@ values ('сформирован'),
        ('отправлен'),
        ('получен покупателем'),
        ('выполнен');
-
-
 
 create table roles
 (

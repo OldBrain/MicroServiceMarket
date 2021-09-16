@@ -1,6 +1,5 @@
 package ru.geekbrains.trainingproject.market.model;
 
-import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
 @Table(name = "orders")
 public class Order {
     @Id
@@ -48,10 +46,107 @@ public class Order {
     private User user;
 
     @OneToMany
-//    (mappedBy = "order",fetch = FetchType.LAZY)
+            (mappedBy = "order", fetch = FetchType.LAZY,
+                    cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<OrderItems> ordersItems;
 
     @OneToOne()
     @JoinColumn(name = "status_id")
     private OrderStatus orderStatus;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public Integer getSum() {
+        return sum;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public List<OrderItems> getOrdersItems() {
+        return ordersItems;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public void setSum(Integer sum) {
+        this.sum = sum;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setOrdersItems(List<OrderItems> ordersItems) {
+        this.ordersItems = ordersItems;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 }
