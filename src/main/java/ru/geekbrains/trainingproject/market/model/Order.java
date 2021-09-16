@@ -35,9 +35,6 @@ public class Order {
     @Column(name = "address")
     private String address;
 
-//    @Column(name = "details_id")
-//    private Long details_id;
-
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -46,11 +43,12 @@ public class Order {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany
+//    (mappedBy = "order",fetch = FetchType.LAZY)
     private List<OrderItems> ordersItems;
 
     @OneToOne()

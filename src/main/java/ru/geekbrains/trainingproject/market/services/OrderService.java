@@ -32,7 +32,6 @@ public class OrderService {
 
     private Order createOrderFromOrderDto(OrderDto orderDto) {
         Order order = new Order();
-
         order.setFirst_name(orderDto.getDetailsUser().getFirstName());
         order.setLast_name(orderDto.getDetailsUser().getLastName());
         order.setPatronymic(orderDto.getDetailsUser().getPatronymic());
@@ -42,14 +41,15 @@ public class OrderService {
         order.setUser(userService.getUserById(orderDto.getUserId()).get());
 
 //        OrderItems orderItems = new OrderItems();
-        List<OrderItems> itemsList =  order.getOrdersItems();
+        List<OrderItems> itemsList = new LinkedList<>();
 
         for (CartItemDto item:  orderDto.getItems()) {
             OrderItems orderItems = new OrderItems();
-//            itemsList.add(cartItemDtoToOrderItems(item, orderItems));
+            itemsList.add(cartItemDtoToOrderItems(item, orderItems,order));
 
         }
         order.setOrdersItems(itemsList);
+        System.out.println("********"+order.getOrdersItems());
 
 
        // Начальный статус заказа сформирован
@@ -57,7 +57,7 @@ public class OrderService {
         return order;
     }
 
-    private OrderItems cartItemDtoToOrderItems(CartItemDto item,OrderItems orderItems) {
+    private OrderItems cartItemDtoToOrderItems(CartItemDto item,OrderItems orderItems,Order order) {
 //        OrderItems orderItems = new OrderItems();
 //        orderItems.setOrder(order);
         orderItems.setProductId(item.getProductId());

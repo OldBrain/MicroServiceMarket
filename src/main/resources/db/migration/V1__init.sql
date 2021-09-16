@@ -60,8 +60,16 @@ create table order_items
     quantity     integer,
     price        integer,
     price_per_product integer,
-    order_id bigint references orders (id)
+    order_id bigint
+--         references orders (id)
 );
+--
+CREATE TABLE IF NOT EXISTS orders_orders_items
+(
+    order_id bigint,
+    orders_items_id bigint
+);
+
 
 CREATE TABLE products
 (

@@ -28,9 +28,12 @@ public class OrderItems {
     @Column(name = "price_per_product")
     private Integer pricePerProduct;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    Order order;
+//    @Column(name = "order_id")
+//    private Long orderId;
+
+//    @ManyToOne
+//    @JoinColumn(name = "order_id")
+//    Order order;
 
 
 }
