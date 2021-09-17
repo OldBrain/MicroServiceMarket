@@ -1,0 +1,35 @@
+version: '3.2'
+
+volumes:
+  cloud-postgres:
+    driver: local
+
+services:
+  postgres:
+    image: library/postgres:latest
+    container_name: market-postgres
+    volumes:
+      - type: volume
+        source: cloud-postgres
+        target: /var/lib/postgresql/dataConfig
+    environment:
+      POSTGRES_DB: market
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+    ports:
+      - 5434:5432
+
+  redis:
+    image: bitnami/redis:latest
+    container_name: market-redis
+#    volumes:
+#      - type: volume
+#        source: market-redis
+#        target: /var/lib/redis/dataConfig
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+#      REDIS_DB: market_cart
+#      REDIS_USER: cart
+#      REDIS_PASSWORD: cart
+    ports:
+      - 6379:6379

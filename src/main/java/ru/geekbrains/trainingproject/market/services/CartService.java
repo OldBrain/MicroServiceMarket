@@ -1,8 +1,10 @@
 package ru.geekbrains.trainingproject.market.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.trainingproject.market.dtos.CartItemDto;
 import ru.geekbrains.trainingproject.market.dtos.OrderDto;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
@@ -10,17 +12,19 @@ import ru.geekbrains.trainingproject.market.utils.Cart;
 import ru.geekbrains.trainingproject.market.utils.UserDataFromHttpRequestUtil;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductService productService;
     private final UserDataFromHttpRequestUtil tmpUserIdFromHttpRequest;
+    private final RedisTemplate<String, Object> redisTemplate;
     private Cart cart;
 
     @PostConstruct
     public void init() {
-        this.cart = new Cart(tmpUserIdFromHttpRequest);
+        this.cart = new Cart(tmpUserIdFromHttpRequest,redisTemplate);
     }
 
     public Cart getCartForCurrentUser() {

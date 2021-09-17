@@ -2,6 +2,8 @@ package ru.geekbrains.trainingproject.market.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import ru.geekbrains.trainingproject.market.dtos.CartItemDto;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
@@ -19,14 +21,18 @@ public class Cart {
     private List<CartItemDto> items;
     private int totalPrice;
     private int pricePerProduct;
-    @JsonIgnore
-    private ConcurrentHashMap<String, List<CartItemDto>> cartMap;
+
+//    @JsonIgnore
+//    private ConcurrentHashMap<String, List<CartItemDto>> cartMap;
     @JsonIgnore
     private UserDataFromHttpRequestUtil userDataFromHttpRequestUtil;
+    @JsonIgnore
+    private RedisTemplate redisTemplate;
 
-    public Cart(UserDataFromHttpRequestUtil userDataFromHttpRequestUtil) {
+    public Cart(UserDataFromHttpRequestUtil userDataFromHttpRequestUtil,RedisTemplate redisTemplate) {
         this.userDataFromHttpRequestUtil = userDataFromHttpRequestUtil;
-        cartMap = new ConcurrentHashMap();
+//        cartMap = new ConcurrentHashMap();
+        this.redisTemplate = redisTemplate;
     }
 
     public boolean add(Long productId) {
@@ -77,7 +83,7 @@ public class Cart {
         setCurrentItemList();
         items.clear();
         totalPrice = 0;
-        cartMap.remove(getCurrentKeyForCart());
+        redisTemplate.delete(getCurrentKeyForCart());
     }
 
     public void recalculate() {
@@ -89,12 +95,12 @@ public class Cart {
     }
 
     private void addToCartMap() {
-        cartMap.put(getCurrentKeyForCart(), items);
+        redisTemplate.opsForValue().set(getCurrentKeyForCart(), items);
     }
 
     private List<CartItemDto> setCurrentItemList() {
-        if (cartMap.containsKey(getCurrentKeyForCart())) {
-            items = cartMap.get(getCurrentKeyForCart());
+        if (redisTemplate.hasKey(getCurrentKeyForCart())) {
+            items = (List<CartItemDto>) redisTemplate.opsForValue().get(getCurrentKeyForCart());
         } else {
             items = new ArrayList<>();
         }
@@ -103,7 +109,7 @@ public class Cart {
 
     public List<CartItemDto> getItemListByUserName(String userName) {
         if (userName != null) {
-            return cartMap.get(userName);
+            return (List<CartItemDto>)redisTemplate.opsForValue().get(userName);
         } else {
             throw new ResourceNotFoundException("Корзина для "+userName+" не найдена");
         }
@@ -128,23 +134,24 @@ public class Cart {
     }
 
     private void reorganizeCurtMap() {
-        if (cartMap.containsKey(getCurrentUserName()) && cartMap.containsKey(getCurrentTmpId())) {
-            List<CartItemDto> tmpListByNameKey = cartMap.get(getCurrentUserName());
-            List<CartItemDto> tmpListByTmpId = cartMap.get(getCurrentTmpId());
+        if (redisTemplate.hasKey(getCurrentUserName()) && redisTemplate.hasKey(getCurrentTmpId())) {
+            List<CartItemDto> tmpListByNameKey =(List<CartItemDto>) redisTemplate.opsForValue().get(getCurrentUserName());
+            List<CartItemDto> tmpListByTmpId = (List<CartItemDto>) redisTemplate.opsForValue().get(getCurrentTmpId());
             List<CartItemDto> resultItemList = Stream.concat(
                     tmpListByNameKey.parallelStream(),
                     tmpListByTmpId.parallelStream()).collect(Collectors.toList());
-            cartMap.remove(getCurrentTmpId());
+            redisTemplate.delete(getCurrentTmpId());
             List<CartItemDto> sortedList = resultItemList.stream().sorted(Comparator.comparing(CartItemDto::getProductId)).collect(Collectors.toList());
 
             items = mergeItemList(sortedList);
 
-            cartMap.put(getCurrentUserName(), items);
+            redisTemplate.opsForValue().set(getCurrentUserName(), items);
+
         }
-        if (!cartMap.containsKey(getCurrentUserName()) && cartMap.containsKey(getCurrentTmpId())) {
-            List<CartItemDto> tmpListByTmpId = cartMap.get(getCurrentTmpId());
-            cartMap.remove(getCurrentTmpId());
-            cartMap.put(getCurrentUserName(), tmpListByTmpId);
+        if (!redisTemplate.hasKey(getCurrentUserName()) && redisTemplate.hasKey(getCurrentTmpId())) {
+            List<CartItemDto> tmpListByTmpId =(List<CartItemDto>) redisTemplate.opsForValue().get(getCurrentTmpId());
+            redisTemplate.delete(getCurrentTmpId());
+            redisTemplate.opsForValue().set(getCurrentUserName(), tmpListByTmpId);
         }
     }
 
