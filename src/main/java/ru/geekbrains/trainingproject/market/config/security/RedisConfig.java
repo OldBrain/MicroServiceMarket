@@ -17,10 +17,10 @@ public class RedisConfig {
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
 //        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
-        redisStandaloneConfiguration.setPassword(RedisPassword.of("yourRedisPasswordIfAny"));
-        return new JedisConnectionFactory(redisStandaloneConfiguration);
-//        return new JedisConnectionFactory();
+//        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration("localhost", 6379);
+//        redisStandaloneConfiguration.setPassword(RedisPassword.of("yourRedisPasswordIfAny"));
+//        return new JedisConnectionFactory(redisStandaloneConfiguration);
+        return new JedisConnectionFactory();
     }
 
     @Bean

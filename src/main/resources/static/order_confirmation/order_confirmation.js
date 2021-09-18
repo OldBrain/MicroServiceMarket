@@ -1,27 +1,24 @@
 angular.module('market-front').controller('orderConfirmationController', function ($rootScope,$localStorage,$scope, $http, $location) {
     const contextPath = 'http://localhost:8189/market/';
 
-    // $rootScope.loadCart = function () {
-    //     $http({
-    //         url: contextPath + 'api/v1/cart',
-    //         method: 'GET'
-    //     }).then(function (response) {
-    //         $scope.cart = response.data;
-    //
-    //     });
-    // };
-
-
     $scope.createOrder = function () {
+        if ($scope.orderDto.detailsUser.firstName == null||$scope.orderDto.detailsUser.lastName == null||
+            $scope.orderDto.detailsUser.patronymic == null) {
+            alert("Форма не аполнена");
+            return;
+        }
         $http({
             url: contextPath + 'api/v1/orders',
             method: 'POST',
             data: $scope.orderDto
-        }).then(function (response){
+        }).then(function successCallback(response){
                 alert('Ваш заказ успешно сформирован');
                 $location.path('/');
                 $rootScope.setCartSum();
-            });
+            },function errorCallback(response) {
+            console.log(response.data);
+            alert(response.data.message)
+        });
     };
 
 

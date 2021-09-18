@@ -1,9 +1,15 @@
 package ru.geekbrains.trainingproject.market.controllers.v1;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.trainingproject.market.dtos.OrderDto;
 import ru.geekbrains.trainingproject.market.dtos.ProductDto;
+import ru.geekbrains.trainingproject.market.dtos.security.AuthResponse;
+import ru.geekbrains.trainingproject.market.exceptions.DataValidationException;
+import ru.geekbrains.trainingproject.market.exceptions.MarketError;
+import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Order;
 import ru.geekbrains.trainingproject.market.services.CartService;
 import ru.geekbrains.trainingproject.market.services.OrderService;
@@ -26,13 +32,14 @@ public class OrderController {
     }
 
     @PostMapping
-    //    @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder(@RequestBody OrderDto orderDto) {
-        System.out.println(orderDto.getDetailsUser());
-        System.out.println(orderDto.getItems());
-
+        @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createOrder(@RequestBody OrderDto orderDto) {
+//        if (orderDto.getDetailsUser() == null) {
+//            return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.NO_CONTENT);
+//            }
         orderService.createAndSaveOrder(orderDto);
         cartService.clearCart();
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 }

@@ -19,17 +19,17 @@ services:
     ports:
       - 5434:5432
 
-  redis:
-    image: bitnami/redis:latest
-    container_name: market-redis
+#  redis:
+#    image: bitnami/redis:latest
+#    container_name: market-redis
 #    volumes:
 #      - type: volume
 #        source: market-redis
 #        target: /var/lib/redis/dataConfig
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
 #      REDIS_DB: market_cart
 #      REDIS_USER: cart
 #      REDIS_PASSWORD: cart
-    ports:
-      - 6379:6379
+#    ports:
+#      - 6379:6379

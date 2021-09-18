@@ -28,7 +28,7 @@ public class CartService {
     }
 
     public Cart getCartForCurrentUser() {
-        cart.recalculate();
+        cart.setCurrentItemList();
         return cart;
     }
 
