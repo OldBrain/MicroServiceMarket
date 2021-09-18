@@ -1,27 +1,33 @@
 <div>
-    <h1>Market</h1>
-    <thead>
-    <table class="table table-success table-striped">
+    <h4>Персональные данные пользователя {{userdata.username}} email:{{userdata.email}}</h4>
+    <h2>{{userdata.detailsUser.firstName}} {{userdata.detailsUser.lastName}} {{userdata.detailsUser.patronymic}}.</h2>
+    <h5>Адрес доставки {{userdata.detailsUser.address}} телефон: {{userdata.detailsUser.phone}}</h5>
+    <h2>Список заказов</h2>
+
+<!--    <table class="table" ng-show="cart.items.length > 0">-->
+        <!--  <table class="table" >-->
+        <thead>
         <tr>
-            <td>id</td>
-            <td>title</td>
-            <td>prise</td>
-            <td>button</td>
+            <td>Номер</td>
+            <td>Дата</td>
+            <td>Цена</td>
+            <td>Адрес доставки</td>
+
         </tr>
         </thead>
-
         <tbody>
-
-        <tr ng-repeat="p in order">
-            <td>{{p.id}}</td>
-            <td>{{p.createdAt}}</td>
-            <td>{{p.last_name}}</td>
-            <td>{{p.patronymic}}</td>
-            <td>
-                <button class="btn btn-primary" ng-click="showOrderItems(p.id)">Детали</button>
-            </td>
+        <tr ng-repeat="i in userdata.orderList">
+            <td>{{i.id}}</td>
+            <td>{{i.createdAt}}</td>
+            <td>{{i.sum}}</td>
         </tr>
+
+            <td></td>
+            <td></td>
+
+
+        </tbody>
     </table>
 
-    </tbody>
+
 </div>

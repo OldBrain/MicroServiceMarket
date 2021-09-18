@@ -11,7 +11,6 @@ angular.module('market-front').controller('personalAccountController', function 
             console.log(response.data);
         });
     };
-
     $scope.getUserDataByName();
 });
 

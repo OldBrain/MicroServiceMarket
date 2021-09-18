@@ -36,6 +36,7 @@
                 templateUrl: 'personal_account/personal_account.html',
                 controller: 'personalAccountController'
             })
+
             .otherwise({
                 redirectTo: '/'
             });
