@@ -34,9 +34,6 @@ public class OrderController {
     @PostMapping
         @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createOrder(@RequestBody OrderDto orderDto) {
-//        if (orderDto.getDetailsUser() == null) {
-//            return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.NO_CONTENT);
-//            }
         orderService.createAndSaveOrder(orderDto);
         cartService.clearCart();
         return ResponseEntity.ok(HttpStatus.OK);
