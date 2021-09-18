@@ -2,8 +2,12 @@ package ru.geekbrains.trainingproject.market.controllers.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.trainingproject.market.dtos.ProductDto;
+import ru.geekbrains.trainingproject.market.exceptions.DataValidationException;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Category;
 import ru.geekbrains.trainingproject.market.model.Product;
@@ -45,7 +49,11 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public ProductDto save(@RequestBody ProductDto productDto) {
+    public ProductDto save(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new DataValidationException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
+        }
+
         Product product = new Product();
         product.setPrice(productDto.getPrice());
         product.setTitle(productDto.getTitle());

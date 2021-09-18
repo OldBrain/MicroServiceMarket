@@ -50,5 +50,17 @@ public class UserService implements UserDetailsService {
     public boolean isExistsEmail(String email) {
         return userRepository.existsAllByEmailEquals(email);
     }
+
+    public String createTmpId() {
+        return String.valueOf(System.currentTimeMillis());
+    }
+
+    public Optional<User> getUserUserName(String userName) {
+        return userRepository.findByUsername(userName);
+    }
+
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
 }
 

@@ -29,6 +29,7 @@ public class JwcRequestFilter extends OncePerRequestFilter {
         String authHandler = request.getHeader("Authorization");
         String userName = null;
         String jwt = null;
+
         if (authHandler != null && authHandler.startsWith("Bearer ")) {
             jwt = authHandler.substring(7);
             try {
@@ -46,4 +47,5 @@ public class JwcRequestFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
 }

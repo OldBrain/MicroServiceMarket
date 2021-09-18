@@ -2,13 +2,12 @@ angular.module('market-front').controller('cartController', function ($scope, $h
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.loadCart = function () {
-        $rootScope.cartsumm=0;
         $http({
             url: contextPath + 'api/v1/cart',
             method: 'GET'
         }).then(function (response) {
             $scope.cart = response.data;
-            $rootScope.cartsumm = $scope.cart.totalPrice;
+            console.log($scope.cart)
         });
     };
 
@@ -38,8 +37,6 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             $scope.loadCart();
         });
     };
-
-
 
     $scope.checkOut = function () {
         $location.path("/order_confirmation");

@@ -1,97 +1,60 @@
 package ru.geekbrains.trainingproject.market.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import ru.geekbrains.trainingproject.market.dtos.CartProductDto;
-import ru.geekbrains.trainingproject.market.dtos.ProductDto;
+import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.trainingproject.market.dtos.CartItemDto;
+import ru.geekbrains.trainingproject.market.dtos.OrderDto;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
-import ru.geekbrains.trainingproject.market.repositories.CartRepository;
+import ru.geekbrains.trainingproject.market.utils.Cart;
+import ru.geekbrains.trainingproject.market.utils.UserDataFromHttpRequestUtil;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductService productService;
-    private final CartRepository cartRepository;
+    private final UserDataFromHttpRequestUtil tmpUserIdFromHttpRequest;
+    private final RedisTemplate<String, Object> redisTemplate;
+    private Cart cart;
 
-
-    public void addProduct(Long id) {
-        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category title = " + id + " not found"));
-        CartProductDto cartProductsDto = new CartProductDto(product);
-        addProductToCartAndCalculateQuantity(cartProductsDto);
+    @PostConstruct
+    public void init() {
+        this.cart = new Cart(tmpUserIdFromHttpRequest,redisTemplate);
     }
 
-    public void deleteAll() {
-        cartRepository.getCartProductsDtoList().clear();
+    public Cart getCartForCurrentUser() {
+        cart.setCurrentItemList();
+        return cart;
     }
 
-    public void deleteById(Long id) {
-        for (int i = 0; i < cartRepository.getCartProductsDtoList().size(); i++) {
-            if (cartRepository.getCartProductsDtoList().get(i).getId().equals(id)) {
-                cartRepository.getCartProductsDtoList().remove(i);
-                break;
-            }
+    public void addItem(Long productId) {
+        if (cart.add(productId)) {
+            return;
         }
+        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину, так как продукт с id: " + productId + " не существует"));
+        cart.add(product);
     }
 
-    public Optional<CartProductDto> getById(long id) {
-        Optional<CartProductDto> cartProductsDto = Optional.ofNullable(cartRepository.getCartProductsDtoList().stream().filter(p -> p.getId() == id).findFirst().orElseThrow(() -> new ResourceNotFoundException("Category title = " + id + " not found in this cart")));
-        return cartProductsDto;
+    public void removeItem(Long productId) {
+        cart.remove(productId);
     }
 
-    public List<CartProductDto> getAll() {
-        return cartRepository.getCartProductsDtoList();
+    public void decrementItem(Long productId) {
+        cart.decrement(productId);
     }
 
-    public CartProductDto getProduct(CartProductDto cartProductDto) {
-        for (CartProductDto p : cartRepository.getCartProductsDtoList()) {
-            if (p.getId().equals(cartProductDto.getId())) {
-                return p;
-            }
-        }
-        return null;
+    public void clearCart() {
+        cart.clear();
     }
 
-    private boolean isProductExistInCart(CartProductDto cartProductsDto) {
-        for (CartProductDto p : cartRepository.getCartProductsDtoList()
-        ) {
-            if (p.getId().equals(cartProductsDto.getId())) {
-                return true;
-            }
-        }
-        return false;
+    public Integer getTotalSum() {
+        return cart.getTotalPrice();
     }
 
-    private void addProductToCartAndCalculateQuantity(CartProductDto cartProductDto) {
-        if (isProductExistInCart(cartProductDto)) {
-            for (CartProductDto p : cartRepository.getCartProductsDtoList()) {
-                if (p.getId().equals(cartProductDto.getId())) {
-                    p.setQuantity(p.getQuantity() + 1);
-                }
-            }
-        } else {
-            cartProductDto.setQuantity(1);
-            cartRepository.getCartProductsDtoList().add(cartProductDto);
-        }
-    }
-
-
-    public void updateProduct(CartProductDto cartProductDto) {
-        CartProductDto cartProductDtoEdit = getProduct(cartProductDto);
-        deleteById(cartProductDtoEdit.getId());
-        save(cartProductDto);
-    }
-
-    private void save(CartProductDto cartProductDto) {
-        CartProductDto cartProductDtoEdit;
-        cartProductDtoEdit = cartProductDto;
-        cartRepository.getCartProductsDtoList().add(cartProductDtoEdit);
-    }
 
 }
-
