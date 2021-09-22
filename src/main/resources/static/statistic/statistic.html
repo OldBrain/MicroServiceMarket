@@ -1,23 +1,28 @@
 <div>
-    <h1>Market</h1>
-    <thead>
+    <h1>Статистика работы сервисов</h1>
+    
+
+
     <table class="table table-success table-striped">
+        <thead>
         <tr>
             <td>Method</td>
             <td>Time</td>
             <td>title</td>
         </tr>
+
         </thead>
 
-        <tbody>
 
 
-<tr ng-repeat="(key, value) in statMethod.value">
-            <td>{{key}}</td>
-            <td>{{value}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
+<tr ng-repeat="(key_class, value_map) in statMethod.mapValue">
+            <td>{{key_class}}</td>
+    <tr ng-repeat="(key, value) in {{value_map"}}>
+            <tr>{{key}}</tr>
+             <tr>{{value}}</tr>
 
+
+        </tr>
         </tr>
     </table>
 

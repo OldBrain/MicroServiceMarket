@@ -8,13 +8,10 @@ angular.module('market-front').controller('statisticController', function ($scop
 
         }).then(function (response) {
             $scope.statMethod = response.data;
-            console.log(response.data.value);
+            console.log(response.data);
         });
     };
 
-
     $scope.loadMethodStat();
-
-    $rootScope.setLkName();
 });
 

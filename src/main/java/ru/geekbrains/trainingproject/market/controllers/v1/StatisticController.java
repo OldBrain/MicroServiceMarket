@@ -19,6 +19,7 @@ public class StatisticController {
 
     @GetMapping()
     public MapResponse getServiceMethodStatistic() {
-        return  new MapResponse(timeAspect.getMethodTimeMap());
+//        return  new MapResponse(timeAspect.getMethodTimeMap());
+        return  new MapResponse(timeAspect.getServiceTimeMap());
     }
 }
