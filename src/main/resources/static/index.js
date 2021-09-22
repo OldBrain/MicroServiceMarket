@@ -109,6 +109,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $rootScope.setCartSum = function () {
+
         $rootScope.cartsumm = 0;
         $http({
             url: contextPath + 'api/v1/cart/sum/',

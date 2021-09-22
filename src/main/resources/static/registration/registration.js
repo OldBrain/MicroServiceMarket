@@ -27,7 +27,4 @@ angular.module('market-front').controller('loginController', function ($scope, $
             });
     }
 
-    // $rootScope.setCartSum();
-    // $rootScope.loadCart();
-    // $rootScope.setLkName();
 });

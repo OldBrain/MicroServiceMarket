@@ -11,9 +11,10 @@
 
         <tbody>
 
-        <tr ng-repeat="s in statMethod.value">
-            <td>{{s}}</td>
-            <td>{{p.id}}</td>
+
+<tr ng-repeat="(key, value) in statMethod.value">
+            <td>{{key}}</td>
+            <td>{{value}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
 

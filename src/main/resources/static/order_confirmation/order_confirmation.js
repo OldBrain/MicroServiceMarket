@@ -42,8 +42,5 @@ angular.module('market-front').controller('orderConfirmationController', functio
         }
     };
 
-    // $rootScope.setCartSum();
-    // $rootScope.loadCart();
-
     $scope.getOrderDtoByUserName();
 });

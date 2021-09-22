@@ -40,7 +40,5 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
     $rootScope.getOrSaveTmpId();
     $rootScope.setLkName();
-    // $rootScope.loadCart();
-    // $rootScope.setCartSum();
 });
 
