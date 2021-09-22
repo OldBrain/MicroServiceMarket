@@ -1,8 +1,6 @@
-
-
 (function () {
     angular
-        .module('market-front', ['ngRoute','ngStorage'])
+        .module('market-front', ['ngRoute', 'ngStorage'])
         .config(config)
         .run(run);
 
@@ -36,6 +34,10 @@
                 templateUrl: 'personal_account/personal_account.html',
                 controller: 'personalAccountController'
             })
+            .when('/statistic', {
+                templateUrl: 'statistic/statistic.html',
+                controller: 'statisticController'
+            })
 
             .otherwise({
                 redirectTo: '/'
@@ -51,9 +53,7 @@
 })();
 
 
-
-
-angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage,$location) {
+angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.tryToAuth = function () {
@@ -100,7 +100,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
         }
     };
 
-    $rootScope.setLkName = function(){
+    $rootScope.setLkName = function () {
         if ($localStorage.webMarketUser) {
             $rootScope.lkname = $localStorage.webMarketUser.username;
         } else {
@@ -109,7 +109,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $rootScope.setCartSum = function () {
-        $rootScope.cartsumm=0;
+        $rootScope.cartsumm = 0;
         $http({
             url: contextPath + 'api/v1/cart/sum/',
             method: 'GET'
@@ -123,7 +123,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
         if ($localStorage.tmpId) {
             $http.defaults.headers.common.tmpId = 'tmpId ' + $localStorage.tmpId.tmpId;
         }
-        if (!$rootScope.isUserLoggedIn()&&!$localStorage.tmpId) {
+        if (!$rootScope.isUserLoggedIn() && !$localStorage.tmpId) {
             $http.get(contextPath + 'api/v1/auth/getid')
                 .then(function (response) {
                     $scope.tmpId = response.data;
@@ -143,7 +143,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
         $location.path("/personal_account")
     };
 
-    $rootScope.cartsumm=0;
+    $rootScope.cartsumm = 0;
     $rootScope.getOrSaveTmpId();
     $rootScope.setCartSum();
     $rootScope.setLkName();
