@@ -2,7 +2,7 @@ angular.module('market-front').controller('loginController', function ($scope, $
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.createUser = function () {
-        // alert($scope.new_user.username)
+        // alert($scope.new_user.username);
         if ($scope.new_user.username == null||$scope.new_user.password == null||$scope.new_user.email == null) {
             alert('Форма не заполнена до конца');
             return;
