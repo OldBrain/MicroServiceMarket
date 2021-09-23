@@ -7,8 +7,8 @@ angular.module('market-front').controller('statisticController', function ($scop
             url: contextPath + 'api/v1/stat'
 
         }).then(function (response) {
-            $scope.statMethod = response.data;
-            console.log(response.data);
+            $scope.statMethod = response.data.mapValue;
+            console.log(response.data.mapValue);
         });
     };
 

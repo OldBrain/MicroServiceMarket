@@ -13,8 +13,8 @@ public class MapResponse {
 //    private List<String[]> keys;
 //    private List<Long> time;
 
-    public MapResponse(Map value) {
-        this.mapValue = value;
+    public MapResponse(Map mapValue) {
+        this.mapValue = mapValue;
     }
 
 }
