@@ -6,14 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.trainingproject.market.dtos.MapResponse;
-import ru.geekbrains.trainingproject.market.dtos.security.StatisticDto;
-import ru.geekbrains.trainingproject.market.utils.TimeAspect;
+import ru.geekbrains.trainingproject.market.utils.StatisticUtil;
 
 @RestController
 @RequestMapping("/api/v1/stat")
 @RequiredArgsConstructor
 public class StatisticController {
-    private final StatisticDto statisticDto;
+    private final StatisticUtil statisticDto;
 
     @GetMapping()
     public MapResponse getServiceMethodStatistic() {

@@ -5,17 +5,12 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
-import ru.geekbrains.trainingproject.market.dtos.security.StatisticDto;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Aspect
 @Component
 @Data
-public class TimeAspect {
-    private final StatisticDto statisticDto;
+public class TimeAspectUtil {
+    private final StatisticUtil statisticDto;
 
     @Around("execution(public * ru.geekbrains.trainingproject.market.services.*.*(..))" +
             "//execution(public * ru.geekbrains.trainingproject.market.services.*.*())")
@@ -35,7 +30,7 @@ public class TimeAspect {
 
         statisticDto.setServiceMap(className,methodName,duration);
 
-        System.out.println("ИТОГ: "+statisticDto.getServiceMap().toString());
+//        System.out.println("ИТОГ: "+statisticDto.getServiceMap().entrySet());
         return out;
     }
 
