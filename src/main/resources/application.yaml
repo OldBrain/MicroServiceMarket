@@ -22,7 +22,10 @@ jwt:
   secret: oifh4309f8h324098fh4398gh8h*&TG*#&Gg97rgff98gf983h4f983h487g*&^F&Fu3r
   lifetime: 36000000
 
-
+redis:
+  hostname: redis-15850.c250.eu-central-1-1.ec2.cloud.redislabs.com
+  port: 15850
+  password: gCJtMyro3E7LPrdAsxtpQVFpHMBiPKOS
 
 
 

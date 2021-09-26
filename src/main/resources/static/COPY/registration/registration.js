@@ -1,8 +1,8 @@
-angular.module('market-front').controller('loginController', function ($scope, $http, $localStorage, $location,$rootScope) {
+angular.module('market-front').controller('registrationController', function ($scope, $http, $localStorage, $location,$rootScope) {
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.createUser = function () {
-        // alert($scope.new_user.username);
+        // alert($scope.new_user.username)
         if ($scope.new_user.username == null||$scope.new_user.password == null||$scope.new_user.email == null) {
             alert('Форма не заполнена до конца');
             return;
@@ -27,4 +27,7 @@ angular.module('market-front').controller('loginController', function ($scope, $
             });
     }
 
+    // $rootScope.setCartSum();
+    // $rootScope.loadCart();
+    // $rootScope.setLkName();
 });

@@ -1,0 +1,27 @@
+<div>
+    <h1>Статистика работы сервисов с момента перезагрузки</h1>
+
+   <div ng-repeat="(key, value) in statMethod">
+       <h3><p class="text-primary"> Сервис: {{key}}</p></h3>
+
+       <table class="table table-dark table-striped" >
+
+        <thead>
+        <tr>
+            <th scope="col">Method</th>
+            <th scope="col">Time(mlc)</th>
+        </tr>
+        </thead>
+
+           <tbody>
+
+           <tr ng-repeat="(key_m, value_m) in value">
+               <td>{{key_m}}</td>
+               <td>{{value_m}}</td>
+
+           </tr>
+           </tbody>
+
+</table>
+   </div>
+</div>

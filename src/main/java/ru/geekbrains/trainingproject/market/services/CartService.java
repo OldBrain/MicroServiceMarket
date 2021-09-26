@@ -27,6 +27,7 @@ public class CartService {
         this.cart = new Cart(tmpUserIdFromHttpRequest,redisTemplate);
     }
 
+
     public Cart getCartForCurrentUser() {
         cart.setCurrentItemList();
         return cart;
