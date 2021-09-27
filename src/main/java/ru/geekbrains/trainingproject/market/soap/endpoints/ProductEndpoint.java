@@ -55,7 +55,7 @@ public class ProductEndpoint {
     @ResponsePayload
     public GetProductByTitleResponse getProductByTitle(@RequestPayload GetProductByTitleRequest request) {
         GetProductByTitleResponse response = new GetProductByTitleResponse();
-        response.setProductsSoapDto(productSoapService.getByTitle(request.getTitle()));
+        response.setProduct(productSoapService.getByTitle(request.getName()));
         return response;
     }
 
