@@ -29,21 +29,28 @@ public class ProductEndpoint {
             </soapenv:Body>
         </soapenv:Envelope>
      */
-//*
-// <soapenv:Header/>
+
+
+//*Пример запроса: POST http://localhost:8189/market/ws
+
+// <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+//        xmlns:f="http://www.flamexander.com/spring/ws/products">
+//    <soapenv:Header/>
 //            <soapenv:Body>
-//                <f:getProductByTitleRequest>
-//                <f:title>bread</f:title>
-//           </f:getProductByTitleRequest>
-//            </soapenv:Body>
-//        </soapenv:Envelope>
+//              <f:getProductByTitleRequest>
+//     <f:name>bread</f:name>
+//</f:getProductByTitleRequest>
+//   </soapenv:Body>
+//</soapenv:Envelope>
+//
 // */
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllProductsRequest")
     @ResponsePayload
     public GetAllProductsResponse getAllProduct(@RequestPayload GetAllProductsRequest request) {
         GetAllProductsResponse response = new GetAllProductsResponse();
 
-        for (ProductsSoapDto ps:productSoapService.getAllProductSoapDto()) {
+        for (ProductsSoapDto ps : productSoapService.getAllProductSoapDto()) {
             response.getProducts().add(ps);
         }
         return response;

@@ -22,8 +22,6 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -38,11 +36,9 @@ public class GetProductByTitleResponse {
     /**
      * Gets the value of the product property.
      *
-     * @return
-     *     possible object is
-     *     {@link ProductsSoapDto
-     *     }
-     *
+     * @return possible object is
+     * {@link ProductsSoapDto
+     * }
      */
     public ProductsSoapDto getProduct() {
         return product;
@@ -51,10 +47,8 @@ public class GetProductByTitleResponse {
     /**
      * Sets the value of the product property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link ProductsSoapDto }
-     *
+     * @param value allowed object is
+     *              {@link ProductsSoapDto }
      */
     public void setProduct(ProductsSoapDto value) {
         this.product = value;
