@@ -9,10 +9,12 @@ import ru.geekbrains.trainingproject.market.soap.GetAllProductsRequest;
 import ru.geekbrains.trainingproject.market.soap.GetAllProductsResponse;
 import ru.geekbrains.trainingproject.market.dtos.soap.ProductsSoapDto;
 import ru.geekbrains.trainingproject.market.services.soap.ProductSoapService;
+import ru.geekbrains.trainingproject.market.soap.GetProductByTitleRequest;
+import ru.geekbrains.trainingproject.market.soap.GetProductByTitleResponse;
 
 @Endpoint
 @RequiredArgsConstructor
-public class StudentEndpoint {
+public class ProductEndpoint {
     private static final String NAMESPACE_URI = "http://www.flamexander.com/spring/ws/products";
     private final ProductSoapService productSoapService;
 
@@ -37,5 +39,16 @@ public class StudentEndpoint {
             response.getProducts().add(ps);
         }
         return response;
+
     }
+
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetProductByTitleRequest")
+    @ResponsePayload
+    public GetProductByTitleResponse getStudentByName(@RequestPayload GetProductByTitleRequest request) {
+        GetProductByTitleResponse response = new GetProductByTitleResponse();
+        response.setProductsSoapDto(productSoapService.getByName(request.getName()));
+        return response;
+    }
+
 }
