@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
         "productsSoapDto"
 })
-@XmlRootElement(name = "GetProductByTitleResponse")
+@XmlRootElement(name = "getProductByTitleResponse")
 public class GetProductByTitleResponse {
 
     @XmlElement(required = true)

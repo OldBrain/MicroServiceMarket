@@ -26,4 +26,8 @@ public class ProductSoapService {
     public List<ProductsSoapDto> getAllProductSoapDto() {
         return productRepository.findAll().stream().map(functionEntityToSoap).collect(Collectors.toList());
     }
+
+    public ProductsSoapDto getByTitle(String title) {
+        return productRepository.findProductByTitleEquals(title).map(functionEntityToSoap).get();
+    }
 }

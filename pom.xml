@@ -130,7 +130,7 @@
 					</sources>
 					<packageName>soap</packageName>
 					<outputDirectory>${project.basedir}/src/main/java/ru/geekbrains/trainingproject/market/soap</outputDirectory>
-					<clearOutputDir>true</clearOutputDir>
+					<clearOutputDir>false</clearOutputDir>
 				</configuration>
 			</plugin>
 <!--SOAP PLUGIN END-->

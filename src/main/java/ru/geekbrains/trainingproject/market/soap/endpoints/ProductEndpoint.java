@@ -25,11 +25,19 @@ public class ProductEndpoint {
         xmlns:f="http://www.flamexander.com/spring/ws/products">
             <soapenv:Header/>
             <soapenv:Body>
-                <f:GetAllProductsRequest/>
+                <f:getAllProductsRequest/>
             </soapenv:Body>
         </soapenv:Envelope>
      */
-
+//*
+// <soapenv:Header/>
+//            <soapenv:Body>
+//                <f:getProductByTitleRequest>
+//                <f:title>bread</f:title>
+//           </f:getProductByTitleRequest>
+//            </soapenv:Body>
+//        </soapenv:Envelope>
+// */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllProductsRequest")
     @ResponsePayload
     public GetAllProductsResponse getAllProduct(@RequestPayload GetAllProductsRequest request) {
@@ -43,11 +51,11 @@ public class ProductEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetProductByTitleRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductByTitleRequest")
     @ResponsePayload
-    public GetProductByTitleResponse getStudentByName(@RequestPayload GetProductByTitleRequest request) {
+    public GetProductByTitleResponse getProductByTitle(@RequestPayload GetProductByTitleRequest request) {
         GetProductByTitleResponse response = new GetProductByTitleResponse();
-        response.setProductsSoapDto(productSoapService.getByName(request.getName()));
+        response.setProductsSoapDto(productSoapService.getByTitle(request.getTitle()));
         return response;
     }
 
