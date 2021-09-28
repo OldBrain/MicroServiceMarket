@@ -1,8 +1,11 @@
 package ru.geekbrains.trainingproject.market.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name = "user_details")
 public class DetailsUser {
     @Id
@@ -25,8 +28,6 @@ public class DetailsUser {
     @Column(name = "address")
     private String address;
 
-    public DetailsUser() {
-    }
 
     public Long getId() {
         return id;

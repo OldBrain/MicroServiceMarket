@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.trainingproject.market.dtos.DetailsUserDto;
 import ru.geekbrains.trainingproject.market.dtos.OrderDto;
 import ru.geekbrains.trainingproject.market.dtos.UserPersonalAccountDto;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthRequest;
@@ -36,6 +37,7 @@ public class UserController {
     private final RolesService rolesService;
     private final CartService cartService;
 
+
     @PostMapping("")
     public ResponseEntity<?> createAuthToken(@RequestBody AuthRequest authRequest) {
         try {
@@ -54,6 +56,7 @@ public class UserController {
         if (userService.isExistsUser(userRegDto.getUsername())||userService.isExistsEmail(userRegDto.getEmail())) {
             return new ResponseEntity<>(new MarketError("This username or E-mail is occupied"), HttpStatus.UNAUTHORIZED);
         }
+        System.out.println(userRegDto.getDetailsUser());
 
         User user = new User();
         user.setUsername(userRegDto.getUsername());
@@ -61,6 +64,11 @@ public class UserController {
         user.setPassword(bCryptPasswordEncoder.encode(userRegDto.getPassword()));
         Role role = rolesService.getRoleWithUsersRights();
         user.setRoles(Collections.singletonList(role));
+
+//        DetailsUserDto detailsUserDto = new DetailsUserDto(userRegDto.getDetailsUser());
+        user.setDetailsUser(userRegDto.getDetailsUser());
+//        user.setDetailsUser(userService.detailsUserDtoToDetailsUser(detailsUserDto));
+
         userService.save(user);
         AuthRequest request = new AuthRequest(userRegDto.getUsername(), userRegDto.getPassword());
         return createAuthToken(request);

@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     public final OrderRepository orderRepository;
-    public final OrderItemsService orderItemsService;
+//    public final OrderItemsService orderItemsService;
     public final OrderStatusService orderStatusService;
     public final UserService userService;
 

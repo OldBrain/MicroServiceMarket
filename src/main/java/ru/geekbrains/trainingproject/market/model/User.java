@@ -40,7 +40,7 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToOne()
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "details_id")
     private DetailsUser detailsUser;
 
@@ -121,4 +121,6 @@ public class User {
     public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
     }
+
+
 }
