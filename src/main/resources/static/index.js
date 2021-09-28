@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module('market-front', ['ngRoute', 'ngStorage'])
+        .module('market-front', ['ngRoute', 'ngStorage' ])
         .config(config)
         .run(run);
 

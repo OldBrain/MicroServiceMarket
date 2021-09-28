@@ -1,6 +1,10 @@
 angular.module('market-front').controller('personalAccountController', function ($scope, $http,$rootScope,$localStorage,$location) {
     const contextPath = 'http://localhost:8189/market/';
 
+    $scope.saveСhanges = function () {
+        //TODO сохранение изменений личных данных userdata.detailsUser.*
+
+    };
 
     $scope.getUserDataByName = function () {
         $http({
