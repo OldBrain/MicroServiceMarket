@@ -1,13 +1,75 @@
 <div>
     <p></p>
     <h3>Заполните форму для регистрации</h3>
-    <form novalidate ng-submit="createUser()">
-        <input class="form-control" type="text" placeholder="Логин" ng-model="new_user.username">
-        <p></p>
-        <input class="form-control" type="text" placeholder="Пароль" ng-model="new_user.password">
-        <p></p>
-        <input class="form-control" type="text" placeholder="Ваш email" ng-model="new_user.email">
-        <p></p>
-        <button type="submit" class="btn btn-primary" ng-click="createUser()">Зарегистрироваться</button>
+<!--    <form novalidate ng-submit="createUser()">-->
+<!--        <input class="form-control" type="text" placeholder="Логин" ng-model="new_user.username">-->
+<!--        <p></p>-->
+<!--        <input class="form-control" type="text" placeholder="Пароль" ng-model="new_user.password">-->
+<!--        <p></p>-->
+<!--        <input class="form-control" type="text" placeholder="Ваш email" ng-model="new_user.email">-->
+<!--        <p></p>-->
+<!--        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>-->
+<!--    </form>-->
+
+    <form class="row g-3" ng-submit="createUser()">
+        <div class="col-md-4">
+            <label for="validationDefaultUsername" class="form-label">Username</label>
+            <div class="input-group">
+                <span class="input-group-text" id="inputGroupPrepend2">?</span>
+                <input type="text" class="form-control" ng-model="new_user.username" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" required>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label for="validationDefaultUsername" class="form-label">Пароль</label>
+            <div class="input-group">
+                <span class="input-group-text" id="inputGroupPrepend20">**</span>
+                <input type="text" class="form-control" ng-model="new_user.password" id="validationDefaultPassword"  aria-describedby="inputGroupPrepend2" required>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label for="validationDefaultUsername" class="form-label">Е-mail:</label>
+            <div class="input-group">
+                <span class="input-group-text" id="inputGroupPrepend21">@</span>
+                <input type="text" class="form-control" ng-model="new_user.email" id="validationDefaultMail"  aria-describedby="inputGroupPrepend2" required>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label for="validationDefault01" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="validationDefault01" value="Имя" required>
+        </div>
+
+        <div class="col-md-4">
+            <label for="validationDefault02" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" id="validationDefault02" value="Фамилия" required>
+        </div>
+
+
+
+        <div class="col-md-6">
+            <label for="validationDefault03" class="form-label">Адрес</label>
+            <input type="text" class="form-control" id="validationDefault03" required>
+        </div>
+
+        <div class="col-md-3">
+            <label for="validationDefault05" class="form-label">Телефон</label>
+            <input type="text" class="form-control" id="validationDefault05" required>
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                <label class="form-check-label" for="invalidCheck2">
+                    Я согласен на обработку персональных данных.
+                </label>
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit" >Отправить</button>
+        </div>
+
     </form>
+
+
 </div>

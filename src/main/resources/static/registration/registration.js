@@ -1,5 +1,7 @@
-angular.module('market-front').controller('loginController', function ($scope, $http, $localStorage, $location,$rootScope) {
+angular.module('market-front').controller('registrationController', function ($scope, $http, $localStorage, $location,$rootScope) {
     const contextPath = 'http://localhost:8189/market/';
+
+
 
     $scope.createUser = function () {
         // alert($scope.new_user.username);
@@ -27,4 +29,7 @@ angular.module('market-front').controller('loginController', function ($scope, $
             });
     }
 
+    $scope.create = function () {
+        alert("Ok")
+    };
 });
