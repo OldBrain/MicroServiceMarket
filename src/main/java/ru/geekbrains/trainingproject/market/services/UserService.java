@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final DetailsUser detailsUser;
+//    private final DetailsUser detailsUser;
 
     public Optional<User> findUserByName(String username) {
         return userRepository.findByUsername(username);
@@ -67,14 +67,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id);
     }
 
-    public DetailsUser detailsUserDtoToDetailsUser(DetailsUserDto detailsUserDto) {
-//        userRepository.findByUsername()
-        detailsUser.setFirstName(detailsUserDto.getFirstName());
-        detailsUser.setLastName(detailsUserDto.getLastName());
-        detailsUser.setPatronymic(detailsUserDto.getPatronymic());
-        detailsUser.setPhone(detailsUserDto.getPhone());
-        detailsUser.setAddress(detailsUserDto.getAddress());
-        return detailsUser;
-    }
+//    public DetailsUser detailsUserDtoToDetailsUser(DetailsUserDto detailsUserDto) {
+////        userRepository.findByUsername()
+//        detailsUser.setFirstName(detailsUserDto.getFirstName());
+//        detailsUser.setLastName(detailsUserDto.getLastName());
+//        detailsUser.setPatronymic(detailsUserDto.getPatronymic());
+//        detailsUser.setPhone(detailsUserDto.getPhone());
+//        detailsUser.setAddress(detailsUserDto.getAddress());
+//        return detailsUser;
+//    }
 }
 
