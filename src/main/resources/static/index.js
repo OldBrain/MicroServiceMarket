@@ -33,7 +33,7 @@
             .when('/personal_account', {
                 templateUrl: 'personal_account/personal_account.html',
                 controller: 'personalAccountController'
-            })
+     
             .when('/statistic', {
                 templateUrl: 'statistic/statistic.html',
                 controller: 'statisticController'
