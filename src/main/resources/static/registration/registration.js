@@ -4,7 +4,6 @@ angular.module('market-front').controller('registrationController', function ($s
 
 
     $scope.createUser = function () {
-        // alert($scope.new_user.username);
         if ($scope.new_user.username == null||$scope.new_user.password == null||$scope.new_user.email == null) {
             alert('Форма не заполнена до конца');
             return;
