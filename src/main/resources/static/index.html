@@ -20,18 +20,18 @@
     <div ng-controller="indexController" class="shadow p-3 mb-5 bg-body rounded">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-<!--            <div class="shadow p-3 mb-5 bg-body rounded">Regular shadow-->
+            <!--            <div class="shadow p-3 mb-5 bg-body rounded">Regular shadow-->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-<!--                        <a href="#!/" class="btn btn-primary" role="button" data-bs-toggle="button">Spring Web Store</a>-->
-                        <a class="nav-link" href="#!/" style="font-weight: bold;">Spring Web Store</a>
+                        <!--                        <a href="#!/" class="btn btn-primary" role="button" data-bs-toggle="button">Spring Web Store</a>-->
+                        <a class="btn btn-outline-dark" href="#!/" style="font-weight: bold;">Spring Web Store</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#!/store">Каталог товаров</a>
+                        <a class="btn btn-outline-primary" href="#!/store">Каталог товаров</a>
                     </li>
-<!--                    О проекте-->
-                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">О проекте</button>
+                    <!--                    О проекте-->
+                    <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">О проекте</button>
 
                     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
                         <div class="offcanvas-header">
@@ -39,9 +39,9 @@
                             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body small">
-                            <h5>Это учебный проект студента образовательного порьала GeekBrains,
+                            <h5>Это учебный проект студента образовательного портала GeekBrains,
                                 факультета Geek University Java-разработки.
-                            Тема: Разработка интернет-магазина на Spring Framework</h5>
+                                Тема: Разработка интернет-магазина на Spring Framework</h5>
 
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                         </ul>
                     </div>
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
-                        <a class="nav-link" href="#!/registration">Регистрация</a>
+                        <a class="btn btn-outline-primary" href="#!/registration">Регистрация</a>
                     </li>
 
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
@@ -83,7 +83,7 @@
                 </ul>
 
             </div>
-<!--            </div>-->
+            <!--            </div>-->
             <!--Корзина Begin-->
             <button type="button" class="btn btn-primary position-relative" ng-click="showCart()">
                 Корзина
@@ -93,7 +93,7 @@
     <span class="visually-hidden">unread messages</span>
   </span>
             </button>
-  <!--Корзина End-->
+            <!--Корзина End-->
 
 
             <li class="nav-item">
@@ -126,8 +126,7 @@
     <script src="personal_account/personal_account.js"></script>
     <script src="create_product/create_product.js"></script>
     <script src="statistic/statistic.js"></script>
-
-<!--    <script src="login/login.js"></script>-->
+    <!--    <script src="login/login.js"></script>-->
 </div>
 </body>
 </html>
