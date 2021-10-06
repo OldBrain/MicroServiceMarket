@@ -44,7 +44,6 @@ create table if not exists orders
     phone      varchar(20),
     address    varchar(255),
     sum        integer,
---     details_id bigserial,
     status_id  bigserial,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
