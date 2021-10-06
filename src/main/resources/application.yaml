@@ -2,22 +2,25 @@ server:
   servlet:
     context-path: /market
   port: 8189
+
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
-    username: sa
-    password:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: postgres
   jpa:
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: false
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+  flyway:
+    url: jdbc:postgresql://localhost:5433/postgres
+    schemas: public
+    user: postgres
+    password: postgres
+    connect-retries: 60
+    validate-on-migrate: true
 jwt:
   secret: oifh4309f8h324098fh4398gh8h*&TG*#&Gg97rgff98gf983h4f983h487g*&^F&Fu3r
   lifetime: 36000000
@@ -27,5 +30,20 @@ redis:
   port: 15850
   password: gCJtMyro3E7LPrdAsxtpQVFpHMBiPKOS
 
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.H2Dialect
+#  h2:
+#    console:
+#      enabled: true
+#      settings:
+#        web-allow-others: false
 
-
+#spring:
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
+#    username: sa
+#    password:
+#  jpa:

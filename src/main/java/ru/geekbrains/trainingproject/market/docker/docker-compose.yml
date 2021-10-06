@@ -1,4 +1,4 @@
-version: '3.2'
+version: '4.1.0'
 
 volumes:
   cloud-postgres:
@@ -6,30 +6,21 @@ volumes:
 
 services:
   postgres:
-    image: library/postgres:latest
-    container_name: market-postgres
-    volumes:
-      - type: volume
-        source: cloud-postgres
-        target: /var/lib/postgresql/dataConfig
-    environment:
-      POSTGRES_DB: market
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
+    image: postgres:9.6
+    domainname: postgres
     ports:
-      - 5434:5432
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-U", "postgres" ]
+      interval: 5s
+      timeout: 1s
+      retries: 2
 
-#  redis:
-#    image: bitnami/redis:latest
-#    container_name: market-redis
-#    volumes:
-#      - type: volume
-#        source: market-redis
-#        target: /var/lib/redis/dataConfig
-#    environment:
-#      - ALLOW_EMPTY_PASSWORD=yes
-#      REDIS_DB: market_cart
-#      REDIS_USER: cart
-#      REDIS_PASSWORD: cart
+
+#  zipkin:
+#    image: openzipkin/zipkin
 #    ports:
-#      - 6379:6379
+#      - "9411:9411"
