@@ -1,13 +1,14 @@
 <div>
     <h4>Персональные данные пользователя {{userdata.username}} email:{{userdata.email}}</h4>
-<!--    <h2>{{userdata.detailsUser.firstName}} {{userdata.detailsUser.lastName}} {{userdata.detailsUser.patronymic}}.</h2>-->
+    <h2>{{userdata.detailsUser.firstName}} {{userdata.detailsUser.lastName}} {{userdata.detailsUser.patronymic}}.</h2>
     <h5>Адрес доставки {{userdata.detailsUser.address}} телефон: {{userdata.detailsUser.phone}}</h5>
 
-    <div class="input-group">
+    <div class="input-group" ng-submit="saveСhanges">
         <span class="input-group-text">ФИО</span>
         <input type="text" aria-label="Фамилия" class="form-control" ng-model="userdata.detailsUser.firstName">
         <input type="text" aria-label="Имя" class="form-control" ng-model="userdata.detailsUser.lastName">
         <input type="text" aria-label="Отчество" class="form-control" ng-model="userdata.detailsUser.patronymic">
+        <button type="submit" class="btn btn-secondary btn-sm">Сохранить</button>
     </div>
 
 
