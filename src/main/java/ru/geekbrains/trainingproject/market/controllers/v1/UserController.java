@@ -85,9 +85,9 @@ public class UserController {
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 
-    @GetMapping("/orders/{userName}")
-    public ResponseEntity<?> getUserOrders(@PathVariable String userName) {
-        UserPersonalAccountDto personalAccountDto =new UserPersonalAccountDto(userService.getUserUserName(userName).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя с именем " + userName)));
-        return new ResponseEntity<>(personalAccountDto,HttpStatus.OK);
-    }
+//    @GetMapping("/orders/{userName}")
+//    public ResponseEntity<?> getUserOrders(@PathVariable String userName) {
+//        UserPersonalAccountDto personalAccountDto =new UserPersonalAccountDto(userService.getUserUserName(userName).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя с именем " + userName)));
+//        return new ResponseEntity<>(personalAccountDto,HttpStatus.OK);
+//    }
 }

@@ -4,7 +4,7 @@ angular.module('market-front').controller('orderConfirmationController', functio
     $scope.createOrder = function () {
         if ($scope.orderDto.detailsUser.firstName == null||$scope.orderDto.detailsUser.lastName == null||
             $scope.orderDto.detailsUser.patronymic == null) {
-            alert("Форма не аполнена");
+            alert("Форма не заполнена");
             return;
         }
         $http({
