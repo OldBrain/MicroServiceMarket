@@ -69,29 +69,5 @@ public class ProductController {
     }
 
 
-    // TODO: Проверить и доработать. Пока не использовать
-    @GetMapping("/filter")
-    public Optional<ProductDto> findAllByPriceIsBetween(
-            @RequestParam(name = "minPrice", required = false) Integer minPrice,
-            @RequestParam(name = "maxPrice", required = false) Integer maxPrice,
-            @RequestParam(defaultValue = "0", name = "p") int pageIndex) {
-        int pageSize = 5;
 
-        if (minPrice == null & maxPrice == null) {
-            Optional<Product> optionalProduct = Optional.ofNullable(productService.findAll().stream().findAny().orElseThrow(() -> new ResourceNotFoundException("Ошибка при получении полного списка продуктов")));
-            return optionalProduct.map(ProductDto::new);
-        }
-
-        if (minPrice != null & maxPrice == null) {
-            Optional<Product> optionalProduct = Optional.ofNullable(productService.findAllByPriceIsMoreThenEqual(minPrice).orElseThrow(() -> new ResourceNotFoundException("По фильтру продуктов нет")));
-            return optionalProduct.map(ProductDto::new);
-        }
-
-        if (minPrice == null & maxPrice != null) {
-            Optional<Product> optionalProduct = Optional.ofNullable(productService.findAllByPriceLessThanEqual(maxPrice).orElseThrow(() -> new ResourceNotFoundException("По фильтру продуктов нет")));
-            return optionalProduct.map(ProductDto::new);
-        }
-        Optional<Product> optionalProduct = Optional.ofNullable(productService.findAllByPriceIsBetween(minPrice, maxPrice).orElseThrow(() -> new ResourceNotFoundException("По фильтру продуктов нет")));
-        return optionalProduct.map(ProductDto::new);
-    }
 }
