@@ -8,15 +8,15 @@ import ru.geekbrains.trainingproject.market.model.Order;
 import ru.geekbrains.trainingproject.market.model.OrderItems;
 import ru.geekbrains.trainingproject.market.repositories.OrderRepository;
 
-import java.util.Collections;
+import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
     public final OrderRepository orderRepository;
-//    public final OrderItemsService orderItemsService;
     public final OrderStatusService orderStatusService;
     public final UserService userService;
 
@@ -66,5 +66,13 @@ public class OrderService {
 
     public List<Order> getAll() {
         return orderRepository.findAll();
+    }
+
+//    public List<OrderDtoShow> findAllByUsername(String userName) {
+//        return orderRepository.findAllByUsername(userName).stream().map(OrderDtoShow::new).collect(Collectors.toList());
+//    }
+
+    public List<Order> findAllByUsername(String userName) {
+        return orderRepository.findAllByUsername(userName);
     }
 }

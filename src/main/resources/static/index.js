@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module('market-front', ['ngRoute', 'ngStorage' ])
+        .module('market-front', ['ngRoute', 'ngStorage'])
         .config(config)
         .run(run);
 
@@ -38,7 +38,10 @@
                 templateUrl: 'statistic/statistic.html',
                 controller: 'statisticController'
             })
-
+            .when('/order_show', {
+                templateUrl: 'order_show/order_show.html',
+                controller: 'orderShowController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -140,8 +143,12 @@ angular.module('market-front').controller('indexController', function ($rootScop
         $location.path("/cart");
     };
 
-    $scope.showOrder = function () {
+    $scope.showPersonalAccount = function () {
         $location.path("/personal_account")
+    };
+
+    $scope.showOrder = function () {
+        $location.path("/order_show")
     };
 
     $rootScope.cartsumm = 0;
