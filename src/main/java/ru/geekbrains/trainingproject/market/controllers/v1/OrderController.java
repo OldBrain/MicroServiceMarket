@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.trainingproject.market.dtos.OrderDto;
-import ru.geekbrains.trainingproject.market.dtos.OrderDtoShow;
 import ru.geekbrains.trainingproject.market.dtos.UserOrderDto;
 import ru.geekbrains.trainingproject.market.model.Order;
 import ru.geekbrains.trainingproject.market.services.CartService;
@@ -29,6 +28,7 @@ public class OrderController {
 
     @GetMapping("")
     public List<Order> findByCurrentUser() {
+        System.out.println("Controller = " + userService.getOrderByCurrentUser().toString());
         return userService.getOrderByCurrentUser();
     }
 

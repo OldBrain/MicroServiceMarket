@@ -15,7 +15,6 @@ public class UserOrderDto {
 //    private List<OrderItems> ordersItems;
     public UserOrderDto(User user) {
         this.orderList = user.getOrderList();
-
         System.out.println("**************"+this.orderList.toString());
 
     }

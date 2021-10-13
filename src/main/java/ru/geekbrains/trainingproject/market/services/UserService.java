@@ -74,7 +74,6 @@ private final UserDataFromHttpRequestUtil userDataFromHttpRequestUtil;
         String currentUserName= userDataFromHttpRequestUtil.getUserName();
         User user = userRepository.findByUsername(currentUserName).get();
         UserOrderDto userOrderDto = new UserOrderDto(user);
-        System.out.println(userOrderDto.getOrderList().toString());
         return userOrderDto.getOrderList();
     }
 }

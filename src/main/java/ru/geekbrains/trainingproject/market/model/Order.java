@@ -1,5 +1,6 @@
 package ru.geekbrains.trainingproject.market.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -42,7 +43,8 @@ public class Order {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @OneToMany

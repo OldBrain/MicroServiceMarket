@@ -1,5 +1,7 @@
 package ru.geekbrains.trainingproject.market.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -26,7 +28,8 @@ public class OrderItems {
     private Integer pricePerProduct;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JsonIgnore
+//    @JoinColumn(name = "order_id")
     Order order;
 
     public OrderItems() {
