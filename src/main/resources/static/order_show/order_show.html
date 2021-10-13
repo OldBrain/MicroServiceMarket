@@ -1,39 +1,39 @@
 <div class="container">
 
     <h4>Мои заказы</h4>
-<!--    <table class="table align-middle">-->
-<!--        <thread scope="col">-->
-<!--            <tr>-->
-<!--                <th scope="col">ID заказа</th>-->
-<!--                <th scope="col">Продукты</th>-->
-<!--                <th scope="col">Стоимость</th>-->
-<!--            </tr>-->
-<!--        </thread>-->
-<!--        <tbody>-->
-<!--        <tr ng-repeat="ord in orders">-->
-<!--            <th scope="row">{{ord.id}}</th>-->
-<!--            <td>-->
-<!--                <table class="table align-middle table-bordered">-->
-<!--                    <thread>-->
-<!--                        <tr>-->
-<!--                            <th scope="col">ID продукта</th>-->
-<!--                            <th scope="col">Название</th>-->
-<!--                            <th scope="col">Количество</th>-->
-<!--                            <th scope="col">Цена продукта</th>-->
-<!--                        </tr>-->
-<!--                    </thread>-->
-<!--                    <tbody>-->
-<!--                    <tr ng-repeat="i in ord.items">-->
-<!--                        <td>{{i.productId}}</td>-->
-<!--                        <td>{{i.productTitle}}</td>-->
-<!--                        <td>{{i.quantity}}</td>-->
-<!--                        <td>{{i.pricePerProduct}}</td>-->
-<!--                    </tr>-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </td>-->
-<!--            <th scope="row">{{ord.price}}</th>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
+    <table class="table align-middle">
+        <thread scope="col">
+            <tr>
+                <th scope="col">ID заказа</th>
+                <th scope="col">Продукты</th>
+                <th scope="col">Стоимость</th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr ng-repeat="ord in orders">
+            <th scope="row">{{ord.id}}</th>
+            <td>
+                <table class="table align-middle table-bordered">
+                    <thread>
+                        <tr>
+                            <th scope="col">ID продукта</th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Количество</th>
+                            <th scope="col">Цена продукта</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                    <tr ng-repeat="i in ord.items">
+                        <td>{{i.productId}}</td>
+                        <td>{{i.productTitle}}</td>
+                        <td>{{i.quantity}}</td>
+                        <td>{{i.pricePerProduct}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <th scope="row">{{ord.price}}</th>
+        </tr>
+        </tbody>
+    </table>
 </div>

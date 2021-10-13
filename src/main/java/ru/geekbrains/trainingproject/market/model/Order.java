@@ -46,9 +46,12 @@ public class Order {
     private User user;
 
     @OneToMany
-            (mappedBy = "order", fetch = FetchType.LAZY,
+            (mappedBy = "order",
                     cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<OrderItems> ordersItems;
+
+
+
 
     @OneToOne()
     @JoinColumn(name = "status_id")
@@ -148,5 +151,20 @@ public class Order {
 
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", last_name='" + last_name + '\'' +
+                ", sum=" + sum +
+                ", patronymic='" + patronymic + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

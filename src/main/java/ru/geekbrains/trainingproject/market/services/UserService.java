@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.trainingproject.market.dtos.UserOrderDto;
 import ru.geekbrains.trainingproject.market.model.Order;
 import ru.geekbrains.trainingproject.market.model.Role;
 import ru.geekbrains.trainingproject.market.model.User;
@@ -72,7 +73,9 @@ private final UserDataFromHttpRequestUtil userDataFromHttpRequestUtil;
     public List<Order> getOrderByCurrentUser() {
         String currentUserName= userDataFromHttpRequestUtil.getUserName();
         User user = userRepository.findByUsername(currentUserName).get();
-        return user.getOrderList();
+        UserOrderDto userOrderDto = new UserOrderDto(user);
+        System.out.println(userOrderDto.getOrderList().toString());
+        return userOrderDto.getOrderList();
     }
 }
 

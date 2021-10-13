@@ -2,3 +2,4 @@ spring:
   profiles:
     active: dev
     test: test
+    work: dev

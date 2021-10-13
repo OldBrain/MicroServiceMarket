@@ -7,7 +7,10 @@ angular.module('market-front').controller('orderShowController', function ($scop
             url: contextPath + 'api/v1/orders',
             method: 'GET'
         }).then(function (response) {
+            alert(response.data);
             $scope.orders = response.data;
+
+
         });
     };
 

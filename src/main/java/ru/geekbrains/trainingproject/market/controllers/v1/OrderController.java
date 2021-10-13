@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.trainingproject.market.dtos.OrderDto;
 import ru.geekbrains.trainingproject.market.dtos.OrderDtoShow;
+import ru.geekbrains.trainingproject.market.dtos.UserOrderDto;
 import ru.geekbrains.trainingproject.market.model.Order;
 import ru.geekbrains.trainingproject.market.services.CartService;
 import ru.geekbrains.trainingproject.market.services.OrderService;
