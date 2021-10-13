@@ -1,4 +1,4 @@
-angular.module('market-front').controller('storeController', function ($scope, $http,$rootScope,$localStorage) {
+angular.module('market-front').controller('storeController', function ($scope, $location, $http,$rootScope,$localStorage) {
     const contextPath = 'http://localhost:8189/market/';
     $scope.currentPage = 1;
 
@@ -9,6 +9,11 @@ angular.module('market-front').controller('storeController', function ($scope, $
         }).then(function (response) {
             $rootScope.setCartSum();
         });
+    };
+
+    $scope.aboutProduct = function (productId) {
+        $rootScope.productId = productId;
+        $location.path("/product_details");
     };
 
     $scope.loadProducts = function (pageIndex = 0) {

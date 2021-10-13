@@ -16,7 +16,7 @@
         <tr ng-repeat="p in productsPage.content">
             <td>{{p.categoryTitle}}</td>
             <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
+            <td><button class="btn btn-outline-primary" ng-click="aboutProduct(p.id)">{{p.title}}</button></td>
             <td>{{p.price}}</td>
             <td>
 <!--                <button class="btn btn-info" ng-click="addCart(p)">Добавить в корзину</button>-->

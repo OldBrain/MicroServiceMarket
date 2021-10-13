@@ -1,45 +1,38 @@
 <div class="container">
 
     <h4>Мои заказы</h4>
-    <table class="table align-middle">
-        <thread scope="col">
-            <tr>
-                <th scope="col">№</th>
-                <th scope="col">Дата</th>
-                <th scope="col">Получатель</th>
-                <th scope="col">Телефон/Адрес</th>
-                <th scope="col">Стоимость</th>
-            </tr>
-        </thread>
-        <tbody>
-        <tr ng-repeat="ord in orders">
-            <th scope="row">{{ord.id}}</th>
-            <th scope="row">{{updatedAt}}</th>
-            <th scope="row">{{ord.first_name}} <br> {{ord.last_name}} <br> {{ord.patronymic}}</th>
-            <th scope="row">{{ord.phone}}<br>{{ord.address}}</th>
-            <th scope="row">{{ord.sum}} руб</th>
-            <td>
-                <table class="table align-middle table-bordered">
-                    <thread>
-                        <tr>
-<!--                            <th scope="col">ID продукта</th>-->
-                            <th scope="col">Название</th>
-                            <th scope="col">Кол-во</th>
-                            <th scope="col">Цена</th>
-                        </tr>
-                    </thread>
-                    <tbody>
-                    <tr ng-repeat="i in ord.ordersItems">
-<!--                        <td>{{i.productId}}</td>-->
-                        <td>{{i.productTitle}}</td>
-                        <td>{{i.quantity}}</td>
-                        <td>{{i.price}}</td>
+    <div ng-repeat="ord in orders" class="card text-white bg-primary mb-3" style="max-width: 90%">
+<!--        <tr ng-repeat="ord in orders">-->
+        <div  class="card-header"><H4>№<kbd>{{ord.id}}</kbd> статус: <kbd>{{ord.orderStatus.title}}</kbd><br>
+            Создан: {{ord.createdAt}} Получатель {{ord.first_name}} {{ord.last_name}} {{ord.patronymic}}</H4>
+        Адрес доставки: {{ord.address}} Телефон: {{ord.phone}}</div>
+        <div class="card-body">
+            <table class="table align-middle table-bordered" >
+
+                <thread>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Кол-во</th>
+                        <th scope="col">Цена(руб)</th>
                     </tr>
-                    </tbody>
-                </table>
-            </td>
-            <th scope="row">{{ord.price}}</th>
-        </tr>
-        </tbody>
-    </table>
+                </thread>
+                <tbody>
+                <tr ng-repeat="i in ord.ordersItems">
+                    <td>{{i.productId}}</td>
+                    <td>{{i.productTitle}}</td>
+                    <td>{{i.quantity}}</td>
+                    <td>{{i.price+ ' x ' + i.quantity + ' = ' + i.price*i.quantity}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="card-text"><H5><kbd>Общая стоимость заказа {{ord.sum}} руб.</kbd></H5>
+            <button class="btn btn-dark" ng-click="#">Оплатить</button></p>
+        </div>
+    </div>
+
+
+
+
+
 </div>
