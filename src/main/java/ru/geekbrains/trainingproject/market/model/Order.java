@@ -1,5 +1,6 @@
 package ru.geekbrains.trainingproject.market.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -42,13 +43,17 @@ public class Order {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @OneToMany
-            (mappedBy = "order", fetch = FetchType.LAZY,
+            (mappedBy = "order",
                     cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<OrderItems> ordersItems;
+
+
+
 
     @OneToOne()
     @JoinColumn(name = "status_id")
@@ -148,5 +153,20 @@ public class Order {
 
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", last_name='" + last_name + '\'' +
+                ", sum=" + sum +
+                ", patronymic='" + patronymic + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

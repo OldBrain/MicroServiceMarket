@@ -2,6 +2,7 @@ package ru.geekbrains.trainingproject.market.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.geekbrains.trainingproject.market.model.Order;
 import ru.geekbrains.trainingproject.market.model.User;
 import ru.geekbrains.trainingproject.market.model.DetailsUser;
 import ru.geekbrains.trainingproject.market.utils.Cart;
@@ -27,4 +28,5 @@ public class OrderDto {
         this.items = cart.getItemListByUserName(username);
         this.totalPrice = cart.getTotalPrice();
     }
+
 }

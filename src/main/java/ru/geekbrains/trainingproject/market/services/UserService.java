@@ -7,13 +7,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.trainingproject.market.dtos.DetailsUserDto;
-import ru.geekbrains.trainingproject.market.model.DetailsUser;
+import ru.geekbrains.trainingproject.market.dtos.UserOrderDto;
+import ru.geekbrains.trainingproject.market.model.Order;
 import ru.geekbrains.trainingproject.market.model.Role;
 import ru.geekbrains.trainingproject.market.model.User;
 import ru.geekbrains.trainingproject.market.repositories.UserRepository;
+import ru.geekbrains.trainingproject.market.utils.UserDataFromHttpRequestUtil;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 //    private final DetailsUser detailsUser;
+private final UserDataFromHttpRequestUtil userDataFromHttpRequestUtil;
 
     public Optional<User> findUserByName(String username) {
         return userRepository.findByUsername(username);
@@ -47,7 +50,7 @@ public class UserService implements UserDetailsService {
                 new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public boolean isExistsUser(String usrname ) {
+    public boolean isExistsUser(String usrname) {
         return userRepository.existsAllByUsernameEquals(usrname);
     }
 
@@ -67,14 +70,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id);
     }
 
-//    public DetailsUser detailsUserDtoToDetailsUser(DetailsUserDto detailsUserDto) {
-////        userRepository.findByUsername()
-//        detailsUser.setFirstName(detailsUserDto.getFirstName());
-//        detailsUser.setLastName(detailsUserDto.getLastName());
-//        detailsUser.setPatronymic(detailsUserDto.getPatronymic());
-//        detailsUser.setPhone(detailsUserDto.getPhone());
-//        detailsUser.setAddress(detailsUserDto.getAddress());
-//        return detailsUser;
-//    }
+    public List<Order> getOrderByCurrentUser() {
+        String currentUserName= userDataFromHttpRequestUtil.getUserName();
+        User user = userRepository.findByUsername(currentUserName).get();
+        UserOrderDto userOrderDto = new UserOrderDto(user);
+        return userOrderDto.getOrderList();
+    }
 }
 

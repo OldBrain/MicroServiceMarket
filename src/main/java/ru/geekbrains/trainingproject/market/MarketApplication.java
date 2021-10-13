@@ -31,6 +31,8 @@ public class MarketApplication {
     public static void main(String[] args) {
         SpringApplication.run(MarketApplication.class, args);
         System.out.println("Application start OK!");
+        System.out.println("see app from url: http://localhost:8189/market/index.html#!/");
+        System.out.println("In test mode, see data console from url: http://localhost:8189/market/h2-console/");
     }
 
 }
