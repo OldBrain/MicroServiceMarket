@@ -9,9 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.trainingproject.market.dtos.DetailsUserDto;
 import ru.geekbrains.trainingproject.market.dtos.OrderDto;
-import ru.geekbrains.trainingproject.market.dtos.UserPersonalAccountDto;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthRequest;
 import ru.geekbrains.trainingproject.market.dtos.security.AuthResponse;
 import ru.geekbrains.trainingproject.market.dtos.security.UserDetailsForRegistrationDto;
