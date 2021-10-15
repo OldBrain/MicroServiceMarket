@@ -23,6 +23,8 @@ public class Cart {
     @JsonIgnore
     private UserDataFromHttpRequestUtil userDataFromHttpRequestUtil;
     @JsonIgnore
+
+    
     private RedisTemplate redisTemplate;
 
     public Cart(UserDataFromHttpRequestUtil userDataFromHttpRequestUtil, RedisTemplate redisTemplate) {

@@ -19,6 +19,24 @@ services:
       timeout: 1s
       retries: 2
 
+  redis_comments:
+    image: redis:5.0.8
+    restart: always
+    volumes:
+      - ./storage/redis_comments/data:/data
+    ports:
+      - 6379:6379
+
+  redis_buy:
+    image: redis:5.0.8
+    restart: always
+    volumes:
+      - ./storage/redis_buy/data:/data
+    ports:
+      - 5000:5000
+
+
+
 
 #  zipkin:
 #    image: openzipkin/zipkin
