@@ -1,8 +1,9 @@
 package ru.geekbrains.trainingproject.market.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.trainingproject.market.config.redis.RedisConnectionConfig;
 import ru.geekbrains.trainingproject.market.exceptions.ResourceNotFoundException;
 import ru.geekbrains.trainingproject.market.model.Product;
 import ru.geekbrains.trainingproject.market.utils.Cart;
@@ -13,14 +14,23 @@ import javax.annotation.PostConstruct;
 @Service
 @RequiredArgsConstructor
 public class CartService {
+
+    @Value("${redis_cart.port}")
+    int cartPort;
+    @Value("${redis_cart.hostname}")
+    String cartHostname;
+    @Value("${redis_cart.password}")
+    String cartPassword;
+
     private final ProductService productService;
     private final UserDataFromHttpRequestUtil tmpUserIdFromHttpRequest;
-    private final RedisTemplate<String, Object> redisTemplate;
+//    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisConnectionConfig redisConnectionConfig;
     private Cart cart;
 
     @PostConstruct
     public void init() {
-        this.cart = new Cart(tmpUserIdFromHttpRequest,redisTemplate);
+        this.cart = new Cart(tmpUserIdFromHttpRequest, redisConnectionConfig.redisTemplate(cartPort,cartHostname,cartPassword));
     }
 
 

@@ -1,0 +1,5 @@
+-- create table if not exists order_items
+-- (
+--     col int not null
+-- );
+-- alter table order_items add column user_id bigint;
