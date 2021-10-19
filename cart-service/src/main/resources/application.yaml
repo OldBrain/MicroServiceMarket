@@ -1,0 +1,14 @@
+server:
+  port: 8191
+  servlet:
+    context-path: /market-cart
+utils:
+  cart:
+    prefix: WEB_MARKET_X_
+integration:
+  product-service:
+    url: http://localhost:8189/market
+
+jwt:
+  secret: oifh4309f8h324098fh4398gh8h*&TG*#&Gg97rgff98gf983h4f983h487g*&^F&Fu3r
+  lifetime: 36000000

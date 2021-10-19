@@ -1,0 +1,51 @@
+<div>
+    <p></p>
+    <h3>Оформление заказа</h3>
+    <h3>Покупатель {{orderDtoOld.detailsUser.firstName}} {{orderDtoOld.detailsUser.lastName}} {{orderDtoOld.detailsUser.patronymic}}</h3>
+    <h5>E-mail: {{orderDtoOld.email}}</h5>
+
+    <table class="table table-success table-striped">
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Количество</td>
+            <td>Цена</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="i in orderDtoOld.items">
+            <td>{{i.productTitle}}</td>
+            <td>
+                {{i.quantity}}
+            </td>
+            <td>{{i.pricePerProduct + ' x ' + i.quantity + ' = ' + i.price}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{'Итого: ' + orderDtoOld.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <h3>Детали заказа</h3>
+    <form novalidate >
+        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="orderDtoOld.detailsUser.firstName">
+        <p></p>
+
+        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="orderDtoOld.detailsUser.lastName">
+        <p></p>
+
+        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="orderDtoOld.detailsUser.patronymic">
+        <p></p>
+
+
+        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDtoOld.detailsUser.phone">
+        <p></p>
+        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="orderDtoOld.detailsUser.address">
+        <p></p>
+        <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && orderDtoOld.items.length > 0">Оформить заказ</button>
+        <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && orderDtoOld.items.length > 0">Оформить заказ</button>
+    </form>
+</div>
