@@ -1,0 +1,93 @@
+package ru.geekbrains.market.gateway;
+
+import io.jsonwebtoken.Claims;
+import io.netty.handler.codec.http.cors.CorsConfigBuilder;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.config.CorsRegistry;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+import ru.geekbrains.market.gateway.security.JwtUtil;
+
+//@RefreshScope
+@Component
+public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
+
+    private JwtUtil jwtUtil;
+    private CorsConfigBuilder corsConfigBuilder;
+
+//    @Autowired
+//    private RouterValidator routerValidator; // custom route validator
+
+    public JwtAuthFilter() {
+        super(Config.class);
+    }
+
+    @Override
+    public GatewayFilter apply(Config config) {
+        return (exchange, chain) -> {
+            ServerHttpRequest request = exchange.getRequest();
+
+            if (!isAuthMissing(request)) {
+                final String token = getAuthHeader(request);
+                if (jwtUtil.isInvalid(token)) {
+                    return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
+                }
+                populateRequestWithHeaders(exchange, token);
+            }
+
+//        if (routerValidator.isSecured.test(request)) {
+//            if (isAuthMissing(request)) {
+//                return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
+//            }
+//            final String token = getAuthHeader(request);
+//            if (jwtUtil.isInvalid(token)) {
+//                return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
+//            }
+//            populateRequestWithHeaders(exchange, token);
+//        }
+
+            return chain.filter(exchange);
+        };
+    }
+
+
+    public static class Config {
+
+    }
+
+
+    private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
+        ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(httpStatus);
+        return response.setComplete();
+    }
+
+    private String getAuthHeader(ServerHttpRequest request) {
+        return request.getHeaders().getOrEmpty("Authorization").get(0).substring(7);
+    }
+
+    private boolean isAuthMissing(ServerHttpRequest request) {
+        if (!request.getHeaders().containsKey("Authorization")) {
+            return true;
+        }
+        if (!request.getHeaders().getOrEmpty("Authorization").get(0).startsWith("Bearer ")) {
+            return true;
+        }
+        return false;
+    }
+
+    private void populateRequestWithHeaders(ServerWebExchange exchange, String token) {
+        Claims claims = jwtUtil.getAllClaimsFromToken(token);
+        exchange.getRequest().mutate()
+                .header("username", claims.getSubject())
+//                .header("role", String.valueOf(claims.get("role")))
+                .build();
+    }
+}

@@ -2,6 +2,7 @@ package ru.geekbrains.market.core.controllers.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -20,16 +21,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
+//@CrossOrigin("*")
 public class ProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
     private final ConverterModelToDto converterModelToDto;
 
-
-
     @GetMapping()
-
     public Page<ProductDto> findAll(@RequestParam(defaultValue = "0", name = "p") int pageIndex) {
         if (pageIndex < 0) {
             pageIndex = 0;

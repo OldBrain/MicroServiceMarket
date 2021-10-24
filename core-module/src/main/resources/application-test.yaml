@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /market
+    context-path: /market-core
   port: 8189
 #  see app from url: http://localhost:8189/market/index.html#!/
 spring:

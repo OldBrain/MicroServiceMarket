@@ -10,18 +10,20 @@ import ru.geekbrains.market.cartservice.avbugorov.services.CartService;
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CartController {
     private final CartService cartService;
     private final ProductServiceIntegration productServiceIntegration;
+//    private final ProductServiceIntegration productServiceIntegration;
 
     @GetMapping("")
     public Cart getCartForCurrentUser() {
         return cartService.getCartForCurrentUser();
     }
 
-    @GetMapping("/add/")
-    public void addToCart( @RequestBody ProductDto product) {
-        cartService.addItem(product);
+    @GetMapping("/add/{productId}")
+    public void addToCart(@PathVariable Long productId) {
+    cartService.addItem(productServiceIntegration.getProductById(productId));
     }
 
     @GetMapping("/clear")

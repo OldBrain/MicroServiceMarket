@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /market
+    context-path: /market-core
   port: 8189
 
 spring:

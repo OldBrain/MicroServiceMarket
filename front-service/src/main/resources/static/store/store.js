@@ -1,10 +1,11 @@
 angular.module('market-front').controller('storeController', function ($scope, $location, $http,$rootScope,$localStorage) {
-    const contextPath = 'http://localhost:8189/market/';
+    // const contextPath = 'http://localhost:8189/market/';
+    const contextPath = 'http://localhost:5555/core/';
     $scope.currentPage = 1;
 
     $scope.addToCart = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/add/' + productId,
+            url: $rootScope.cartContextPath  + 'api/v1/cart/add/' + productId,
             method: 'GET'
         }).then(function (response) {
             $rootScope.setCartSum();
@@ -18,12 +19,14 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
     $scope.loadProducts = function (pageIndex = 0) {
         $http({
-            url: contextPath + "api/v1/products",
+            // http://localhost:5555/core/api/v1/products
+            url: $rootScope.coreContextPath + "api/v1/products",
             method: 'GET',
             params: {
                 p: pageIndex
             }
         }).then(function (response) {
+
             console.log(response.data);
             $scope.productsPage = response.data;
             $scope.totalPages = $scope.productsPage.totalPages;
@@ -40,10 +43,9 @@ angular.module('market-front').controller('storeController', function ($scope, $
     };
 
 
-
     $scope.loadProducts();
 
-    $rootScope.getOrSaveTmpId();
-    $rootScope.setLkName();
+    // $rootScope.getOrSaveTmpId();
+    // $rootScope.setLkName();
 });
 

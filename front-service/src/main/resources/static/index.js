@@ -5,6 +5,9 @@
         .run(run);
 
     function config($routeProvider) {
+
+
+
         $routeProvider
             .when('/', {
                 templateUrl: 'welcome/welcome.html',
@@ -52,6 +55,9 @@
     }
 
     function run($rootScope, $http, $localStorage) {
+        $rootScope.coreContextPath = 'http://localhost:5555/core/';
+        $rootScope.cartContextPath = 'http://localhost:5555/cart/';
+        http://localhost:5555/core/api/v1/products
         if ($localStorage.webMarketUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
         }
@@ -61,10 +67,10 @@
 
 
 angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
-    const contextPath = 'http://localhost:8189/market/';
+    // const contextPath = 'http://localhost:8189/market/';
 
     $scope.tryToAuth = function () {
-        $http.post(contextPath + 'api/v1/auth', $scope.user)
+        $http.post($rootScope.coreContextPath + 'api/v1/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -123,11 +129,12 @@ angular.module('market-front').controller('indexController', function ($rootScop
 
         $rootScope.cartsumm = 0;
         $http({
-            url: contextPath + 'api/v1/cart/sum/',
+            url: $rootScope.cartContextPath + 'api/v1/cart/sum/',
             method: 'GET'
         }).then(function (response) {
             $scope.totalSum = response.data;
             $rootScope.cartsumm = $scope.totalSum;
+            alert($rootScope.cartContextPath + 'api/v1/cart/sum/')
         });
     };
 
@@ -141,7 +148,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
             $http.defaults.headers.common.name = null;
         }
         if (!$rootScope.isUserLoggedIn() && !$localStorage.tmpId) {
-            $http.get(contextPath + 'api/v1/auth/getid')
+            $http.get($rootScope.coreContextPath + 'api/v1/auth/getid')
                 .then(function (response) {
                     $scope.tmpId = response.data;
                     $http.defaults.headers.common.tmpId = 'tmpId ' + $scope.tmpId;
@@ -165,9 +172,9 @@ angular.module('market-front').controller('indexController', function ($rootScop
         $location.path("/order_show")
     };
 
-    $rootScope.cartsumm = 0;
-    $rootScope.getOrSaveTmpId();
-    $rootScope.setCartSum();
-    $rootScope.setLkName();
+    // $rootScope.cartsumm = 0;
+    // $rootScope.getOrSaveTmpId();
+    // $rootScope.setCartSum();
+    // $rootScope.setLkName();
 
 });

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
 import ru.geekbrains.market.api.dtos.modeldtos.ProductDto;
 import ru.geekbrains.market.api.exeptions.ResourceNotFoundException;
 import ru.geekbrains.market.core.model.Category;
@@ -23,7 +24,6 @@ public class ProductService {
     public List<Product> findAll() {
         return productRepository.findAll();
     }
-
 
 public Page<Product> findAllPageByPage(int pageIndex, int pageSize) {
     return productRepository.findAll(PageRequest.of(pageIndex,pageSize));

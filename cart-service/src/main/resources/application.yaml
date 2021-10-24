@@ -7,7 +7,7 @@ utils:
     prefix: WEB_MARKET_X_
 integration:
   product-service:
-    url: http://localhost:8189/market
+    url: http://localhost:8189/market-core
 
 jwt:
   secret: oifh4309f8h324098fh4398gh8h*&TG*#&Gg97rgff98gf983h4f983h487g*&^F&Fu3r
