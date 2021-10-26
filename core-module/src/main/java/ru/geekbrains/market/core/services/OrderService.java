@@ -3,72 +3,63 @@ package ru.geekbrains.market.core.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.geekbrains.market.api.dtos.cart.CartDto;
-import ru.geekbrains.market.api.dtos.cart.CartItemsDto;
-import ru.geekbrains.market.api.dtos.modeldtos.OrderDto;
-import ru.geekbrains.market.api.dtos.modeldtos.OrderItemsDto;
-import ru.geekbrains.market.api.exeptions.ResourceNotFoundException;
+import ru.geekbrains.market.api.dtos.CartDto;
+import ru.geekbrains.market.api.dtos.OrderDetailsDto;
+import ru.geekbrains.market.api.dtos.OrderDto;
+import ru.geekbrains.market.api.dtos.OrderItemDto;
+import ru.geekbrains.market.api.exceptions.ResourceNotFoundException;
 import ru.geekbrains.market.core.integration.CartServiceIntegration;
 import ru.geekbrains.market.core.model.Order;
-import ru.geekbrains.market.core.model.OrderItems;
+import ru.geekbrains.market.core.model.OrderItem;
 import ru.geekbrains.market.core.repositories.OrderRepository;
-import ru.geekbrains.market.core.utils.UserNameFromHttpRequestUtil;
-import ru.geekbrains.market.core.utils.converters.ConverterDtoToModel;
-import ru.geekbrains.market.core.utils.converters.ConverterModelToDto;
-import java.util.LinkedList;
+import ru.geekbrains.market.core.utils.Converter;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    public final OrderRepository orderRepository;
-    public final OrderStatusService orderStatusService;
-    public final UserService userService;
-    public final ConverterDtoToModel converterDtoToModel;
+    private final OrderRepository orderRepository;
     private final CartServiceIntegration cartServiceIntegration;
-    private final UserNameFromHttpRequestUtil userNameFromHttpRequestUtil;
-    public void saveOrder(Order order) {
-        orderRepository.save(order);
-    }
-
-    public void createAndSaveOrder(OrderDto orderDto) {
-        Order order = createOrderFromOrderDto(orderDto);
-        saveOrder(order);
-    }
-
+    private final ProductService productService;
+    private final Converter converter;
 
     @Transactional
-    public Order createOrderFromOrderDto(OrderDto orderDto) {
-        Order order = converterDtoToModel.orderFromOrderDto(orderDto);
-        String currentUserName = userNameFromHttpRequestUtil.getUserCurrentName();
-        CartDto cart = cartServiceIntegration.getUserCartDto();
-        List<OrderItems> itemsList = new LinkedList<>();
-
-        for (OrderItemsDto item : cart.getItems()) {
-          OrderItems orderItems = new OrderItems();
-           itemsList.add(cartItemDtoToOrderItems(item, orderItems, order));
+    public Order createOrder(String username, OrderDetailsDto orderDetailsDto) {
+        CartDto cart = cartServiceIntegration.getUserCartDto(username);
+        Order order = new Order();
+        order.setUsername(username);
+        order.setPrice(cart.getTotalPrice());
+        order.setAddress(orderDetailsDto.getAddress());
+        order.setPhone(orderDetailsDto.getPhone());
+        List<OrderItem> items = new ArrayList<>();
+        for (OrderItemDto i : cart.getItems()) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setPrice(i.getPrice());
+            orderItem.setPricePerProduct(i.getPricePerProduct());
+            orderItem.setQuantity(i.getQuantity());
+            orderItem.setProduct(productService.findById(i.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти продукт при оформлении заказа. ID продукта: " + i.getProductId())));
+            items.add(orderItem);
         }
-        order.setOrdersItems(itemsList);
-        // Начальный статус заказа сформирован
-        order.setOrderStatus(orderStatusService.getOrderStatusById(1l));
+        order.setItems(items);
+        orderRepository.save(order);
+        cartServiceIntegration.clearUserCart(username);
         return order;
     }
 
-    private OrderItems cartItemDtoToOrderItems(OrderItemsDto item, OrderItems orderItems, Order order) {
-        orderItems.setOrder(order);
-        orderItems.setProductId(item.getProductId());
-        orderItems.setProductTitle(item.getProductTitle());
-        orderItems.setQuantity(item.getQuantity());
-        orderItems.setPricePerProduct(item.getPricePerProduct());
-        orderItems.setPrice(item.getPrice());
-        return orderItems;
+    public Optional<Order> findById(Long id) {
+        return orderRepository.findById(id);
     }
 
-    public List<Order> getAll() {
-        return orderRepository.findAll();
+    @Transactional
+    public Optional<OrderDto> findDtoByIdAndUsername(Long id, String username) {
+        return orderRepository.findOneByIdAndUsername(id, username).map(o -> converter.orderToDto(o));
     }
 
-    public List<Order> findAllByUsername(String userName) {
-        return orderRepository.findAllByUsername(userName);
+    public List<Order> findAllByUsername(String username) {
+        return orderRepository.findAllByUsername(username);
     }
 }

@@ -1,5 +1,21 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /market-core
 spring:
-  profiles:
-    active: dev
-    test: test
-    work: dev
+  application:
+    name: core-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+    open-in-view: false
+integration:
+  cart-service:
+    url: http://localhost:8191/market-cart

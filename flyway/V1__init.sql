@@ -72,6 +72,8 @@ CREATE TABLE products
     category_id bigint references categories (id)
 );
 
+
+
 insert into products (title, price, category_id)
 values ('bread', 5, 1),
        ('milk', 20, 1),

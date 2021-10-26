@@ -1,26 +1,21 @@
 package ru.geekbrains.market.gateway;
 
 import io.jsonwebtoken.Claims;
-import io.netty.handler.codec.http.cors.CorsConfigBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.config.CorsRegistry;
-import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import ru.geekbrains.market.gateway.security.JwtUtil;
 
 //@RefreshScope
 @Component
 public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
-
-    private JwtUtil jwtUtil;
-    private CorsConfigBuilder corsConfigBuilder;
+    @Autowired
+    private ru.geekbrains.market.gateway.JwtUtil jwtUtil;
 
 //    @Autowired
 //    private RouterValidator routerValidator; // custom route validator
@@ -57,11 +52,8 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
         };
     }
 
-
     public static class Config {
-
     }
-
 
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
