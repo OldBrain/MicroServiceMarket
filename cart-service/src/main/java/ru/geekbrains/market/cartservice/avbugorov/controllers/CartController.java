@@ -22,6 +22,12 @@ public class CartController {
         return new CartDto(cart.getItems(), cart.getTotalPrice());
     }
 
+    @GetMapping("/summ/{uuid}")
+    public Integer getCartSumm(@RequestHeader(required = false) String username, @PathVariable String uuid) {
+        Cart cart = cartService.getCurrentCart(getCurrentCartUuid(username, uuid));
+        return cart.getTotalPrice();
+    }
+
     @GetMapping("/generate")
     public StringResponse getCart() {
         return new StringResponse(cartService.generateCartUuid());

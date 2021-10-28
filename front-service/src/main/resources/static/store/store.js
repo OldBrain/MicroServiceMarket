@@ -5,7 +5,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
     $scope.addToCart = function (productId) {
         $http({
-            url: $rootScope.cartContextPath  + 'api/v1/cart/add/' + productId,
+            url: 'http://localhost:5555/cart/api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + productId,
             method: 'GET'
         }).then(function (response) {
             $rootScope.setCartSum();
@@ -19,7 +19,6 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
     $scope.loadProducts = function (pageIndex = 0) {
         $http({
-            // http://localhost:5555/core/api/v1/products
             url: $rootScope.coreContextPath + "api/v1/products",
             method: 'GET',
             params: {
@@ -44,8 +43,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
 
     $scope.loadProducts();
-
-    // $rootScope.getOrSaveTmpId();
-    // $rootScope.setLkName();
+    $rootScope.setCartSum();
+    $rootScope.setLkName();
 });
 

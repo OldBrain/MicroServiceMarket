@@ -54,12 +54,19 @@
             });
     }
 
+
     function run($rootScope, $http, $localStorage) {
         $rootScope.coreContextPath = 'http://localhost:5555/core/';
         $rootScope.cartContextPath = 'http://localhost:5555/cart/';
-        http://localhost:5555/core/api/v1/products
+
         if ($localStorage.webMarketUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
+        }
+        if (!$localStorage.webMarketGuestCartId) {
+            $http.get('http://localhost:5555/cart/api/v1/cart/generate')
+                .then(function successCallback(response) {
+                    $localStorage.webMarketGuestCartId = response.data.value;
+                });
         }
     }
 
@@ -67,30 +74,27 @@
 
 
 angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
-    // const contextPath = 'http://localhost:8189/market/';
 
     $scope.tryToAuth = function () {
-        $http.post($rootScope.coreContextPath + 'api/v1/auth', $scope.user)
+        alert($scope.user)
+        $http.post('http://localhost:5555/auth/api/v1/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-                    $http.defaults.headers.common.name = 'name ' + $scope.user.username;
                     $localStorage.webMarketUser = {username: $scope.user.username, token: response.data.token};
-                    $rootScope.lkname = $scope.user.username;
-
 
                     $scope.user.username = null;
                     $scope.user.password = null;
-                    $location.path("/");
-                    $rootScope.setCartSum();
+
+                    $http.get('http://localhost:5555/cart/api/v1/cart/' + $localStorage.webMarketGuestCartId + '/merge')
+                        .then(function successCallback(response) {
+                        });
                 }
             }, function errorCallback(response) {
-                alert(response.data.message)
             });
     };
 
     $scope.tryToLogout = function () {
-        $location.path("/");
         $scope.clearUser();
         if ($scope.user.username) {
             $scope.user.username = null;
@@ -99,7 +103,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
             $scope.user.password = null;
         }
 
-        $rootScope.setCartSum();
+        $location.path('/');
     };
 
     $scope.clearUser = function () {
@@ -126,39 +130,38 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $rootScope.setCartSum = function () {
-
         $rootScope.cartsumm = 0;
         $http({
-            url: $rootScope.cartContextPath + 'api/v1/cart/sum/',
+            url: 'http://localhost:5555/cart/'+ 'api/v1/cart/summ/' + $localStorage.webMarketGuestCartId,
             method: 'GET'
         }).then(function (response) {
             $scope.totalSum = response.data;
             $rootScope.cartsumm = $scope.totalSum;
-            alert($rootScope.cartContextPath + 'api/v1/cart/sum/')
+            // alert('http://localhost:5555/cart/'+ 'api/v1/cart/summ/' + $localStorage.webMarketGuestCartId)
         });
     };
 
-    $rootScope.getOrSaveTmpId = function () {
-        if ($localStorage.tmpId) {
-            $http.defaults.headers.common.tmpId = 'tmpId ' + $localStorage.tmpId.tmpId;
-        }
-        if ($rootScope.isUserLoggedIn()) {
-            $http.defaults.headers.common.name = 'name ' + $localStorage.webMarketUser.username;
-        } else {
-            $http.defaults.headers.common.name = null;
-        }
-        if (!$rootScope.isUserLoggedIn() && !$localStorage.tmpId) {
-            $http.get($rootScope.coreContextPath + 'api/v1/auth/getid')
-                .then(function (response) {
-                    $scope.tmpId = response.data;
-                    $http.defaults.headers.common.tmpId = 'tmpId ' + $scope.tmpId;
-                    $localStorage.tmpId = {tmpId: $scope.tmpId};
-                    alert($localStorage.tmpId.tmpId);
-                });
-        }
-
-
-    };
+    // $rootScope.getOrSaveTmpId = function () {
+    //     if ($localStorage.tmpId) {
+    //         $http.defaults.headers.common.tmpId = 'tmpId ' + $localStorage.tmpId.tmpId;
+    //     }
+    //     if ($rootScope.isUserLoggedIn()) {
+    //         $http.defaults.headers.common.name = 'name ' + $localStorage.webMarketUser.username;
+    //     } else {
+    //         $http.defaults.headers.common.name = null;
+    //     }
+    //     if (!$rootScope.isUserLoggedIn() && !$localStorage.tmpId) {
+    //         $http.get($rootScope.coreContextPath + 'api/v1/auth/getid')
+    //             .then(function (response) {
+    //                 $scope.tmpId = response.data;
+    //                 $http.defaults.headers.common.tmpId = 'tmpId ' + $scope.tmpId;
+    //                 $localStorage.tmpId = {tmpId: $scope.tmpId};
+    //                 // alert($localStorage.tmpId.tmpId);
+    //             });
+    //     }
+    //
+    //
+    // };
 
     $scope.showCart = function () {
         $location.path("/cart");
@@ -172,9 +175,9 @@ angular.module('market-front').controller('indexController', function ($rootScop
         $location.path("/order_show")
     };
 
-    // $rootScope.cartsumm = 0;
+    $rootScope.cartsumm = 0;
     // $rootScope.getOrSaveTmpId();
-    // $rootScope.setCartSum();
-    // $rootScope.setLkName();
+    $rootScope.setCartSum();
+    $rootScope.setLkName();
 
 });

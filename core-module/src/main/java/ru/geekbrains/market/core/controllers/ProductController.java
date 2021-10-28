@@ -34,21 +34,17 @@ public class ProductController {
         return productService.findAllPageByPage(pageIndex, 5).map(p -> converter.productToDto(p));
     }
 
-//    @GetMapping
-//    public Page<ProductDto> findAll(
-//            @RequestParam(defaultValue = "1", name = "p") int pageIndex,
-//            @RequestParam MultiValueMap<String, String> params
-//    ) {
-//        if (pageIndex < 1) {
-//            pageIndex = 1;
-//        }
-//        return productService.findAll(pageIndex - 1, 10, params).map(p -> converter.productToDto(p));
+//    @GetMapping("/{id}")
+//    public ProductDto findById(@PathVariable Long id) {
+//        Product p = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product id = " + id + " not found"));
+//        return converter.productToDto(p);
 //    }
 
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
-        Product p = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product id = " + id + " not found"));
-        return converter.productToDto(p);
+        Product product = productService.findById(id).orElseThrow(()
+                -> new ResourceNotFoundException("product id " + id + "not found"));
+        return converter.productToDto(product);
     }
 
     @PostMapping

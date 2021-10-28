@@ -1,45 +1,44 @@
-angular.module('market-front').controller('cartController', function ($scope, $http, $location,$localStorage,$rootScope) {
-    const contextPath = 'http://localhost:8189/market/';
+angular.module('market-front').controller('cartController', function ($scope, $http, $location, $localStorage, $rootScope) {
+    const contextPath = 'http://localhost:5555/cart/';
 
     $scope.loadCart = function () {
-        $rootScope.cartsumm=0;
         $http({
-            url: contextPath + 'api/v1/cart',
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId,
             method: 'GET'
         }).then(function (response) {
             $scope.cart = response.data;
-            $rootScope.cartsumm = $scope.cart.totalPrice;
         });
     };
 
     $scope.incrementItem = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/add/' + productId,
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/add/' + productId,
             method: 'GET'
         }).then(function (response) {
             $scope.loadCart();
+            $rootScope.setCartSum();
         });
     };
 
     $scope.decrementItem = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/decrement/' + productId,
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/decrement/' + productId,
             method: 'GET'
         }).then(function (response) {
             $scope.loadCart();
+            $rootScope.setCartSum();
         });
     };
 
     $scope.removeItem = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/remove/' + productId,
+            url: contextPath + 'api/v1/cart/' + $localStorage.webMarketGuestCartId + '/remove/' + productId,
             method: 'GET'
         }).then(function (response) {
             $scope.loadCart();
+            $rootScope.setCartSum();
         });
     };
-
-
 
     $scope.checkOut = function () {
         $location.path("/order_confirmation");
@@ -50,4 +49,5 @@ angular.module('market-front').controller('cartController', function ($scope, $h
     }
 
     $scope.loadCart();
+    $rootScope.setCartSum();
 });

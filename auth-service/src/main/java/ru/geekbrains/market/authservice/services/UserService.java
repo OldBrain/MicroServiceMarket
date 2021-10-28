@@ -32,7 +32,21 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
+
+
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    public boolean isExistsUser(String usrname) {
+        return userRepository.existsAllByUsernameEquals(usrname);
+    }
+
+    public boolean isExistsEmail(String email) {
+        return userRepository.existsAllByEmailEquals(email);
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
     }
 }

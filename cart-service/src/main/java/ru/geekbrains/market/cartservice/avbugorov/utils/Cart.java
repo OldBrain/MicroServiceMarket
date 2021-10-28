@@ -78,4 +78,9 @@ public class Cart {
         recalculate();
         another.clear();
     }
+
+    public int getTotalPrice() {
+        recalculate();
+        return totalPrice;
+    }
 }

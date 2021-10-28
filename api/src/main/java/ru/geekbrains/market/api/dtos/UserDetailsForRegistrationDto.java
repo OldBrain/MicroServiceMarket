@@ -1,8 +1,11 @@
 package ru.geekbrains.market.api.dtos;
 
-public class AuthRequest {
+
+public class UserDetailsForRegistrationDto {
     private String username;
     private String password;
+    private String email;
+    private DetailsUserDto detailsUser;
 
     public String getUsername() {
         return username;
@@ -20,11 +23,19 @@ public class AuthRequest {
         this.password = password;
     }
 
-    public AuthRequest() {
+    public String getEmail() {
+        return email;
     }
 
-    public AuthRequest(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public DetailsUserDto getDetailsUser() {
+        return detailsUser;
+    }
+
+    public void setDetailsUser(DetailsUserDto detailsUser) {
+        this.detailsUser = detailsUser;
     }
 }
