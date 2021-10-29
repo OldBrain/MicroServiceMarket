@@ -1,36 +1,55 @@
 <div>
-    <h4>Персональные данные пользователя {{userdata.username}} email:{{userdata.email}}</h4>
-    <h2>{{userdata.detailsUser.firstName}} {{userdata.detailsUser.lastName}} {{userdata.detailsUser.patronymic}}.</h2>
-    <h5>Адрес доставки {{userdata.detailsUser.address}} телефон: {{userdata.detailsUser.phone}}</h5>
+    <h4>Персональные данные пользователя {{userD.username}} email:{{userD.email}}</h4>
+    <h2>{{userD.detailsUserDtoList[0].firstName}} {{userD.detailsUserDtoList[0].lastName}} {{userD.detailsUserDtoList[0].patronymic}}.</h2>
+    <h5>Адрес доставки {{userD.detailsUserDtoList[0].address}} телефон: {{userD.detailsUserDtoList[0].phone}}</h5>
 
     <div class="input-group" ng-submit="saveСhanges">
         <span class="input-group-text">ФИО</span>
-        <input type="text" aria-label="Фамилия" class="form-control" ng-model="userdata.detailsUserDto.firstName">
-        <input type="text" aria-label="Имя" class="form-control" ng-model="userdata.detailsUserDto.lastName">
-        <input type="text" aria-label="Отчество" class="form-control" ng-model="userdata.detailsUserDto.patronymic">
+        <input type="text" aria-label="Фамилия" class="form-control" ng-model="userD.detailsUserDtoList[0].firstName">
+        <input type="text" aria-label="Имя" class="form-control" ng-model="userD.detailsUserDtoList[0].lastName">
+        <input type="text" aria-label="Отчество" class="form-control" ng-model="userD.detailsUserDtoList[0].patronymic">
         <button type="submit" class="btn btn-secondary btn-sm">Сохранить</button>
     </div>
 
 
-    <h2>Список заказов</h2>
+    <h4>Список не оплаченных заказов</h4>
 
-<!--    <table class="table" ng-show="cart.items.length > 0">-->
-        <!--  <table class="table" >-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <td>Номер</td>-->
-<!--            <td>Дата</td>-->
-<!--            <td>Цена</td>-->
-<!--            <td>Адрес доставки</td>-->
+    <table class="table align-middle">
+        <thread scope="col">
+            <tr>
+                <th scope="col">ID заказа</th>
+                <th scope="col">Продукты</th>
+                <th scope="col">Стоимость</th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr ng-repeat="ord in orders">
+            <th scope="row">{{ord.id}}</th>
+            <td>
+                <table class="table align-middle table-bordered">
+                    <thread>
+                        <tr>
+                            <th scope="col">ID продукта</th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Количество</th>
+                            <th scope="col">Цена продукта</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                    <tr ng-repeat="i in ord.items">
+                        <td>{{i.productId}}</td>
+                        <td>{{i.productTitle}}</td>
+                        <td>{{i.quantity}}</td>
+                        <td>{{i.pricePerProduct}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <th scope="row">{{ord.price}}</th>
+        </tr>
+        </tbody>
+    </table>
 
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr ng-repeat="i in userdata.orderList">-->
-<!--            <td>{{i.id}}</td>-->
-<!--            <td>{{i.createdAt}}</td>-->
-<!--            <td>{{i.sum}}</td>-->
-<!--        </tr>-->
 
             <td></td>
             <td></td>

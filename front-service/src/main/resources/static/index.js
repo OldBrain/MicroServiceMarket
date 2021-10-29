@@ -49,6 +49,11 @@
                 templateUrl: 'order_show/order_show.html',
                 controller: 'orderShowController'
             })
+            .when('/order_pay', {
+                templateUrl: 'order_pay/order_pay.html',
+                controller: 'orderPayController'
+            })
+
             .otherwise({
                 redirectTo: '/'
             });

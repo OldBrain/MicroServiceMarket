@@ -9,6 +9,7 @@ public class MarketFrontApplication {
     public static void main(String[] args) {
         SpringApplication.run(MarketFrontApplication.class, args);
         System.out.println("Front application start OK!");
+        System.out.println("http://localhost:3000/market/index.html#!/");
     }
 
 }

@@ -27,11 +27,12 @@ public class ProductController {
     private final Converter converter;
 
     @GetMapping()
-    public Page<ProductDto> findAll(@RequestParam(defaultValue = "0", name = "p") int pageIndex) {
+    public Page<ProductDto> findAll(@RequestParam(defaultValue = "0", name = "p") int pageIndex,
+                                    @RequestParam MultiValueMap<String, String> params) {
         if (pageIndex < 0) {
             pageIndex = 0;
         }
-        return productService.findAllPageByPage(pageIndex, 5).map(p -> converter.productToDto(p));
+        return productService.findAllPageByPage(pageIndex, 5, params).map(p -> converter.productToDto(p));
     }
 
 //    @GetMapping("/{id}")

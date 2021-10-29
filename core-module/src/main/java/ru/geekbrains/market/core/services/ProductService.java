@@ -31,8 +31,8 @@ public class ProductService {
         return productRepository.findAll(constructSpecification(rqParams), PageRequest.of(pageIndex, pageSize));
     }
 
-    public Page<Product> findAllPageByPage(int pageIndex, int pageSize) {
-        return productRepository.findAll(PageRequest.of(pageIndex,pageSize));
+    public Page<Product> findAllPageByPage(int pageIndex, int pageSize, MultiValueMap<String, String> rqParams) {
+        return productRepository.findAll(constructSpecification(rqParams),PageRequest.of(pageIndex,pageSize));
 
     }
 

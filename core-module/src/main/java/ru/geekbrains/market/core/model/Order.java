@@ -33,6 +33,15 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "last_name")
+    private String last_name;
+
+    @Column(name = "patronymic")
+    private String patronymic;
+
+    @Column(name = "first_name")
+    private String first_name;
+
     @Column
     private String username;
 
@@ -55,4 +64,8 @@ public class Order {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToOne()
+    @JoinColumn(name = "status_id")
+    private OrderStatus orderStatus;
 }

@@ -4,6 +4,14 @@ create table categories
     title varchar(255)
 );
 
+CREATE TABLE products
+(
+    id          bigserial primary key,
+    title       VARCHAR(255),
+    price       INTEGER,
+    category_id bigint references categories (id)
+);
+
 insert into categories (title)
 values ('Food');
 
@@ -20,7 +28,7 @@ create table if not exists user_details
 create table users
 (
     id         bigserial primary key,
-    username   varchar(30) not null,
+    username   varchar(30) not null unique,
     password   varchar(80) not null,
     email      varchar(50) unique,
     created_at timestamp default current_timestamp,
@@ -38,6 +46,7 @@ create table order_status
 create table if not exists orders
 (
     id         bigserial primary key,
+    username   varchar(30) references users (username),
     last_name  varchar(100),
     patronymic varchar(100),
     first_name varchar(100),
@@ -47,30 +56,23 @@ create table if not exists orders
     status_id  bigserial,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
-    user_id    bigint references users(id),
     foreign key (status_id) references order_status (id)
 );
 
 create table order_items
 (
-    id bigserial primary key,
-    product_id bigint,
-    product_title varchar(100),
-    quantity     integer,
-    price        integer,
+    id                bigserial primary key,
+    order_id          bigint references orders (id),
+    product_id        bigserial references products (id),
+    quantity          integer,
     price_per_product integer,
-    order_id bigint,
-    foreign key (order_id) references orders (id)
+    price             integer,
+    created_at        timestamp default current_timestamp,
+    updated_at        timestamp default current_timestamp
 );
 
 
-CREATE TABLE products
-(
-    id          bigserial primary key,
-    title       VARCHAR(255),
-    price       INTEGER,
-    category_id bigint references categories (id)
-);
+
 
 
 
@@ -137,5 +139,8 @@ insert into users_roles (user_id, role_id)
 values (1, 1),
        (2, 2);
 
-insert into orders(last_name, patronymic, first_name, phone, address, sum, user_id, status_id)
-values ('Владимир', 'Иванович', 'Тестов', '+7(905)555-555', 'Москва, Кремль', '10099', 1, 1);
+insert into orders(last_name, patronymic, first_name, phone, address, sum, username, status_id)
+values ('Владимир', 'Иванович', 'Тестов', '+7(905)555-555', 'Москва, Кремль', '10099', 'admin', 1);
+
+insert into order_items (order_id, product_id, quantity, price_per_product, price)
+values (1, 1, 4, 25, 100);

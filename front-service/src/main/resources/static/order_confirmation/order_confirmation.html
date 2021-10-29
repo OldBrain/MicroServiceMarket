@@ -1,8 +1,8 @@
 <div>
     <p></p>
     <h3>Оформление заказа</h3>
-    <h3>Покупатель {{orderDtoOld.detailsUser.firstName}} {{orderDtoOld.detailsUser.lastName}} {{orderDtoOld.detailsUser.patronymic}}</h3>
-    <h5>E-mail: {{orderDtoOld.email}}</h5>
+    <h3>Покупатель {{userD.detailsUserDtoList[0].lastName}} {{userD.detailsUserDtoList[0].lastName}} {{userD.detailsUserDtoList[0].patronymic}}</h3>
+    <h5>E-mail: {{userD.email}}</h5>
 
     <table class="table table-success table-striped">
         <thead>
@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="i in orderDtoOld.items">
+        <tr ng-repeat="i in cart.items">
             <td>{{i.productTitle}}</td>
             <td>
                 {{i.quantity}}
@@ -30,22 +30,22 @@
 
     <p></p>
     <h3>Детали заказа</h3>
-    <form novalidate >
-        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="orderDtoOld.detailsUser.firstName">
+    <form novalidate ng-submit="createOrder()">
+        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="userD.detailsUserDtoList[0].firstName">
         <p></p>
 
-        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="orderDtoOld.detailsUser.lastName">
+        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="userD.detailsUserDtoList[0].lastName">
         <p></p>
 
-        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="orderDtoOld.detailsUser.patronymic">
+        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="userD.detailsUserDtoList[0].patronymic">
         <p></p>
 
 
-        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDtoOld.detailsUser.phone">
+        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="userD.detailsUserDtoList[0].phone">
         <p></p>
-        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="orderDtoOld.detailsUser.address">
+        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="userD.detailsUserDtoList[0].address">
         <p></p>
-        <button class="btn btn-primary" ng-click="createOrder()" ng-show="isUserLoggedIn() && orderDtoOld.items.length > 0">Оформить заказ</button>
-        <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && orderDtoOld.items.length > 0">Оформить заказ</button>
+        <button class="btn btn-primary" type="submit" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+<!--        <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>-->
     </form>
 </div>
