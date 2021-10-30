@@ -22,12 +22,17 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StringResponse createOrder(@RequestBody OrderDetailsDto orderDetailsDto, @RequestHeader String username) {
+        System.out.println(new StringResponse(orderService.createOrder(username, orderDetailsDto).getId().toString()));
         return new StringResponse(orderService.createOrder(username, orderDetailsDto).getId().toString());
     }
 
-    @GetMapping
-    public List<OrderDto> getOrdersForCurrentUser(@RequestHeader String username) {
-        return orderService.findAllByUsername(username).stream().map(o -> converter.orderToDto(o)).collect(Collectors.toList());
+    @GetMapping("")
+    public List<OrderDto> getOrdersForCurrentUser(@RequestHeader String username, @RequestParam( name = "status",defaultValue = "0",required = false) Long status) {
+        System.out.println("status=" + status);
+        if (status.equals(0l)) {
+            return orderService.findAllByUsername(username).stream().map(o -> converter.orderToDto(o)).collect(Collectors.toList());
+        }
+        return orderService.findAllByUsernameAndStatus(username, status).stream().map(o -> converter.orderToDto(o)).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")

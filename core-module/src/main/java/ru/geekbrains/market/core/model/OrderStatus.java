@@ -1,9 +1,15 @@
 package ru.geekbrains.market.core.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Entity
 @Table(name = "order_status")
+//@Data
+
 public class OrderStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +19,6 @@ public class OrderStatus {
     @Column(name = "title")
     String title;
 
-    public OrderStatus() {
-    }
 
     public Long getId() {
         return id;

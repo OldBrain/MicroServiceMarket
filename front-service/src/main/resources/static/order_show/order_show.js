@@ -15,15 +15,18 @@ angular.module('market-front').controller('orderShowController', function ($scop
     //     });
     // };
 
-    $scope.loadOrders = function () {
+    $scope.loadOrders = function (status = 0) {
         $http({
             url: 'http://localhost:5555/core/api/v1/orders',
-            method: 'GET'
+            method: 'GET',
+            params: {
+                status:status
+            }
         }).then(function (response) {
             $scope.orders = response.data;
         });
     };
 
 
-    $scope.loadOrders();
+    $scope.loadOrders(0);
 });

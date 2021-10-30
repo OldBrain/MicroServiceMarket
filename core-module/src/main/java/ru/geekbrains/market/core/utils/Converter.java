@@ -29,6 +29,8 @@ public class Converter {
     }
 
     public OrderDto orderToDto(Order order) {
-        return new OrderDto(order.getId(), order.getItems().stream().map(oi -> orderItemToDto(oi)).collect(Collectors.toList()), order.getAddress(), order.getPhone(), order.getPrice());
+        return new OrderDto(order.getId(), order.getItems().stream().map(oi -> orderItemToDto(oi)).collect(Collectors.toList()), order.getAddress(),
+                order.getPhone(), order.getPrice(),order.getLast_name(),
+                order.getPatronymic(),order.getFirst_name(),order.getOrderStatus().getId());
     }
 }

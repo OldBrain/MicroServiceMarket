@@ -6,22 +6,7 @@ angular.module('market-front').controller('personalAccountController', function 
     //
     // };
 
-    // $scope.getUserDataByName = function () {
-    //     if ($rootScope.isUserLoggedIn()) {
-    //
-    //         $http.get(contextPath + 'api/v1/auth/'+ $rootScope.lkname)
-    //             .then(function successCallback (response) {
-    //                 $scope.userdata = response.data;
-    //                 console.log(response);
-    //
-    //             },function errorCallback(response) {
-    //                 alert(response.data.message)
-    //             });
-    //
-    //     }
-    // };
 
-    // $scope.getUserDataByName();
     $scope.getUser = function () {
         if ($rootScope.isUserLoggedIn()) {
             $http.get( 'http://localhost:5555/auth/api/v1/users/me')
@@ -36,10 +21,13 @@ angular.module('market-front').controller('personalAccountController', function 
         }
     };
 
-    $scope.loadOrders = function () {
+    $scope.loadOrders = function (status = 0) {
         $http({
             url: 'http://localhost:5555/core/api/v1/orders',
-            method: 'GET'
+            method: 'GET',
+            params: {
+                status:status
+            }
         }).then(function (response) {
             $scope.orders = response.data;
         });
@@ -47,6 +35,7 @@ angular.module('market-front').controller('personalAccountController', function 
 
 
     $scope.getUser();
-    $scope.loadOrders();
+    //loadOrders(status -1 "создан")
+    $scope.loadOrders(1);
 });
 

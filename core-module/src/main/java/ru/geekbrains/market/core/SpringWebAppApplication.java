@@ -39,5 +39,6 @@ public class SpringWebAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringWebAppApplication.class, args);
+		System.out.println("Core module started!");
 	}
 }

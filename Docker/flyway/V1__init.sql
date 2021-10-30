@@ -52,7 +52,7 @@ create table if not exists orders
     first_name varchar(100),
     phone      varchar(20),
     address    varchar(255),
-    sum        integer,
+    price        integer,
     status_id  bigserial,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
@@ -139,7 +139,7 @@ insert into users_roles (user_id, role_id)
 values (1, 1),
        (2, 2);
 
-insert into orders(last_name, patronymic, first_name, phone, address, sum, username, status_id)
+insert into orders(last_name, patronymic, first_name, phone, address, price, username, status_id)
 values ('Владимир', 'Иванович', 'Тестов', '+7(905)555-555', 'Москва, Кремль', '10099', 'admin', 1);
 
 insert into order_items (order_id, product_id, quantity, price_per_product, price)

@@ -22,11 +22,13 @@ angular.module('market-front').controller('orderConfirmationController', functio
     };
 
     $scope.createOrder = function () {
-        if ($scope.orderDto.detailsUser.firstName == null||$scope.orderDto.detailsUser.lastName == null||
-            $scope.orderDto.detailsUser.patronymic == null) {
-            alert("Форма не заполнена");
-            return;
-        }
+
+        // if ($scope.orderDto.detailsUser.firstName == null||$scope.orderDto.detailsUser.lastName == null||
+        //     $scope.orderDto.detailsUser.patronymic == null) {
+        //     alert("Форма не заполнена");
+        //     return;
+        // }
+        alert("createOrder")
         $http({
             url: 'http://localhost:5555/core/api/v1/orders',
             method: 'POST',
