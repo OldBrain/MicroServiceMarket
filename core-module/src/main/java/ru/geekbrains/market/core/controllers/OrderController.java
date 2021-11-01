@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.market.api.dtos.OrderDetailsDto;
 import ru.geekbrains.market.api.dtos.OrderDto;
 import ru.geekbrains.market.api.dtos.StringResponse;
+import ru.geekbrains.market.core.model.Order;
 import ru.geekbrains.market.core.services.OrderService;
+import ru.geekbrains.market.core.services.OrderStatusService;
 import ru.geekbrains.market.core.utils.Converter;
 
 import java.util.List;
@@ -16,15 +18,23 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
 public class OrderController {
+
     private final OrderService orderService;
+    private final OrderStatusService orderStatusService;
     private final Converter converter;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StringResponse createOrder(@RequestBody OrderDetailsDto orderDetailsDto, @RequestHeader String username) {
-        System.out.println(new StringResponse(orderService.createOrder(username, orderDetailsDto).getId().toString()));
+//        System.out.println(new StringResponse(orderService.createOrder(username, orderDetailsDto).getId().toString()));
         return new StringResponse(orderService.createOrder(username, orderDetailsDto).getId().toString());
     }
+
+
+    @GetMapping("/status/{id}")
+    public String getStatus(@PathVariable Long id) {
+        return orderStatusService.findById(id).getTitle();
+            }
 
     @GetMapping("")
     public List<OrderDto> getOrdersForCurrentUser(@RequestHeader String username, @RequestParam( name = "status",defaultValue = "0",required = false) Long status) {

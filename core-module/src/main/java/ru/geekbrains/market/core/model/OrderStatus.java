@@ -2,12 +2,12 @@ package ru.geekbrains.market.core.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
-@NoArgsConstructor
+
 @Entity
 @Table(name = "order_status")
+@NoArgsConstructor
 //@Data
 
 public class OrderStatus {
@@ -18,7 +18,6 @@ public class OrderStatus {
 
     @Column(name = "title")
     String title;
-
 
     public Long getId() {
         return id;

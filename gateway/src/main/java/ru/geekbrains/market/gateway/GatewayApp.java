@@ -9,5 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GatewayApp {
     public static void main(String[] args) {
         SpringApplication.run(GatewayApp.class, args);
+        System.out.println("GatewayApp started!");
     }
+
 }

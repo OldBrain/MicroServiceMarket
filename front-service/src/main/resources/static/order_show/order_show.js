@@ -3,7 +3,7 @@ angular.module('market-front').controller('orderShowController', function ($scop
 
     // $scope.loadOrders = function () {
     //     $http({
-    //         // url: contextPath + 'api/v1/orders/'+ $rootScope.lkname,
+    //         'http://localhost:5555/core/api/v1/orders',
     //         url: contextPath + 'api/v1/orders',
     //         method: 'GET'
     //     }).then(function (response) {
@@ -24,8 +24,24 @@ angular.module('market-front').controller('orderShowController', function ($scop
             }
         }).then(function (response) {
             $scope.orders = response.data;
+            $scope.orderId = $scope.orders.id;
+
+            console.log(response.data);
         });
     };
+
+    // $scope.loadOrderStatus = function (id = 0) {
+    //     $http({
+    //         url: 'http://localhost:5555/core/api/v1/orders'+,
+    //         method: 'GET',
+    //         params: {
+    //             status:status
+    //         }
+    //     }).then(function (response) {
+    //         $scope.orders = response.data;
+    //         console.log(response.data);
+    //     });
+    // };
 
 
     $scope.loadOrders(0);

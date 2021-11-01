@@ -9,6 +9,8 @@ import ru.geekbrains.market.cartservice.avbugorov.integration.ProductServiceInte
 import ru.geekbrains.market.cartservice.avbugorov.services.CartService;
 import ru.geekbrains.market.cartservice.avbugorov.utils.Cart;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class CartController {
     }
 
     @GetMapping("/summ/{uuid}")
-    public Integer getCartSumm(@RequestHeader(required = false) String username, @PathVariable String uuid) {
+    public BigDecimal getCartSumm(@RequestHeader(required = false) String username, @PathVariable String uuid) {
         Cart cart = cartService.getCurrentCart(getCurrentCartUuid(username, uuid));
         return cart.getTotalPrice();
     }

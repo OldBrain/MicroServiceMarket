@@ -1,20 +1,22 @@
 package ru.geekbrains.market.core.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.geekbrains.market.api.dtos.CategoryDto;
-import ru.geekbrains.market.api.dtos.OrderDto;
-import ru.geekbrains.market.api.dtos.OrderItemDto;
-import ru.geekbrains.market.api.dtos.ProductDto;
-import ru.geekbrains.market.core.model.Category;
-import ru.geekbrains.market.core.model.Order;
-import ru.geekbrains.market.core.model.OrderItem;
-import ru.geekbrains.market.core.model.Product;
+import org.springframework.web.bind.annotation.PostMapping;
+import ru.geekbrains.market.api.dtos.*;
+import ru.geekbrains.market.core.model.*;
+import ru.geekbrains.market.core.services.OrderStatusService;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+
 
 @Component
 public class Converter {
+
+
+
     public ProductDto productToDto(Product product) {
         return new ProductDto(product.getId(), product.getTitle(), product.getPrice(), product.getCategory().getTitle());
     }
@@ -31,6 +33,11 @@ public class Converter {
     public OrderDto orderToDto(Order order) {
         return new OrderDto(order.getId(), order.getItems().stream().map(oi -> orderItemToDto(oi)).collect(Collectors.toList()), order.getAddress(),
                 order.getPhone(), order.getPrice(),order.getLast_name(),
-                order.getPatronymic(),order.getFirst_name(),order.getOrderStatus().getId());
+                order.getPatronymic(),order.getFirst_name(),
+                order.getOrderStatus().getId());
+    }
+
+    public CommentsDto commentsToDto(Comments cm) {
+        return new CommentsDto(cm.getUsername(), cm.getContent(), cm.getProductId());
     }
 }

@@ -1,6 +1,6 @@
 <div class="container">
 
-    <h4>Мои заказы</h4>
+    <h4>Оплаченные заказы</h4>
     <div ng-repeat="ord in orders" class="card text-white bg-primary mb-3" style="max-width: 90%">
 <!--        <tr ng-repeat="ord in orders">-->
         <div  class="card-header"><H4>№<kbd>{{ord.id}}</kbd> статус: <kbd>{{ord.orderStatus.title}}</kbd><br>
@@ -18,16 +18,17 @@
                     </tr>
                 </thread>
                 <tbody>
-                <tr ng-repeat="i in ord.ordersItems">
+                <tr ng-repeat="i in ord.items">
                     <td>{{i.productId}}</td>
                     <td>{{i.productTitle}}</td>
                     <td>{{i.quantity}}</td>
+<!--                    <td>{{i.pricePerProduct}}</td>-->
                     <td>{{i.price+ ' x ' + i.quantity + ' = ' + i.price*i.quantity}}</td>
                 </tr>
                 </tbody>
             </table>
-            <p class="card-text"><H5><kbd>Общая стоимость заказа {{ord.sum}} руб.</kbd></H5>
-            <button class="btn btn-dark" ng-click="#">Оплатить</button></p>
+            <p class="card-text"><H5><kbd>Общая стоимость заказа {{ord.price}} руб.</kbd></H5>
+<!--            <button class="btn btn-dark" ng-click="#">Оплатить</button></p>-->
         </div>
     </div>
 

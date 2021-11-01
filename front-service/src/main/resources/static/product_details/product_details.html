@@ -1,17 +1,22 @@
 <div>
+
+
     <p></p>
-<!--    <h3>{{product.title}}</h3>-->
+    <!--    <h3>{{product.title}}</h3>-->
     <div class="card mb-3" style="max-width: 95%">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="https://intermarium.news/wp-content/uploads/2019/03/Varenyky-1-e1551782650361-342x246.jpg" class="img-fluid rounded-start" alt="...">
+                <img src="https://intermarium.news/wp-content/uploads/2019/03/Varenyky-1-e1551782650361-342x246.jpg"
+                     class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
                     <h2 class="card-title">{{product.title}}</h2>
                     <p class="card-text">Это вареники.</p>
-                    <p class="card-text"><H3>Цена: {{product.price}} руб.</H3></p>
+                    <p class="card-text">
+                    <H3>Цена: {{product.price}} руб.</H3></p>
                     <p class="card-text"><small class="text-muted">Кол-во покупок XXX</small></p>
+                    <button class="btn btn-primary" ng-click="addToCart(product.id)">Добавить в корзину</button>
                 </div>
             </div>
         </div>
@@ -34,9 +39,18 @@
         <div class="card-body">
             <h5 class="card-title">Шолохов М. А. "Поднятая целина":</h5>
 
-            <p class="card-text">«Вареники со сметаной – тоже святая еда, лучше любого причастия, особливо когда их, милушек моих, положат тебе в тарелку побольше, да ишо раз побольше, этак горкой, да опосля нежно потрясут
-            эту тарелку, чтобы сметана до дна прошла, чтобы каждый вареник в ней с ног до головы обвалялся».</p>
-            <button class="btn btn-primary" ng-click="addToCart(product.id)">Добавить в корзину</button>
+            <p class="card-text">«Вареники со сметаной – тоже святая еда, лучше любого причастия, особливо когда их,
+                милушек моих, положат тебе в тарелку побольше, да ишо раз побольше, этак горкой, да опосля нежно
+                потрясут
+                эту тарелку, чтобы сметана до дна прошла, чтобы каждый вареник в ней с ног до головы обвалялся».</p>
         </div>
+            {{d.content}}
+            <div ng-repeat="d in comment" class="alert alert-primary" role="alert" align="left" >
+                <kbd>  {{d.username}}</kbd><br>
+                <samp>{{d.content}}</samp>
+            </div>
+
     </div>
+
+
 </div>

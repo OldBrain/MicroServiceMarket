@@ -8,9 +8,28 @@ CREATE TABLE products
 (
     id          bigserial primary key,
     title       VARCHAR(255),
-    price       INTEGER,
+    price       numeric(8,2),
     category_id bigint references categories (id)
 );
+
+create table comments
+(
+    id          bigserial primary key,
+    username    VARCHAR(25),
+    content     VARCHAR(255),
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp,
+    product_id bigserial not null
+);
+
+insert into comments(username, content, product_id)
+values ('admin','Просто супер. Это хлеб моей мечты',1),
+       ('admin','Отвратительный товар не советую',2),
+       ('user','Это хлеб из отрубей, и прочих отбросов!',1);
+
+
+
+
 
 insert into categories (title)
 values ('Food');
@@ -52,12 +71,14 @@ create table if not exists orders
     first_name varchar(100),
     phone      varchar(20),
     address    varchar(255),
-    price        integer,
+    price      numeric(8,2),
     status_id  bigserial,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
     foreign key (status_id) references order_status (id)
 );
+
+
 
 create table order_items
 (
@@ -65,8 +86,8 @@ create table order_items
     order_id          bigint references orders (id),
     product_id        bigserial references products (id),
     quantity          integer,
-    price_per_product integer,
-    price             integer,
+    price_per_product numeric(8,2),
+    price             numeric(8,2),
     created_at        timestamp default current_timestamp,
     updated_at        timestamp default current_timestamp
 );
@@ -77,26 +98,26 @@ create table order_items
 
 
 insert into products (title, price, category_id)
-values ('bread', 5, 1),
-       ('milk', 20, 1),
-       ('sausage', 21, 1),
-       ('sour', 15, 1),
-       ('cream', 150, 1),
-       ('kefir', 250, 1),
-       ('meat', 650, 1),
-       ('nuts', 60, 1),
-       ('tea', 350, 1),
-       ('coffee', 750, 1),
-       ('cocoa cola', 99, 1),
-       ('sprite', 98, 1),
-       ('fanta', 97, 1),
-       ('butter', 50, 1),
-       ('oranges', 88, 1),
-       ('lemons', 122, 1),
-       ('chips', 29, 1),
-       ('beer', 800, 1),
-       ('fish', 1200, 1),
-       ('pasta', 85, 1);
+values ('bread', 5.5, 1),
+       ('milk', 20.56, 1),
+       ('sausage', 21.26, 1),
+       ('sour', 15.00, 1),
+       ('cream', 150.00, 1),
+       ('kefir', 250.66, 1),
+       ('meat', 650.55, 1),
+       ('nuts', 60.01, 1),
+       ('tea', 350.02, 1),
+       ('coffee', 750.08, 1),
+       ('cocoa cola', 99.55, 1),
+       ('sprite', 98.66, 1),
+       ('fanta', 97.11, 1),
+       ('butter', 50.15, 1),
+       ('oranges', 88.14, 1),
+       ('lemons', 122.44, 1),
+       ('chips', 29.99, 1),
+       ('beer', 800.01, 1),
+       ('fish', 1200.11, 1),
+       ('pasta', 85.11, 1);
 
 insert into user_details(last_name, patronymic, first_name, phone, address)
 VALUES ('Татьяна', 'Петровна', 'Юзерова', '25-25-25', 'Астрахань'),

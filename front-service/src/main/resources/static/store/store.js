@@ -12,7 +12,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
     };
 
     $scope.aboutProduct = function (productId) {
-        $rootScope.productId = productId;
+        $localStorage.productId = productId;
         $location.path("/product_details");
     };
 

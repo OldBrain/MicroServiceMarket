@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PayPalService {
     private final OrderService orderService;
-
     @Transactional
     public OrderRequest createOrderRequest(Long orderId) {
         ru.geekbrains.market.core.model.Order order = orderService.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found"));

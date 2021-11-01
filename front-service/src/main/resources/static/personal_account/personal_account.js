@@ -1,4 +1,4 @@
-angular.module('market-front').controller('personalAccountController', function ($scope, $http,$rootScope,$localStorage,$location) {
+angular.module('market-front').controller('personalAccountController', function ($scope, $http,$rootScope,$localStorage,$location, $routeParams) {
     const contextPath = 'http://localhost:8189/market/';
 
     // $scope.saveСhanges = function () {
@@ -31,6 +31,10 @@ angular.module('market-front').controller('personalAccountController', function 
         }).then(function (response) {
             $scope.orders = response.data;
         });
+    };
+
+    $scope.OrderPay = function (Id = 0) {
+        $location.path('/order_pay/' + Id);
     };
 
 

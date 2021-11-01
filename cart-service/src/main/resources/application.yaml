@@ -4,7 +4,7 @@ server:
     context-path: /market-cart
 utils:
   cart:
-    prefix: WEB_MARKET_X_
+    prefix: WEB_MARKET_XXX_
 integration:
   product-service:
     url: http://localhost:8189/market-core

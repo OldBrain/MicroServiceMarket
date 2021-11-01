@@ -8,7 +8,6 @@ import ru.geekbrains.market.api.exceptions.ResourceNotFoundException;
 import ru.geekbrains.market.core.integration.CartServiceIntegration;
 import ru.geekbrains.market.core.model.Order;
 import ru.geekbrains.market.core.model.OrderItem;
-import ru.geekbrains.market.core.model.OrderStatus;
 import ru.geekbrains.market.core.repositories.OrderRepository;
 import ru.geekbrains.market.core.utils.Converter;
 
@@ -35,7 +34,7 @@ public class OrderService {
         order.setPatronymic(orderDetailsDto.getPatronymic());
         order.setFirst_name(orderDetailsDto.getFirst_name());
         order.setLast_name(orderDetailsDto.getLast_name());
-        order.setOrderStatus(orderStatusService.fondById(1l));
+        order.setOrderStatus(orderStatusService.findById(1l));
         List<OrderItem> items = new ArrayList<>();
         for (OrderItemDto i : cart.getItems()) {
             OrderItem orderItem = new OrderItem();
@@ -61,8 +60,10 @@ public class OrderService {
         return orderRepository.findOneByIdAndUsername(id, username).map(o -> converter.orderToDto(o));
     }
 
+
     public List<Order> findAllByUsername(String username) {
-        return orderRepository.findAllByUsername(username);
+//        return orderRepository.findAllByUsername(username).stream().filter(o->!o.getPrice().equals(0)).collect(Collectors.toList());
+        return orderRepository.findAllByUsername(username).stream().collect(Collectors.toList());
     }
 
     public List<Order> findAllByUsernameAndStatus(String username, Long status) {
@@ -70,4 +71,5 @@ public class OrderService {
                 filter(order -> order.getOrderStatus().getId().
                         equals(status)).collect(Collectors.toList());
     }
+
 }

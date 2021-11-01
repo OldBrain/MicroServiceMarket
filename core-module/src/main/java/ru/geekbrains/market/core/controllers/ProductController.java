@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
+
     private final Converter converter;
 
     @GetMapping()
@@ -35,18 +36,13 @@ public class ProductController {
         return productService.findAllPageByPage(pageIndex, 5, params).map(p -> converter.productToDto(p));
     }
 
-//    @GetMapping("/{id}")
-//    public ProductDto findById(@PathVariable Long id) {
-//        Product p = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product id = " + id + " not found"));
-//        return converter.productToDto(p);
-//    }
-
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
         Product product = productService.findById(id).orElseThrow(()
                 -> new ResourceNotFoundException("product id " + id + "not found"));
         return converter.productToDto(product);
     }
+
 
     @PostMapping
     public ProductDto save(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {

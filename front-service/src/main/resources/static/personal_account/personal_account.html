@@ -45,7 +45,9 @@
                     </tbody>
                 </table>
             </td>
-            <th scope="row">{{ord.price}}</th>
+            <th><button class="btn btn-outline-primary" ng-click="OrderPay(ord.id)">Оплатить заказ № +{{ord.id}}, сумма:{{ord.price}} руб.</button></th>
+<!--            <th scope="row">{{ord.price}}</th>-->
+
         </tr>
         </tbody>
     </table>

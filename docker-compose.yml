@@ -4,6 +4,7 @@ volumes:
   cloud-postgres:
     driver: local
 
+
 services:
   postgres:
     image: postgres:9.6

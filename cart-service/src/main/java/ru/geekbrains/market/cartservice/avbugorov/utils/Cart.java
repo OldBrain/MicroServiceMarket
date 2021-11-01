@@ -4,6 +4,9 @@ import lombok.Data;
 import ru.geekbrains.market.api.dtos.OrderItemDto;
 import ru.geekbrains.market.api.dtos.ProductDto;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +14,8 @@ import java.util.List;
 @Data
 public class Cart {
     private List<OrderItemDto> items;
-    private int totalPrice;
+//    private MathContext mc = new MathContext(4,RoundingMode.FLOOR);
+    private BigDecimal totalPrice =new BigDecimal("0");
 
     public Cart() {
         this.items = new ArrayList<>();
@@ -51,13 +55,13 @@ public class Cart {
 
     public void clear() {
         items.clear();
-        totalPrice = 0;
+        totalPrice = BigDecimal.ZERO;
     }
 
     private void recalculate() {
-        totalPrice = 0;
+        totalPrice = BigDecimal.ZERO;
         for (OrderItemDto i : items) {
-            totalPrice += i.getPrice();
+            totalPrice=totalPrice.add(i.getPrice());
         }
     }
 
@@ -79,8 +83,8 @@ public class Cart {
         another.clear();
     }
 
-    public int getTotalPrice() {
-        recalculate();
+    public BigDecimal getTotalPrice() {
+//        recalculate();
         return totalPrice;
     }
 }

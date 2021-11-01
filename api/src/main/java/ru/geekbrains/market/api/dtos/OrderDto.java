@@ -1,5 +1,6 @@
 package ru.geekbrains.market.api.dtos;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OrderDto {
@@ -7,7 +8,7 @@ public class OrderDto {
     private List<OrderItemDto> items;
     private String address;
     private String phone;
-    private int price;
+    private BigDecimal price;
 
     private String last_name;
     private String patronymic;
@@ -54,11 +55,11 @@ public class OrderDto {
         this.phone = phone;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -89,7 +90,7 @@ public class OrderDto {
     public OrderDto() {
     }
 
-    public OrderDto(Long id, List<OrderItemDto> items, String address, String phone, int price, String last_name, String patronymic, String first_name,Long orderStatus) {
+    public OrderDto(Long id, List<OrderItemDto> items, String address, String phone, BigDecimal price, String last_name, String patronymic, String first_name,Long orderStatus) {
         this.id = id;
         this.items = items;
         this.address = address;
@@ -98,5 +99,6 @@ public class OrderDto {
         this.last_name = last_name;
         this.patronymic = patronymic;
         this.first_name = first_name;
+        this.orderStatus = orderStatus;
     }
 }
