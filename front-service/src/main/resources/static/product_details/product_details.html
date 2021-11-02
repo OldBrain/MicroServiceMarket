@@ -12,11 +12,27 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h2 class="card-title">{{product.title}}</h2>
-                    <p class="card-text">Это вареники.</p>
+                    <p class="card-text">Пока фото только вареников.</p>
+                      <div ng-show="isShow()">
+                        <label for="exampleDataList" class="form-label"></label>
+                        <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Оцените товар...">
+                        <datalist id="datalistOptions">
+                            <option value="*">
+                            <option value="**">
+                            <option value="***">
+                            <option value="****">
+                            <option value="*****">
+                        </datalist>
+                      </div>
+
+
                     <p class="card-text">
                     <H3>Цена: {{product.price}} руб.</H3></p>
                     <p class="card-text"><small class="text-muted">Кол-во покупок XXX</small></p>
                     <button class="btn btn-primary" ng-click="addToCart(product.id)">Добавить в корзину</button>
+                    <p></p>
+
+
                 </div>
             </div>
         </div>
@@ -52,5 +68,10 @@
 
     </div>
 
+    <form novalidate ng-show="isShow()" ng-submit="createProduct()">
+        <input  class="form-control form-control-lg" type="text" placeholder="Ваш отзыв" ng-model="new_content.title">
+        <p></p>
+        <button  type="submit" class="btn btn-primary">Создать</button>
+    </form>
 
 </div>

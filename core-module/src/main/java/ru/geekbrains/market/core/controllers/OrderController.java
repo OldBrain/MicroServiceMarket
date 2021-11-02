@@ -26,7 +26,6 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StringResponse createOrder(@RequestBody OrderDetailsDto orderDetailsDto, @RequestHeader String username) {
-//        System.out.println(new StringResponse(orderService.createOrder(username, orderDetailsDto).getId().toString()));
         return new StringResponse(orderService.createOrder(username, orderDetailsDto).getId().toString());
     }
 
@@ -34,16 +33,25 @@ public class OrderController {
     @GetMapping("/status/{id}")
     public String getStatus(@PathVariable Long id) {
         return orderStatusService.findById(id).getTitle();
-            }
+    }
 
     @GetMapping("")
-    public List<OrderDto> getOrdersForCurrentUser(@RequestHeader String username, @RequestParam( name = "status",defaultValue = "0",required = false) Long status) {
+    public List<OrderDto> getOrdersForCurrentUser(@RequestHeader String username, @RequestParam(name = "status", defaultValue = "0", required = false) Long status) {
         System.out.println("status=" + status);
         if (status.equals(0l)) {
             return orderService.findAllByUsername(username).stream().map(o -> converter.orderToDto(o)).collect(Collectors.toList());
         }
         return orderService.findAllByUsernameAndStatus(username, status).stream().map(o -> converter.orderToDto(o)).collect(Collectors.toList());
     }
+
+    @GetMapping("/exists/{productId}")
+    public Boolean isProductExist(@RequestHeader(required = false, defaultValue = "noname") String username, @PathVariable Long productId) {
+        if (username.equals("noname")) {
+            return false;
+        }
+        return orderService.isProductExist(username, productId).booleanValue();
+    }
+
 
     @GetMapping("/{id}")
     public OrderDto getOrderForCurrentUser(@RequestHeader String username, @PathVariable Long id) {

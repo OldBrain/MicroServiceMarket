@@ -31,6 +31,21 @@ angular.module('market-front').controller('productDetailsController', function (
 
     }
 
+    $scope.isNameExists = function () {
+        $http.get('http://localhost:5555/core/api/v1/orders/exists/' + id)
+            .then(function successCallback(response) {
+                $scope.isExists = response.data;
+                console.log($scope.isExists);
+               }, function failureCallback(response) {
+                alert(response.data.messages);
+            });
+    };
+
+    $rootScope.isShow = function () {
+       return  $scope.isExists;
+    };
+
     $scope.showComments();
     $scope.showProduct();
+    $scope.isNameExists();
 });

@@ -8,6 +8,7 @@ import ru.geekbrains.market.api.exceptions.ResourceNotFoundException;
 import ru.geekbrains.market.core.integration.CartServiceIntegration;
 import ru.geekbrains.market.core.model.Order;
 import ru.geekbrains.market.core.model.OrderItem;
+import ru.geekbrains.market.core.model.Product;
 import ru.geekbrains.market.core.repositories.OrderRepository;
 import ru.geekbrains.market.core.utils.Converter;
 
@@ -43,6 +44,7 @@ public class OrderService {
             orderItem.setPricePerProduct(i.getPricePerProduct());
             orderItem.setQuantity(i.getQuantity());
             orderItem.setProduct(productService.findById(i.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти продукт при оформлении заказа. ID продукта: " + i.getProductId())));
+//            orderItem.setUsername(username);
             items.add(orderItem);
         }
         order.setItems(items);
@@ -61,8 +63,8 @@ public class OrderService {
     }
 
 
+
     public List<Order> findAllByUsername(String username) {
-//        return orderRepository.findAllByUsername(username).stream().filter(o->!o.getPrice().equals(0)).collect(Collectors.toList());
         return orderRepository.findAllByUsername(username).stream().collect(Collectors.toList());
     }
 
@@ -70,6 +72,23 @@ public class OrderService {
         return orderRepository.findAllByUsername(username).stream().
                 filter(order -> order.getOrderStatus().getId().
                         equals(status)).collect(Collectors.toList());
+    }
+
+    //TODO заменить статус на оплачен
+    public Boolean isProductExist(String username, Long productId) {
+        List<Order> orderListStatus0 = orderRepository.findAllByUsername(username).stream().
+                filter(order -> order.getOrderStatus().getId().
+                        equals(1l)).collect(Collectors.toList());
+
+        for (Order o : orderListStatus0) {
+            List<OrderItem> items = o.getItems();
+            for (OrderItem i : items) {
+                if (i.getProduct().getId().equals(productId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
