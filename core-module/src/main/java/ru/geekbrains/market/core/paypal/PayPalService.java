@@ -23,7 +23,7 @@ public class PayPalService {
         orderRequest.checkoutPaymentIntent("CAPTURE");
 
         ApplicationContext applicationContext = new ApplicationContext()
-                .brandName("Web App Market")
+                .brandName("Market")
                 .landingPage("BILLING")
                 .shippingPreference("SET_PROVIDED_ADDRESS");
         orderRequest.applicationContext(applicationContext);

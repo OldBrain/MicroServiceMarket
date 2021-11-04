@@ -32,7 +32,7 @@ public class ProductService {
     }
 
     public Page<Product> findAllPageByPage(int pageIndex, int pageSize, MultiValueMap<String, String> rqParams) {
-        return productRepository.findAll(constructSpecification(rqParams),PageRequest.of(pageIndex,pageSize));
+        return productRepository.findAll(constructSpecification(rqParams), PageRequest.of(pageIndex, pageSize));
 
     }
 

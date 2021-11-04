@@ -12,7 +12,7 @@ import java.util.Optional;
 public class OrderStatusService {
     private final OrderStatusRepository orderStatusRepository;
 
-    public Optional<OrderStatus>findTitleById(Long id) {
+    public Optional<OrderStatus> findTitleById(Long id) {
         return orderStatusRepository.findTitleById(id);
     }
 

@@ -11,8 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.market.api.dtos.AuthRequest;
 import ru.geekbrains.market.api.dtos.AuthResponse;
-import ru.geekbrains.market.api.dtos.DetailsUserDto;
-import ru.geekbrains.market.api.dtos.UserDetailsForRegistrationDto;
 import ru.geekbrains.market.api.exceptions.MarketError;
 import ru.geekbrains.market.authservice.model.Role;
 import ru.geekbrains.market.authservice.model.User;

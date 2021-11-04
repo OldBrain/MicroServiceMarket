@@ -16,6 +16,6 @@ public class StatisticController {
 
     @GetMapping()
     public MapResponse getServiceMethodStatistic() {
-        return  new MapResponse(statisticDto.getServiceMap());
+        return new MapResponse(statisticDto.getServiceMap());
     }
 }

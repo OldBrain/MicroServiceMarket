@@ -44,7 +44,6 @@ public class OrderService {
             orderItem.setPricePerProduct(i.getPricePerProduct());
             orderItem.setQuantity(i.getQuantity());
             orderItem.setProduct(productService.findById(i.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти продукт при оформлении заказа. ID продукта: " + i.getProductId())));
-//            orderItem.setUsername(username);
             items.add(orderItem);
         }
         order.setItems(items);
@@ -61,7 +60,6 @@ public class OrderService {
     public Optional<OrderDto> findDtoByIdAndUsername(Long id, String username) {
         return orderRepository.findOneByIdAndUsername(id, username).map(o -> converter.orderToDto(o));
     }
-
 
 
     public List<Order> findAllByUsername(String username) {
