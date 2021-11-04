@@ -16,5 +16,10 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
     @Query("select c from Comments c where c.productId = :productId")
     public List<Comments> findAllByProductIdEquals(Long productId);
 
+    @Query("select c from Comments c where (c.username = :username and c.productId =:productId)")
+    public Optional<Comments> findQueryByUsernameAndProductId(String username,Long productId);
+
+//    public List<Comments> findFirstByUsernameEqualsAndProductIdEquals(String username,Long productId);
+
 
 }

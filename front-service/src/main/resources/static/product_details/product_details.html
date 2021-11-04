@@ -60,7 +60,7 @@
                 потрясут
                 эту тарелку, чтобы сметана до дна прошла, чтобы каждый вареник в ней с ног до головы обвалялся».</p>
         </div>
-            {{d.content}}
+<!--            {{d.content}}-->
             <div ng-repeat="d in comment" class="alert alert-primary" role="alert" align="left" >
                 <kbd>  {{d.username}}</kbd><br>
                 <samp>{{d.content}}</samp>
@@ -68,8 +68,9 @@
 
     </div>
 
-    <form novalidate ng-show="isShow()" ng-submit="createProduct()">
-        <input  class="form-control form-control-lg" type="text" placeholder="Ваш отзыв" ng-model="new_content.title">
+    <form novalidate ng-show="isShow()" ng-submit="addComment()">
+<!--        <input  class="form-control form-control-lg" type="text" placeholder={{username}} ng-model="new_comment.username">-->
+        <input  class="form-control form-control-lg" type="text" placeholder={{currentComment.content}} ng-model="new_comment.content">
         <p></p>
         <button  type="submit" class="btn btn-primary">Создать</button>
     </form>

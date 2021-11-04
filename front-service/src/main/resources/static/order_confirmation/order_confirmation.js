@@ -2,11 +2,6 @@ angular.module('market-front').controller('orderConfirmationController', functio
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.createOrder = function () {
-        // if ($scope.orderDto.detailsUser.firstName == null||$scope.orderDto.detailsUser.lastName == null||
-        //     $scope.orderDto.detailsUser.patronymic == null) {
-        //     alert("Форма не заполнена");
-        //     return;
-        // }
 
         $http({
             url: 'http://localhost:5555/core/api/v1/orders',

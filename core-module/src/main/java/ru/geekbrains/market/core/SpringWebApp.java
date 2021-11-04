@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource("secret.properties")
-public class SpringWebAppApplication {
+public class SpringWebApp {
 	// TODO План на курс:
 	// 1. Сделать регистрацию пользователей на отдельной странице
 	// 2. + Сделать корзину (+ добавить редис)
@@ -38,7 +38,7 @@ public class SpringWebAppApplication {
 	// 3. * Попробуйте разобраться с CORS Policy для Auth Server
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringWebAppApplication.class, args);
+		SpringApplication.run(SpringWebApp.class, args);
 		System.out.println("Core module started!");
 	}
 }
