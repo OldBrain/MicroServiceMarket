@@ -1,0 +1,60 @@
+<div>
+    <h1>Market</h1>
+    <thead>
+            <div class="row g-2">
+                <div class="col-6 col-md-2">
+                    <form novalidate ng-submit="loadProducts()">
+                        <div class="form-floating input-group-sm">
+                            <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title">
+                            <label for="filterTitle">Название</label>
+                        </div>
+                        <p></p>
+                        <div class="form-floating input-group-sm">
+                            <input type="number" class="form-control" id="filterMinPrice" placeholder=""
+                                   ng-model="filter.min_price">
+                            <label for="filterMinPrice">Минимальная цена</label>
+                        </div>
+                        <p></p>
+                        <div class="form-floating input-group-sm">
+                            <input type="number" class="form-control" id="filterMaxPrice" placeholder=""
+                                   ng-model="filter.max_price">
+                            <label for="filterMaxPrice">Максимальная цена</label>
+                        </div>
+                        <p></p>
+                        <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить</button>
+                    </form>
+                </div>
+                <div class="col-sm-6 col-md-10">
+    <table class="table table-success table-striped">
+        <tr>
+            <td>Category</td>
+            <td>id</td>
+            <td>title</td>
+            <td>prise</td>
+            <td>button</td>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr ng-repeat="p in productsPage.content">
+            <td>{{p.categoryTitle}}</td>
+            <td>{{p.id}}</td>
+            <td><button class="btn btn-outline-primary" ng-click="aboutProduct(p.id)">{{p.title}}</button></td>
+            <td>{{p.price}}</td>
+            <td>
+<!--                <button class="btn btn-info" ng-click="addCart(p)">Добавить в корзину</button>-->
+                <button class="btn btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h6>страница {{currentPage}} из {{totalPages}}</h6>
+
+    <button class="btn btn-outline-info" ng-click="toChangePage(-1)">Previous Page</button>
+    <button class="btn btn-outline-info" ng-click="toChangePage(1)">Next page</button>
+
+</div>
+             </div >
+</div>

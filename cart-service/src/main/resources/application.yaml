@@ -1,0 +1,10 @@
+server:
+  port: 8191
+  servlet:
+    context-path: /market-cart
+utils:
+  cart:
+    prefix: WEB_MARKET_XXX_
+integration:
+  product-service:
+    url: http://localhost:8189/market-core

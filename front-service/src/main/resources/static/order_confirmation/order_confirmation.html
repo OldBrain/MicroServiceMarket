@@ -1,0 +1,51 @@
+<div>
+    <p></p>
+    <h3>Оформление заказа</h3>
+    <h3>Покупатель {{userD.detailsUserDtoList[0].lastName}} {{userD.detailsUserDtoList[0].lastName}} {{userD.detailsUserDtoList[0].patronymic}}</h3>
+    <h5>E-mail: {{userD.email}}</h5>
+
+    <table class="table table-success table-striped">
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Количество</td>
+            <td>Цена</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="i in cart.items">
+            <td>{{i.productTitle}}</td>
+            <td>
+                {{i.quantity}}
+            </td>
+            <td>{{i.pricePerProduct + ' x ' + i.quantity + ' = ' + i.price}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{'Итого: ' + orderDtoOld.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <h3>Детали заказа</h3>
+    <form novalidate ng-submit="createOrder()">
+        <input class="form-control" type="text" placeholder="Фамилия получателя" ng-model="userD.detailsUserDtoList[0].firstName">
+        <p></p>
+
+        <input class="form-control" type="text" placeholder="Имя получателя" ng-model="userD.detailsUserDtoList[0].lastName">
+        <p></p>
+
+        <input class="form-control" type="text" placeholder="Отчество получателя" ng-model="userD.detailsUserDtoList[0].patronymic">
+        <p></p>
+
+
+        <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="userD.detailsUserDtoList[0].phone">
+        <p></p>
+        <input class="form-control" type="text" required placeholder="Адрес доставки" ng-model="userD.detailsUserDtoList[0].address">
+        <p></p>
+        <button class="btn btn-primary" type="submit" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+<!--        <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>-->
+    </form>
+</div>
